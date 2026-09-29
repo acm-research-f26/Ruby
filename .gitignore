@@ -1,0 +1,34 @@
+# Python environments (huge, machine-specific)
+lens_env/
+lens_env311/
+.venv/
+__pycache__/
+*.pyc
+
+# Data: regenerate with get_negatives.py + make_cutouts.py (see README)
+data/cutouts/
+data/manifest.csv
+*.npy
+*.fits
+*.zip
+# Lens catalog: download from Zenodo (see README)
+q1_discovery_engine_lens_catalog.csv
+
+# Model weights and training outputs (large)
+*.ckpt
+*.pt
+*.pth
+checkpoints/
+wandb/
+lightning_logs/
+
+# Logs and scratch files
+*.log
+test.py
+get_galaxies.py
+galaxies_sample.csv
+
+# OS / editor clutter
+.DS_Store
+.vscode/
+.ipynb_checkpoints/
