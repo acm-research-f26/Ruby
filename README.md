@@ -8,7 +8,7 @@ real non-lens galaxies, cut into identical images. It is the foundation for a pl
 **Zoobot** (galaxy-pretrained CNN) and a **Vision Transformer** (ImageNet-pretrained) trained on
 identical data, evaluated on how highly each ranks the known compound lenses.
 
-![Example cutouts: lenses (top) and non-lenses (bottom)](data/preview.png)
+![Example cutouts: lenses (top) and non-lenses (bottom)](preview.png)
 
 ## The dataset
 
