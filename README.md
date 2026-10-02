@@ -138,14 +138,6 @@ python train.py --model vit --lr 3e-5 --seed 2 && python train.py --model vit --
 python evaluate.py
 ```
 
-## Next steps
-
-- [x] `train.py`: fine-tune Zoobot and a ViT on identical splits (compound lenses always in test)
-- [x] `evaluate.py`: compound-lens ranks, inspection cost, normal-lens recall (3 seeds each)
-- [ ] Add an ImageNet-pretrained ConvNeXt-Nano to separate architecture from pretraining
-- [ ] Enlarge the test set with more non-lenses for more realistic ranks
-- [ ] Add team-built simulated compound lenses, and a separate "compound" training class
-
 ## Data sources and citations
 
 - Lens catalog: Euclid Q1 Strong Lensing Discovery Engine, Zenodo, doi:[10.5281/zenodo.15003116](https://doi.org/10.5281/zenodo.15003116)
