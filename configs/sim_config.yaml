@@ -1,0 +1,65 @@
+# Configuration for simulating single (galaxy-galaxy) strong gravitational lenses
+# with lenstronomy. Physics follows Wilde et al. 2022 (MNRAS 512, 3464), Section 2:
+# SIE lens galaxy, Sersic source light, Einstein radius set from a sampled velocity
+# dispersion via the singular-isothermal-sphere relation (their eq. 1).
+
+seed: 42
+
+cosmology:
+  H0: 70.0        # km/s/Mpc
+  Om0: 0.3
+
+image:
+  num_pix: 100           # pixels per side (fixed across all batches for consistent scale)
+  pixel_scale: 0.1       # arcsec/pixel (Euclid VIS-like)
+  psf_fwhm: 0.18         # arcsec, Gaussian PSF FWHM
+  exposure_time: 1800.0  # seconds
+  sky_brightness: 22.5   # mag/arcsec^2
+  read_noise: 4.0
+  ccd_gain: 2.5
+  magnitude_zero_point: 25.0
+  # Fixed dataset-wide intensity range (counts) used to linearly scale every
+  # image to [0, 1] identically -- NOT a per-image min/max stretch, so pixel
+  # values stay physically comparable across images/batches for measurement
+  # or model input. Computed via lens_sim.calibrate_global_scale(); regenerate
+  # both if any lens_galaxy/source_galaxy/image parameter above changes.
+  scale_low: -0.01850
+  scale_high: 0.87001
+
+lens_galaxy:
+  z_range: [0.2, 0.8]
+  velocity_dispersion_range: [150.0, 300.0]  # km/s
+  ellipticity_range: [0.0, 0.4]              # |e|, random position angle
+  light_magnitude_range: [19.0, 21.5]
+  light_r_eff_range: [0.4, 1.2]              # arcsec
+  light_sersic_n_range: [3.0, 5.0]
+  external_shear_range: [0.0, 0.05]
+
+source_galaxy:
+  z_range: [1.0, 3.0]
+  magnitude_range: [23.0, 26.0]
+  r_eff_range: [0.05, 0.3]        # arcsec
+  sersic_n_range: [0.5, 4.0]
+  ellipticity_range: [0.0, 0.5]
+  offset_range: [-0.35, 0.35]     # arcsec, source center offset from lens center
+
+dataset:
+  n_lens: 400        # positive examples: SIE lens + lensed source
+  n_nonlens: 400      # negative examples: same lens light, unlensed/absent source
+  train_fraction: 0.8
+
+training:
+  epochs: 20
+  batch_size: 32
+  learning_rate: 0.001
+  device: auto   # auto | cpu | mps | cuda
+
+deepdream:
+  octaves: 3
+  octave_scale: 1.4
+  iterations_per_octave: 40
+  learning_rate: 0.08
+
+zoobot:
+  encoder_name: "hf_hub:mwalmsley/zoobot-encoder-convnext_nano"
+  input_size: 224

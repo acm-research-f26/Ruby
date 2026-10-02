@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Large generated datasets -- regenerate with src/dataset.py + configs/*.yaml
+data/*.npz
+!data/real_euclid_dataset.npz
+
+# Bulk per-image exports and zips -- regenerate with src/export_images.py
+outputs/images/
+outputs/images_batch2/
+outputs/*.zip
+
+# One-off local automation, not part of the deliverable
+outputs/*.applescript
+outputs/logs/
+
+.DS_Store

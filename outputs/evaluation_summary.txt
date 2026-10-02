@@ -1,0 +1,20 @@
+
+=== sim_batch1 (balanced 400/400)  (n=800, 400 lens / 400 nonlens) ===
+  CNN           acc=0.961  prec=1.000  recall=0.922  f1=0.960  (tp=369 tn=400 fp=0 fn=31)
+  ViT           acc=0.931  prec=0.983  recall=0.877  f1=0.927  (tp=351 tn=394 fp=6 fn=49)
+  Zoobot-head   acc=0.932  prec=0.970  recall=0.892  f1=0.930  (tp=357 tn=389 fp=11 fn=43)
+
+=== sim_batch2 (10%/90% imbalanced)  (n=800, 80 lens / 720 nonlens) ===
+  CNN           acc=0.996  prec=1.000  recall=0.963  f1=0.981  (tp=77 tn=720 fp=0 fn=3)
+  ViT           acc=0.980  prec=0.864  recall=0.950  f1=0.905  (tp=76 tn=708 fp=12 fn=4)
+  Zoobot-head   acc=0.964  prec=0.768  recall=0.912  f1=0.834  (tp=73 tn=698 fp=22 fn=7)
+
+=== sim_large_heldout (last 10%, unseen in training)  (n=600, 305 lens / 295 nonlens) ===
+  CNN           acc=0.968  prec=1.000  recall=0.938  f1=0.968  (tp=286 tn=295 fp=0 fn=19)
+  ViT           acc=0.920  prec=0.971  recall=0.869  f1=0.917  (tp=265 tn=287 fp=8 fn=40)
+  Zoobot-head   acc=0.945  prec=0.959  recall=0.931  f1=0.945  (tp=284 tn=283 fp=12 fn=21)
+
+=== real_euclid_q1 (23 real cutouts)  (n=23, 12 lens / 11 nonlens) ===
+  CNN           acc=0.609  prec=0.615  recall=0.667  f1=0.640  (tp=8 tn=6 fp=5 fn=4)
+  ViT           acc=0.478  prec=0.500  recall=0.500  f1=0.500  (tp=6 tn=5 fp=6 fn=6)
+  Zoobot-head   acc=0.609  prec=0.800  recall=0.333  f1=0.471  (tp=4 tn=10 fp=1 fn=8)

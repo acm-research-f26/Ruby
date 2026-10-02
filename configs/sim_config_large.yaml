@@ -1,0 +1,60 @@
+# Large training set: same physics + same fixed intensity scale as
+# sim_config.yaml (must match exactly for pixel-value comparability), but a
+# much bigger balanced sample and a fresh seed, for training CNN/ViT models
+# that generalize better than the small 800-image smoke-test batch.
+
+seed: 7
+
+cosmology:
+  H0: 70.0        # km/s/Mpc
+  Om0: 0.3
+
+image:
+  num_pix: 100
+  pixel_scale: 0.1
+  psf_fwhm: 0.18
+  exposure_time: 1800.0
+  sky_brightness: 22.5
+  read_noise: 4.0
+  ccd_gain: 2.5
+  magnitude_zero_point: 25.0
+  scale_low: -0.01850
+  scale_high: 0.87001
+
+lens_galaxy:
+  z_range: [0.2, 0.8]
+  velocity_dispersion_range: [150.0, 300.0]
+  ellipticity_range: [0.0, 0.4]
+  light_magnitude_range: [19.0, 21.5]
+  light_r_eff_range: [0.4, 1.2]
+  light_sersic_n_range: [3.0, 5.0]
+  external_shear_range: [0.0, 0.05]
+
+source_galaxy:
+  z_range: [1.0, 3.0]
+  magnitude_range: [23.0, 26.0]
+  r_eff_range: [0.05, 0.3]
+  sersic_n_range: [0.5, 4.0]
+  ellipticity_range: [0.0, 0.5]
+  offset_range: [-0.35, 0.35]
+
+dataset:
+  n_lens: 3000
+  n_nonlens: 3000
+  train_fraction: 0.9
+
+training:
+  epochs: 80
+  batch_size: 64
+  learning_rate: 0.001
+  device: auto
+
+deepdream:
+  octaves: 3
+  octave_scale: 1.4
+  iterations_per_octave: 40
+  learning_rate: 0.08
+
+zoobot:
+  encoder_name: "hf_hub:mwalmsley/zoobot-encoder-convnext_nano"
+  input_size: 224
