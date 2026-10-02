@@ -75,11 +75,76 @@ the team's `requirements.txt` with **one change: `scipy==1.17.1`**, which requir
 - **Selection bias.** Many known Q1 lenses were found partly *by Zoobot*, which may favour Zoobot in any
   comparison on this set.
 
+## Experiment: Zoobot vs. Vision Transformer
+
+Both models were fine-tuned on **identical data** (same split, preprocessing, augmentation and
+stopping rule) with `train.py`, and compared with `evaluate.py`.
+
+| | Zoobot | ViT |
+|---|---|---|
+| Architecture | ConvNeXt-Nano (CNN), 15.0M parameters | ViT-Base/16, 85.4M parameters |
+| Pretrained on | Galaxies (Galaxy Zoo) | Everyday photos (ImageNet-21k) |
+| `timm` name | `hf_hub:mwalmsley/zoobot-encoder-greyscale-convnext_nano` | `vit_base_patch16_224.augreg_in21k` |
+| Learning rate (chosen on validation) | 1e-4 | 3e-5 |
+
+**Split** (`data/split.csv`, fixed): 1,741 train (346 lenses) / 373 validation / 379 test
+(75 normal lenses + **4 compound lenses** + 300 non-lenses). The compound lenses are never used
+for training or tuning.
+
+**Setup:** greyscale VIS, arcsinh stretch, resized to 224x224; random flips and 90-degree rotations;
+AdamW with class-weighted cross-entropy; stop after 3 epochs without validation-AUC improvement.
+Learning rate picked per model from {1e-4, 3e-5, 1e-5} using **validation AUC only**, then 3 seeds each.
+
+### Results on the held-out test set (mean ± std over 3 seeds)
+
+| Metric | Zoobot | ViT |
+|---|---|---|
+| Test AUC (all lenses vs. non-lenses) | **0.990 ± 0.003** | 0.974 ± 0.003 |
+| Normal lenses in the top 79 (of 75) | 70, 69, 66 | 62, 65, 68 |
+| Mean rank of the 4 compound lenses (of 379) | **24.2 ± 2.2** | 38.3 ± 6.7 |
+| Inspection cost (images checked to find all 4) | 50.3 ± 9.3 | 64.7 ± 3.7 |
+
+![Rank of each compound lens under each model](results/compound_ranks.png)
+
+![The 4 compound lenses with each model's ranks](results/compound_lenses.png)
+
+### What this shows
+
+- **Zoobot is the better general lens finder**: higher test AUC in all three seeds, with a model
+  about 5x smaller.
+- **Both models rank all 4 compound lenses above nearly all non-lenses**, but mostly in the middle
+  of the lens ranking, not at the top. Only the brightest, cleanest ring ranks near the top.
+- **Zoobot ranks every compound lens higher on average**, but this is **suggestive, not conclusive**:
+  there are only 4 lenses, one of them is a near tie, and ranks swing widely between seeds
+  (the same lens ranged from 7th to 43rd for Zoobot).
+
+### Limitations
+
+- **Architecture and pretraining are confounded.** The models differ in both, so this cannot say
+  which one explains the gap. An ImageNet-pretrained ConvNeXt-Nano would separate them.
+- **Small, lens-rich test set.** 1 in ~5 test images is a lens, versus roughly 1 in 1,700 on the sky,
+  so these numbers are optimistic for a real survey. Ranks out of 379 are not comparable to the
+  Euclid paper's ranks out of ~1 million.
+- **No compound lenses in training.** Neither model ever saw one while learning.
+
+### Reproduce
+
+```bash
+# pick each model's learning rate on validation (seed 1)
+for m in zoobot vit; do for lr in 1e-4 3e-5 1e-5; do python train.py --model $m --lr $lr --seed 1; done; done
+# repeat the winners with two more seeds
+python train.py --model zoobot --lr 1e-4 --seed 2 && python train.py --model zoobot --lr 1e-4 --seed 3
+python train.py --model vit --lr 3e-5 --seed 2 && python train.py --model vit --lr 3e-5 --seed 3
+python evaluate.py
+```
+
 ## Next steps
 
-- [ ] `train.py`: fine-tune Zoobot and a ViT on identical splits (compound lenses always in test)
-- [ ] `evaluate.py`: compound-lens ranks, inspection cost, normal-lens recall, ROC curves (3 seeds each)
-- [ ] Add team-built simulated compound lenses to the training set
+- [x] `train.py`: fine-tune Zoobot and a ViT on identical splits (compound lenses always in test)
+- [x] `evaluate.py`: compound-lens ranks, inspection cost, normal-lens recall (3 seeds each)
+- [ ] Add an ImageNet-pretrained ConvNeXt-Nano to separate architecture from pretraining
+- [ ] Enlarge the test set with more non-lenses for more realistic ranks
+- [ ] Add team-built simulated compound lenses, and a separate "compound" training class
 
 ## Data sources and citations
 
