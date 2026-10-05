@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""Generate a balanced synthetic dataset with 1,000 lenses and 1,000 non-lenses.
-
+"""
 This script creates a CSV file with:
 - 1,000 lens samples
 - 1,000 non-lens samples
 - 500 compound lenses among the 1,000 lens samples
 - 500 simple lenses among the 1,000 lens samples
-
-The dataset is intentionally synthetic and suitable for testing model pipelines.
 """
 
 from __future__ import annotations
