@@ -1,0 +1,72 @@
+import os
+import numpy as np
+import matplotlib.pyplot as plt # Added for saving images
+from lenstronomy.LensModel.lens_model import LensModel
+from lenstronomy.LightModel.light_model import LightModel
+from lenstronomy.Data.pixel_grid import PixelGrid
+from lenstronomy.Data.psf import PSF
+from lenstronomy.ImSim.image_model import ImageModel
+
+output_dir = "simulated_lenses"
+os.makedirs(output_dir, exist_ok=True)
+
+num_pix = 100
+delta_pix = 0.04
+transform_pix2coord = np.array([[delta_pix, 0], [0, delta_pix]])
+ra_at_xy_0 = -delta_pix * (num_pix - 1) / 2
+dec_at_xy_0 = -delta_pix * (num_pix - 1) / 2
+
+pixel_grid = PixelGrid(num_pix, num_pix, transform_pix2coord, ra_at_xy_0, dec_at_xy_0)
+psf = PSF(psf_type='GAUSSIAN', fwhm=0.15)
+
+lens_model = LensModel(lens_model_list=['SIE'])
+lens_light_model = LightModel(light_model_list=['SERSIC_ELLIPSE'])
+source_model = LightModel(light_model_list=['SERSIC_ELLIPSE'])
+
+imageModel = ImageModel(
+    data_class=pixel_grid, 
+    psf_class=psf, 
+    lens_model_class=lens_model,
+    source_model_class=source_model, 
+    lens_light_model_class=lens_light_model
+)
+
+num_images = 500
+print(f"Generating {num_images} unique lenses... Please wait.")
+
+for i in range(num_images):
+    theta_E = np.random.uniform(0.6, 0.9)
+    e1_lens = np.random.uniform(-0.2, 0.2)
+    e2_lens = np.random.uniform(-0.2, 0.2)
+    kwargs_lens = [{'theta_E': theta_E, 'e1': e1_lens, 'e2': e2_lens, 'center_x': 0.0, 'center_y': 0.0}]
+    
+    amp_lens = np.random.uniform(60000, 100000)
+    kwargs_lens_light = [{
+        'amp': amp_lens, 'R_sersic': np.random.uniform(0.1, 0.15), 'n_sersic': 4.0,
+        'e1': np.random.uniform(-0.15, 0.15), 'e2': np.random.uniform(-0.15, 0.15),
+        'center_x': 0.0, 'center_y': 0.0
+    }]
+    
+    center_x_src = np.random.uniform(-0.07, 0.07)
+    center_y_src = np.random.uniform(-0.07, 0.07)
+    amp_src = np.random.uniform(35000, 55000)
+    kwargs_source = [{
+        'amp': amp_src, 'R_sersic': np.random.uniform(0.04, 0.08), 'n_sersic': 1.0,
+        'e1': np.random.uniform(-0.1, 0.1), 'e2': np.random.uniform(-0.1, 0.1),
+        'center_x': center_x_src, 'center_y': center_y_src
+    }]
+    
+    clean_image = imageModel.image(kwargs_lens, kwargs_source, kwargs_lens_light)
+    
+    background_rms = np.random.uniform(12.0, 18.0)
+    noise = np.random.normal(100.0, background_rms, clean_image.shape)
+    noisy_image = clean_image + noise
+    
+    # 1. Keep saving the raw numerical data matrix
+    np.save(os.path.join(output_dir, f"lens_{i:03d}.npy"), noisy_image)
+    
+    # 2. NEW: Save a matching viewable PNG image file directly to the folder
+    # This maps the values identically to the window visualization you liked
+    plt.imsave(os.path.join(output_dir, f"lens_{i:03d}.png"), noisy_image, cmap='gray', origin='lower', vmin=70, vmax=400)
+
+print(f"Successfully saved both data matrices and standard PNGs to: '{output_dir}/'")
