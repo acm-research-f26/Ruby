@@ -1,0 +1,71 @@
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from lenstronomy.LightModel.light_model import LightModel
+from lenstronomy.Data.pixel_grid import PixelGrid
+from lenstronomy.Data.psf import PSF
+from lenstronomy.ImSim.image_model import ImageModel
+
+# Create a separate output directory for your non-lens dataset
+output_dir = "simulated_non_lenses"
+os.makedirs(output_dir, exist_ok=True)
+
+# 1. Setup a static 100x100 resolution pixel grid (Matches the lens dataset)
+num_pix = 100
+delta_pix = 0.04
+transform_pix2coord = np.array([[delta_pix, 0], [0, delta_pix]])
+ra_at_xy_0 = -delta_pix * (num_pix - 1) / 2
+dec_at_xy_0 = -delta_pix * (num_pix - 1) / 2
+
+pixel_grid = PixelGrid(num_pix, num_pix, transform_pix2coord, ra_at_xy_0, dec_at_xy_0)
+psf = PSF(psf_type='GAUSSIAN', fwhm=0.15)
+
+# Initialize light models ONLY (We completely omit the LensModel to prevent warping)
+lens_light_model = LightModel(light_model_list=['SERSIC_ELLIPSE'])
+source_model = LightModel(light_model_list=['SERSIC_ELLIPSE'])
+
+# The lens_model_class parameter is set to None because there is no gravitational mass warping the light
+imageModel = ImageModel(
+    data_class=pixel_grid, 
+    psf_class=psf, 
+    lens_model_class=None, 
+    source_model_class=source_model, 
+    lens_light_model_class=lens_light_model
+)
+
+num_images = 500
+print(f"Generating {num_images} unique NON-LENSES... Please wait.")
+
+for i in range(num_images):
+    # Randomize Central Foreground Galaxy (Normal elliptical/spiral core)
+    amp_lens = np.random.uniform(60000, 100000)
+    kwargs_lens_light = [{
+        'amp': amp_lens, 'R_sersic': np.random.uniform(0.1, 0.15), 'n_sersic': 4.0,
+        'e1': np.random.uniform(-0.15, 0.15), 'e2': np.random.uniform(-0.15, 0.15),
+        'center_x': 0.0, 'center_y': 0.0
+    }]
+    
+    # Randomize Background Source (Without a lens, this will show up as a normal, unwarped galaxy blob)
+    # We allow a larger position radius so it randomly sits near, behind, or next to the main galaxy
+    center_x_src = np.random.uniform(-0.4, 0.4)
+    center_y_src = np.random.uniform(-0.4, 0.4)
+    amp_src = np.random.uniform(35000, 55000)
+    kwargs_source = [{
+        'amp': amp_src, 'R_sersic': np.random.uniform(0.04, 0.08), 'n_sersic': 1.0,
+        'e1': np.random.uniform(-0.2, 0.2), 'e2': np.random.uniform(-0.2, 0.2),
+        'center_x': center_x_src, 'center_y': center_y_src
+    }]
+    
+    # 2. Render the clean image (Since lens_model_class=None, kwargs_lens is passed as empty or None)
+    clean_image = imageModel.image(kwargs_lens=None, kwargs_source=kwargs_source, kwargs_lens_light=kwargs_lens_light)
+    
+    # 3. Add identical background noise properties to keep the dataset consistency flawless
+    background_rms = np.random.uniform(12.0, 18.0)
+    noise = np.random.normal(100.0, background_rms, clean_image.shape)
+    noisy_image = clean_image + noise
+    
+    # 4. Save both the raw NumPy matrices and viewable PNG files
+    np.save(os.path.join(output_dir, f"non_lens_{i:03d}.npy"), noisy_image)
+    plt.imsave(os.path.join(output_dir, f"non_lens_{i:03d}.png"), noisy_image, cmap='gray', origin='lower', vmin=70, vmax=400)
+
+print(f"Successfully saved both data matrices and standard PNGs to new folder: '{output_dir}/'")
