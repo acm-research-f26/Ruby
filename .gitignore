@@ -1,0 +1,11 @@
+dspl_experiment/
+.venv/
+model_checkpoints/
+zoobot_cache/
+lightning_logs/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+__pycache__/
+*.py[cod]

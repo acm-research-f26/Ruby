@@ -1,0 +1,1 @@
+-e ../zoobot[pytorch]
