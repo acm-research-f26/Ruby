@@ -1,0 +1,20 @@
+filter,on_rate_lenses,on_rate_nonlenses,in_rules,lens_centre_share,compound_on,label
+k445,0.98,0.053,"truth, truth_top100, zoobot_top100",0.663,4,ring/arc detector (most selective)
+k10,0.988,0.109,"truth, truth_top100",0.642,4,ring/arc detector
+k21,0.977,0.213,"truth, truth_top100",0.737,4,ring/arc detector
+k79,0.968,0.152,"truth, truth_top100",0.81,4,ring/arc detector
+k339,0.962,0.132,"truth, truth_top100",0.745,4,exactly one ring (switches off when a second ring is added)
+k42,0.841,0.348,truth,0.648,4,ring/arc detector (weak)
+k49,0.725,0.363,truth,0.541,3,faint or partial arcs (off for a bright full ring)
+k72,0.133,0.52,truth_top100,0.498,0,unclear (barely reacts to rings)
+k129,0.948,0.176,zoobot_top100,0.724,4,ring/arc detector
+k179,0.893,0.241,truth,0.498,4,ring/arc detector
+k185,0.988,0.206,zoobot_top100,0.764,4,ring/arc detector
+k205,0.526,0.404,truth,0.539,4,ring/arc detector (also on for many plain galaxies)
+k255,0.965,0.138,truth,0.674,4,ring/arc detector
+k291,0.89,0.422,truth,0.649,2,faint or partial arcs (off for a bright full ring)
+k348,0.841,0.277,truth,0.645,4,ring/arc detector
+k382,0.803,0.5,truth,0.715,4,ring/arc detector
+k475,0.994,0.244,truth_top100,0.627,4,ring/arc detector
+k530,0.09,0.459,zoobot_top100,0.488,1,"two rings (on for two, rarely for one)"
+k610,0.997,0.202,truth_top100,0.266,4,ring/arc detector

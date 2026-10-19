@@ -1,0 +1,22 @@
+LEARNED RULES:
+  label(X,'lens') :- not k445(X,'0'), not ab2(X,'True').
+  ab1(X,'True') :- not k530(X,'1'), not k129(X,'0').
+  ab2(X,'True') :- k185(X,'0'), not ab1(X,'True').
+
+3 rules using 4 filters: k129, k185, k445, k530
+   k129  ON for  95% of training lenses,  18% of training non-lenses
+   k185  ON for  99% of training lenses,  21% of training non-lenses
+   k445  ON for  98% of training lenses,   5% of training non-lenses
+   k530  ON for   9% of training lenses,  46% of training non-lenses
+
+VAL (373 images, scored against the TRUE answer):
+  rules accuracy    95.2%   (Zoobot at score > 0.5: 94.9%)
+  rules precision   84.1%   of the ones the rules called lenses, how many were
+  rules recall      93.2%   of the real lenses, how many the rules found
+  fidelity          97.1%   how often the rules agree with Zoobot
+
+TEST (379 images, scored against the TRUE answer):
+  rules accuracy    92.6%   (Zoobot at score > 0.5: 92.3%)
+  rules precision   75.8%   of the ones the rules called lenses, how many were
+  rules recall      94.9%   of the real lenses, how many the rules found
+  fidelity          97.6%   how often the rules agree with Zoobot
