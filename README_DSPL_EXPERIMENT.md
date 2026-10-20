@@ -1,6 +1,6 @@
 # DSPL-Like Sensitivity Pilot
 
-This pilot generates 100x100 grayscale images with one foreground SIE lens and two background Sérsic sources at different redshifts. It changes one factor at a time: source faintness, lens Einstein-radius scale, or foreground lens-light flux. A small unlensed/weakly lensed negative-control group is included.
+This pilot generates 100x100 grayscale images with one foreground SIE lens and two background Sérsic sources at different redshifts. It changes one factor at a time: source faintness, lens Einstein-radius scale, or foreground lens-light flux. Negative controls retain the simulated source and foreground light but reduce the Einstein radius to 0.01 arcsec; they are weak-lens controls, not a representative population of real non-lens galaxies.
 
 ## What is fixed and what is provisional
 
@@ -21,7 +21,8 @@ The lens/source assumptions are provisional, not established Ruby priors: one SI
 | --- | --- | --- |
 | Source magnitude offset | 0, 1, 2, 3 mag | Each +1 mag makes the source about 2.512 times fainter. Source magnitudes are (21.5, 23.0), (22.5, 24.0), (23.5, 25.0), and (24.5, 26.0) for the two planes. |
 | Einstein-radius scale | 0.70, 0.85, 1.00, 1.15, 1.30 | Multiplies the 1.2 arcsec baseline, giving 0.84, 1.02, 1.20, 1.38, and 1.56 arcsec. |
-| Foreground-light flux scale | 0.5, 1, 2, 4 | Multiplies lens-galaxy flux; corresponding lens magnitudes are 21.503, 20.750, 19.997, and 19.245. Larger flux means a brighter foreground lens and a stronger blending stress test. |
+| Foreground-light flux scale | 0.5, 1, 2, 4 | Multiplies lens-galaxy flux; corresponding lens magnitudes are 21.503, 20.750, 19.997, and 19.245. This varies foreground brightness only; it does not vary source-lens separation, neighboring objects, or overlap geometry. |
+| Negative controls | theta_E = 0.01 arcsec, label 0 | Same general source/lens-light setup with negligible lensing. These test rejection of this specific weak-lens case, not broad real-world non-lens contamination. |
 | Replicates | 5 per positive condition | 13 positive conditions x 5 = 65 DSPL-like images; plus 5 negative controls = 70 images total. |
 
 The mean lensed-flux contributions recorded in the faintness sweep are:
@@ -201,7 +202,7 @@ Grouped sensitivity categories use Wilson 95% intervals. The categories are prop
 | Low foreground light, scale 0.5 | 30/30 | 100% (88.6-100%) | 0.707 | No misses in this bin. |
 | Nominal foreground light, scale 1.0 | 30/30 | 100% (88.6-100%) | 0.697 | Reference blending bin. |
 | High foreground light, scales 2-4 | 60/60 | 100% (94.0-100%) | 0.662 | Mean score is 0.035 below nominal; detection remained complete in this sample. |
-| Negative controls | 0/100 flagged | 0% FPR (0-3.7%) | 0.199 | Better constrained than the 5-control pilot, but still synthetic controls. |
+| Negative controls | 0/100 flagged | 0% FPR (0-3.7%) | 0.199 | Better constrained than the 5-control pilot, but these are weak-lens controls, not a diverse non-lens galaxy sample. |
 
 Across faintness offsets, all 120 examples were detected; mean scores dipped at +2 mag and rose slightly at +3, so the score trend is not monotonic. Across blending settings, all 120 examples were detected while the mean score declined from 0.697 at nominal foreground light to 0.640 at scale 4. Arc size remains the main weakness: detection was 7/30 at scale 0.70 and 26/30 at 0.85, compared with 30/30 at baseline and larger scales.
 
@@ -215,6 +216,8 @@ The expanded faintness-sweep mean lensed-flux contributions were:
 | 3 | 108.3 | 36.6 |
 
 The expanded artifacts are `dspl_experiment/expanded_30rep/simulation_manifest.csv`, `zoobot_scores.csv`, `summary_by_condition.csv`, `detection_by_lens_category.csv`, and `performance_by_parameter.png`.
+
+**Scope of the blending result:** the blending sweep increases only the brightness of the central foreground lens galaxy. It does not test spatial offsets, crowded fields, nearby contaminants, or different source-lens overlap geometries. Therefore the observed small score decline at high foreground flux should not be generalized to all forms of astronomical blending.
 
 ## Reproducibility and limits
 
