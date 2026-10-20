@@ -43,6 +43,16 @@ python generate_dspl_experiment.py --replicates 5
 
 This writes `dspl_experiment/simulation_manifest.csv` and individual PNGs under `dspl_experiment/images/`. Five replicates per condition is a small pilot, not a final power analysis. Each positive manifest row records nonzero lensed flux contributions from both source planes.
 
+To create the expanded follow-up without replacing the original 5-replicate pilot, generate 30 examples per positive condition and 100 controls in a separate directory:
+
+```powershell
+python generate_dspl_experiment.py --replicates 30 --negative-controls 100 --output dspl_experiment/expanded_30rep/simulation_manifest.csv
+python run_zoobot_inference.py --manifest dspl_experiment/expanded_30rep/simulation_manifest.csv --checkpoint model_checkpoints/ruby_synthetic_lens_head/checkpoints/0.ckpt --output dspl_experiment/expanded_30rep/zoobot_scores.csv
+python analyze_dspl_results.py --scores dspl_experiment/expanded_30rep/zoobot_scores.csv --output-dir dspl_experiment/expanded_30rep
+```
+
+This design writes 390 positive condition images (13 conditions x 30 paired replicates) plus 100 negative controls, 490 image files total. The same 30 baseline scenes are reused across the three sweeps, so there are 430 unique image contents (330 positive, 100 controls). The original 70-image pilot remains unchanged.
+
 ## Zoobot inference status
 
 The notebook's `FinetuneableZoobotClassifier.predict_step` returns softmax probabilities. Since the notebook labels lenses as 1, the second output column is the lens probability. Its existing class decision uses `argmax`, not a separately tuned threshold. The notebook's `CatalogDataModule` test transform uses the project's minimal galaxy transform: 224-pixel input, grayscale PNGs become one-channel tensors, values convert to float in [0,1], and no mean/std normalization is enabled.
@@ -129,6 +139,66 @@ The additional `dspl_experiment/detection_by_lens_category.csv` groups positive 
 
 The categories within each feature are compared only within that feature's sweep. All rows are synthetic, and the confidence intervals are broad because each bin contains only 5 or 10 images.
 
+## Expanded 30-replicate follow-up
+
+The follow-up used the same one-epoch checkpoint and the same argmax class decision. Each condition has 30 paired replicates; there are 390 positive condition rows and 100 negative-control rows. The three baseline settings share the same 30 scenes across sweeps, so row-level totals weight those baseline scenes three times. Unique-image metrics deduplicate identical rendered PNGs.
+
+| Measure | Across condition rows | Deduplicated unique images | Meaning |
+| --- | ---: | ---: | --- |
+| Positive / control examples | 390 / 100 | 330 / 100 | There are 490 manifest rows and 430 unique image contents. |
+| True positive / false negative | 363 / 27 | 303 / 27 | Positive images classified as lens / missed. |
+| True negative / false positive | 100 / 0 | 100 / 0 | Controls classified correctly / incorrectly flagged as lenses. |
+| Positive detection rate (recall) | 93.08% | 91.82% | Deduplicated estimate counts each rendered image once. |
+| Negative-control false-positive rate | 0/100 = 0% | 0/100 = 0% | Wilson 95% interval is 0-3.7%; zero observed is not proof of zero real-world contamination. |
+| Overall accuracy | 94.49% | 93.72% | Correct classifications divided by rows or unique images; synthetic data only. |
+| Mean lens score, positives / controls | 0.6730 / 0.1993 | See category means below | Class-1 softmax output; not guaranteed calibrated. |
+
+Per-condition results (mean +/- sample SD and median lens score):
+
+| Sweep | Setting | n | Mean +/- SD | Median | Detected as lens | Change vs. baseline: mean / detection |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Faintness offset (mag) | 0 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0.000 / 0 pp |
+| Faintness offset (mag) | 1 | 30 | 0.692 +/- 0.051 | 0.684 | 30/30 (100%) | -0.006 / 0 pp |
+| Faintness offset (mag) | 2 | 30 | 0.636 +/- 0.058 | 0.634 | 30/30 (100%) | -0.062 / 0 pp |
+| Faintness offset (mag) | 3 | 30 | 0.659 +/- 0.065 | 0.661 | 30/30 (100%) | -0.039 / 0 pp |
+| Arc-radius scale | 0.70 | 30 | 0.429 +/- 0.085 | 0.437 | 7/30 (23.3%) | -0.268 / -76.7 pp |
+| Arc-radius scale | 0.85 | 30 | 0.581 +/- 0.059 | 0.586 | 26/30 (86.7%) | -0.116 / -13.3 pp |
+| Arc-radius scale | 1.00 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0.000 / 0 pp |
+| Arc-radius scale | 1.15 | 30 | 0.787 +/- 0.041 | 0.785 | 30/30 (100%) | +0.090 / 0 pp |
+| Arc-radius scale | 1.30 | 30 | 0.841 +/- 0.031 | 0.850 | 30/30 (100%) | +0.144 / 0 pp |
+| Foreground-light scale | 0.5 | 30 | 0.707 +/- 0.048 | 0.706 | 30/30 (100%) | +0.009 / 0 pp |
+| Foreground-light scale | 1.0 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0.000 / 0 pp |
+| Foreground-light scale | 2.0 | 30 | 0.684 +/- 0.052 | 0.682 | 30/30 (100%) | -0.013 / 0 pp |
+| Foreground-light scale | 4.0 | 30 | 0.640 +/- 0.058 | 0.629 | 30/30 (100%) | -0.057 / 0 pp |
+| Negative controls | label 0 | 100 | 0.199 +/- 0.020 | 0.198 | 0/100 flagged | FPR 0% |
+
+Grouped sensitivity categories use Wilson 95% intervals. The categories are property bins within separate sweeps, not unique physical lens morphologies; baseline scenes are paired across the sweeps.
+
+| Simulated category | Detected | Rate (95% interval) | Mean lens score | Project interpretation |
+| --- | ---: | ---: | ---: | --- |
+| Bright/moderate sources, offsets 0-1 mag | 60/60 | 100% (94.0-100%) | 0.695 | No misses in this bin; the interval still allows a nonzero miss rate. |
+| Faint sources, offsets 2-3 mag | 60/60 | 100% (94.0-100%) | 0.647 | Mean score is 0.047 below the brighter bin; retain faint cases and retest. |
+| Small arcs, radius scales 0.70-0.85 | 33/60 | 55.0% (42.5-66.9%) | 0.505 | Persistent sensitivity gap; prioritize small arcs in training/evaluation coverage. |
+| Baseline arcs, radius scale 1.00 | 30/30 | 100% (88.6-100%) | 0.697 | Reference bin; no misses in 30 paired examples. |
+| Large arcs, radius scales 1.15-1.30 | 60/60 | 100% (94.0-100%) | 0.814 | Strong detection in these simulations; validate on independent data. |
+| Low foreground light, scale 0.5 | 30/30 | 100% (88.6-100%) | 0.707 | No misses in this bin. |
+| Nominal foreground light, scale 1.0 | 30/30 | 100% (88.6-100%) | 0.697 | Reference blending bin. |
+| High foreground light, scales 2-4 | 60/60 | 100% (94.0-100%) | 0.662 | Mean score is 0.035 below nominal; detection remained complete in this sample. |
+| Negative controls | 0/100 flagged | 0% FPR (0-3.7%) | 0.199 | Better constrained than the 5-control pilot, but still synthetic controls. |
+
+Across faintness offsets, all 120 examples were detected; mean scores dipped at +2 mag and rose slightly at +3, so the score trend is not monotonic. Across blending settings, all 120 examples were detected while the mean score declined from 0.697 at nominal foreground light to 0.640 at scale 4. Arc size remains the main weakness: detection was 7/30 at scale 0.70 and 26/30 at 0.85, compared with 30/30 at baseline and larger scales.
+
+The expanded faintness-sweep mean lensed-flux contributions were:
+
+| Magnitude offset | Source 1 mean lensed flux | Source 2 mean lensed flux |
+| ---: | ---: | ---: |
+| 0 | 1716.8 | 579.5 |
+| 1 | 683.5 | 230.7 |
+| 2 | 272.1 | 91.8 |
+| 3 | 108.3 | 36.6 |
+
+The expanded artifacts are `dspl_experiment/expanded_30rep/simulation_manifest.csv`, `zoobot_scores.csv`, `summary_by_condition.csv`, `detection_by_lens_category.csv`, and `performance_by_parameter.png`.
+
 ## Reproducibility and limits
 
-The generator uses deterministic seeds. Outputs and checkpoints are excluded from Git via `.gitignore`; scripts and manifest schemas remain versionable. Training, validation, and DSPL evaluation images are all synthetic. The reported classifier scores are a pipeline demonstration, not a measurement of real-survey performance; the small pilot and five negative controls do not support broad generalization claims.
+The generator uses deterministic seeds. The original 5-replicate pilot and expanded 30-replicate follow-up are separate. Training, validation, and DSPL evaluation images are all synthetic. These scores are a pipeline demonstration, not a measurement of real-survey performance; larger synthetic samples reduce sampling uncertainty but do not resolve the simulation-to-observation gap.

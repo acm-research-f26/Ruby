@@ -286,7 +286,7 @@ def make_row(
     }
 
 
-def generate(output_csv: Path, replicates: int) -> None:
+def generate(output_csv: Path, replicates: int, negative_controls: int) -> None:
     output_csv = output_csv.resolve()
     output_root = output_csv.parent
     output_root.mkdir(parents=True, exist_ok=True)
@@ -320,7 +320,7 @@ def generate(output_csv: Path, replicates: int) -> None:
                     )
                 )
 
-    for replicate in range(replicates):
+    for replicate in range(negative_controls):
         rows.append(
             make_row(
                 output_root=output_root,
@@ -355,7 +355,16 @@ if __name__ == "__main__":
         help="CSV manifest path; images are saved beside it under images/.",
     )
     parser.add_argument("--replicates", type=int, default=5)
+    parser.add_argument(
+        "--negative-controls",
+        type=int,
+        default=None,
+        help="Number of negative controls; defaults to --replicates.",
+    )
     args = parser.parse_args()
     if args.replicates < 2:
         parser.error("--replicates must be at least 2 for condition comparisons")
-    generate(args.output, args.replicates)
+    negative_controls = args.replicates if args.negative_controls is None else args.negative_controls
+    if negative_controls < 1:
+        parser.error("--negative-controls must be at least 1")
+    generate(args.output, args.replicates, negative_controls)
