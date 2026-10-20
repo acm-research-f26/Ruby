@@ -143,6 +143,23 @@ The categories within each feature are compared only within that feature's sweep
 
 The follow-up used the same one-epoch checkpoint and the same argmax class decision. Each condition has 30 paired replicates; there are 390 positive condition rows and 100 negative-control rows. The three baseline settings share the same 30 scenes across sweeps, so row-level totals weight those baseline scenes three times. Unique-image metrics deduplicate identical rendered PNGs.
 
+### How to read the units and metrics
+
+| Field or term | Units / definition | How to interpret it |
+| --- | --- | --- |
+| `lens_score`, mean, median, SD | Unitless score on a 0-1 scale | Zoobot's class-1 softmax output, where class 1 means lens. It is not guaranteed to be calibrated as a probability. SD is the sample standard deviation of scores within a condition. |
+| Detection / recall | Percent of positive examples classified as class 1 | Uses argmax: the image is called a lens when class 1 has the larger score. It is not a separately tuned threshold. |
+| False-positive rate (FPR) | Percent of label-0 controls classified as class 1 | Reported separately from lens detection rate. |
+| False negative (FN) | Count of label-1 lenses classified as class 0 | In the expanded run there are 27 unique FNs; all are from small-arc conditions. |
+| Magnitude offset | Magnitudes (`mag`) added to both sources | Higher magnitude means fainter light; +1 mag is about 2.512 times less flux. |
+| Einstein-radius scale | Unitless multiplier of the 1.20 arcsec baseline | For example, 0.70 means $0.70 \times 1.20 = 0.84$ arcsec, not 0.70 arcsec. |
+| Foreground-light flux scale | Unitless multiple of baseline lens-galaxy flux | For example, 4 means four times the baseline foreground light. |
+| Lensed source flux | Lenstronomy model flux units | Sum of the modeled lensed source light, not calibrated detector counts or magnitudes. |
+| `n` / condition rows | Number of manifest entries at a setting | There are 30 entries per positive condition. Identical baseline scenes are intentionally shared across sweeps. |
+| Unique images | Distinct rendered image contents | The 490 condition rows correspond to 430 unique image contents because the three sweep baselines reuse the same 30 scenes. |
+
+The 27 false negatives are 23/30 at scale 0.70 (0.84 arcsec) and 4/30 at scale 0.85 (1.02 arcsec). Row-based recall (363/390 = 93.08%) counts shared baseline scenes in each sweep; deduplicated recall (303/330 = 91.82%) counts each rendered image once. Both are synthetic-data summaries, not estimates from observed lenses.
+
 | Measure | Across condition rows | Deduplicated unique images | Meaning |
 | --- | ---: | ---: | --- |
 | Positive / control examples | 390 / 100 | 330 / 100 | There are 490 manifest rows and 430 unique image contents. |
