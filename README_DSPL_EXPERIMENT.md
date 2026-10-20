@@ -46,12 +46,12 @@ This writes `dspl_experiment/simulation_manifest.csv` and individual PNGs under 
 To create the expanded follow-up without replacing the original 5-replicate pilot, generate 30 examples per positive condition and 100 controls in a separate directory:
 
 ```powershell
-python generate_dspl_experiment.py --replicates 30 --negative-controls 100 --output dspl_experiment/expanded_30rep/simulation_manifest.csv
+python generate_dspl_experiment.py --replicates 30 --negative-controls 100 --output dspl_experiment/expanded_30rep/simulation_manifest.csv --image-dir dspl_experiment/images
 python run_zoobot_inference.py --manifest dspl_experiment/expanded_30rep/simulation_manifest.csv --checkpoint model_checkpoints/ruby_synthetic_lens_head/checkpoints/0.ckpt --output dspl_experiment/expanded_30rep/zoobot_scores.csv
 python analyze_dspl_results.py --scores dspl_experiment/expanded_30rep/zoobot_scores.csv --output-dir dspl_experiment/expanded_30rep
 ```
 
-This design writes 390 positive condition images (13 conditions x 30 paired replicates) plus 100 negative controls, 490 image files total. The same 30 baseline scenes are reused across the three sweeps, so there are 430 unique image contents (330 positive, 100 controls). The original 70-image pilot remains unchanged.
+This design writes 390 positive condition images (13 conditions x 30 paired replicates) plus 100 negative controls, 490 condition rows total. PNGs are stored with the original DSPL pilot under `dspl_experiment/images/{faintness,arc_size,blending,negative_control}`. The first five replicates reuse byte-identical pilot images; the remaining replicates are added alongside them. The same 30 baseline scenes are shared across the three sweeps, so the expanded run has 430 unique image contents (330 positive, 100 controls). The original 70-image pilot manifest and scores remain unchanged.
 
 ## Zoobot inference status
 

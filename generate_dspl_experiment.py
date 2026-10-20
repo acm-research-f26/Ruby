@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import math
+import os
 from pathlib import Path
 
 import numpy as np
@@ -231,6 +232,7 @@ def render_image(
 def make_row(
     *,
     output_root: Path,
+    image_root: Path,
     experiment: str,
     condition_value: float,
     condition_unit: str,
@@ -253,8 +255,9 @@ def make_row(
     sample_id = f"{experiment}_{condition_value:g}_rep{replicate:02d}"
     if negative:
         sample_id = f"negative_control_rep{replicate:02d}"
-    relative_path = Path("images") / experiment / f"{sample_id}.png"
-    normalize_and_save(image, output_root / relative_path)
+    image_path = image_root / experiment / f"{sample_id}.png"
+    relative_path = Path(os.path.relpath(image_path, output_root))
+    normalize_and_save(image, image_path)
     return {
         "image_id": sample_id,
         "image_path": relative_path.as_posix(),
@@ -286,9 +289,15 @@ def make_row(
     }
 
 
-def generate(output_csv: Path, replicates: int, negative_controls: int) -> None:
+def generate(
+    output_csv: Path,
+    replicates: int,
+    negative_controls: int,
+    image_dir: Path | None = None,
+) -> None:
     output_csv = output_csv.resolve()
     output_root = output_csv.parent
+    image_root = (image_dir or output_root / "images").resolve()
     output_root.mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, object]] = []
     base_seed = 20261016
@@ -311,6 +320,7 @@ def generate(output_csv: Path, replicates: int, negative_controls: int) -> None:
                 rows.append(
                     make_row(
                         output_root=output_root,
+                        image_root=image_root,
                         experiment=experiment,
                         condition_value=value,
                         condition_unit=unit,
@@ -324,6 +334,7 @@ def generate(output_csv: Path, replicates: int, negative_controls: int) -> None:
         rows.append(
             make_row(
                 output_root=output_root,
+                image_root=image_root,
                 experiment="negative_control",
                 condition_value=1.0,
                 condition_unit="control",
@@ -361,10 +372,16 @@ if __name__ == "__main__":
         default=None,
         help="Number of negative controls; defaults to --replicates.",
     )
+    parser.add_argument(
+        "--image-dir",
+        type=Path,
+        default=None,
+        help="Image directory; defaults to images/ beside the manifest.",
+    )
     args = parser.parse_args()
     if args.replicates < 2:
         parser.error("--replicates must be at least 2 for condition comparisons")
     negative_controls = args.replicates if args.negative_controls is None else args.negative_controls
     if negative_controls < 1:
         parser.error("--negative-controls must be at least 1")
-    generate(args.output, args.replicates, negative_controls)
+    generate(args.output, args.replicates, negative_controls, args.image_dir)
