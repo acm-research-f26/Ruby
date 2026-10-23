@@ -171,26 +171,28 @@ The 87 false negatives are 30/30 at scale 0.50 (0.60 arcsec), 30/30 at scale 0.5
 | Overall accuracy | 84.18% | 82.24% | Correct classifications divided by rows or unique images; synthetic data only. |
 | Mean lens score, positives / controls | 0.6199 / 0.1993 | See category means below | Class-1 softmax output; not guaranteed calibrated. |
 
-Per-condition results (mean +/- sample SD and median lens score):
+Per-condition results (mean +/- sample SD and median lens score). `FN` is the number of label-1 lenses classified as non-lenses; it is blank for controls because that row reports false positives instead.
 
-| Sweep | Setting | n | Mean +/- SD | Median | Detected as lens | Change vs. baseline: mean / detection |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Faintness offset (mag) | 0 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0.000 / 0 pp |
-| Faintness offset (mag) | 1 | 30 | 0.692 +/- 0.051 | 0.684 | 30/30 (100%) | -0.006 / 0 pp |
-| Faintness offset (mag) | 2 | 30 | 0.636 +/- 0.058 | 0.634 | 30/30 (100%) | -0.062 / 0 pp |
-| Faintness offset (mag) | 3 | 30 | 0.659 +/- 0.065 | 0.661 | 30/30 (100%) | -0.039 / 0 pp |
-| Arc-radius scale | 0.50 | 30 | 0.259 +/- 0.091 | 0.243 | 0/30 (0%) | -0.438 / -100 pp |
-| Arc-radius scale | 0.55 | 30 | 0.291 +/- 0.093 | 0.280 | 0/30 (0%) | -0.406 / -100 pp |
-| Arc-radius scale | 0.70 | 30 | 0.429 +/- 0.085 | 0.437 | 7/30 (23.3%) | -0.268 / -76.7 pp |
-| Arc-radius scale | 0.85 | 30 | 0.581 +/- 0.059 | 0.586 | 26/30 (86.7%) | -0.116 / -13.3 pp |
-| Arc-radius scale | 1.00 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0.000 / 0 pp |
-| Arc-radius scale | 1.15 | 30 | 0.787 +/- 0.041 | 0.785 | 30/30 (100%) | +0.090 / 0 pp |
-| Arc-radius scale | 1.30 | 30 | 0.841 +/- 0.031 | 0.850 | 30/30 (100%) | +0.144 / 0 pp |
-| Foreground-light scale | 0.5 | 30 | 0.707 +/- 0.048 | 0.706 | 30/30 (100%) | +0.009 / 0 pp |
-| Foreground-light scale | 1.0 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0.000 / 0 pp |
-| Foreground-light scale | 2.0 | 30 | 0.684 +/- 0.052 | 0.682 | 30/30 (100%) | -0.013 / 0 pp |
-| Foreground-light scale | 4.0 | 30 | 0.640 +/- 0.058 | 0.629 | 30/30 (100%) | -0.057 / 0 pp |
-| Negative controls | label 0 | 100 | 0.199 +/- 0.020 | 0.198 | 0/100 flagged | FPR 0% |
+| Sweep | Setting | n | Mean +/- SD | Median | Detected as lens | FN | Change vs. baseline: mean / detection |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Faintness offset (mag) | 0 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0 | 0.000 / 0 pp |
+| Faintness offset (mag) | 1 | 30 | 0.692 +/- 0.051 | 0.684 | 30/30 (100%) | 0 | -0.006 / 0 pp |
+| Faintness offset (mag) | 2 | 30 | 0.636 +/- 0.058 | 0.634 | 30/30 (100%) | 0 | -0.062 / 0 pp |
+| Faintness offset (mag) | 3 | 30 | 0.659 +/- 0.065 | 0.661 | 30/30 (100%) | 0 | -0.039 / 0 pp |
+| Arc-radius scale | 0.50 | 30 | 0.259 +/- 0.091 | 0.243 | 0/30 (0%) | 30 | -0.438 / -100 pp |
+| Arc-radius scale | 0.55 | 30 | 0.291 +/- 0.093 | 0.280 | 0/30 (0%) | 30 | -0.406 / -100 pp |
+| Arc-radius scale | 0.70 | 30 | 0.429 +/- 0.085 | 0.437 | 7/30 (23.3%) | 23 | -0.268 / -76.7 pp |
+| Arc-radius scale | 0.85 | 30 | 0.581 +/- 0.059 | 0.586 | 26/30 (86.7%) | 4 | -0.116 / -13.3 pp |
+| Arc-radius scale | 1.00 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0 | 0.000 / 0 pp |
+| Arc-radius scale | 1.15 | 30 | 0.787 +/- 0.041 | 0.785 | 30/30 (100%) | 0 | +0.090 / 0 pp |
+| Arc-radius scale | 1.30 | 30 | 0.841 +/- 0.031 | 0.850 | 30/30 (100%) | 0 | +0.144 / 0 pp |
+| Foreground-light scale | 0.5 | 30 | 0.707 +/- 0.048 | 0.706 | 30/30 (100%) | 0 | +0.009 / 0 pp |
+| Foreground-light scale | 1.0 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0 | 0.000 / 0 pp |
+| Foreground-light scale | 2.0 | 30 | 0.684 +/- 0.052 | 0.682 | 30/30 (100%) | 0 | -0.013 / 0 pp |
+| Foreground-light scale | 4.0 | 30 | 0.640 +/- 0.058 | 0.629 | 30/30 (100%) | 0 | -0.057 / 0 pp |
+| Negative controls | label 0 | 100 | 0.199 +/- 0.020 | 0.198 | 0/100 flagged | - | FPR 0% |
+
+**Main interpretation:** detection is complete for the tested faintness and foreground-light settings, but not for small simulated arcs. All 60 very-small-arc examples (0.50-0.55 scale; 0.60-0.66 arcsec) were missed, followed by 23/30 misses at 0.70 scale (0.84 arcsec) and 4/30 at 0.85 scale (1.02 arcsec). Baseline and larger arcs (1.20-1.56 arcsec) were all detected in this synthetic sample.
 
 Grouped sensitivity categories use Wilson 95% intervals. The categories are property bins within separate sweeps, not unique physical lens morphologies; baseline scenes are paired across the sweeps.
 
