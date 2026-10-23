@@ -42,7 +42,7 @@ IMAGE_SETTINGS = {
 
 SWEEPS = {
     "faintness": ("source_magnitude_offset", (0.0, 1.0, 2.0, 3.0), "magnitude"),
-    "arc_size": ("theta_e_scale", (0.70, 0.85, 1.0, 1.15, 1.30), "scale"),
+    "arc_size": ("theta_e_scale", (0.50, 0.55, 0.70, 0.85, 1.0, 1.15, 1.30), "scale"),
     "blending": ("lens_light_flux_scale", (0.5, 1.0, 2.0, 4.0), "flux_scale"),
 }
 

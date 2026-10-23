@@ -84,6 +84,7 @@ def summarize_lens_categories(rows: list[dict[str, str]]) -> list[dict[str, obje
     categories = [
         ("Source brightness", "Bright/moderate", "Magnitude offset 0-1", "faintness", {0.0, 1.0}),
         ("Source brightness", "Faint", "Magnitude offset 2-3", "faintness", {2.0, 3.0}),
+        ("Arc size", "Very small arcs", "Einstein-radius scale 0.50-0.55", "arc_size", {0.5, 0.55}),
         ("Arc size", "Small arcs", "Einstein-radius scale 0.70-0.85", "arc_size", {0.7, 0.85}),
         ("Arc size", "Baseline arcs", "Einstein-radius scale 1.00", "arc_size", {1.0}),
         ("Arc size", "Large arcs", "Einstein-radius scale 1.15-1.30", "arc_size", {1.15, 1.3}),
@@ -146,6 +147,7 @@ def summarize_lens_categories(rows: list[dict[str, str]]) -> list[dict[str, obje
 
     reference_categories = {
         ("Source brightness", "Faint"): ("Source brightness", "Bright/moderate"),
+        ("Arc size", "Very small arcs"): ("Arc size", "Baseline arcs"),
         ("Arc size", "Small arcs"): ("Arc size", "Baseline arcs"),
         ("Arc size", "Large arcs"): ("Arc size", "Baseline arcs"),
         ("Foreground blending", "Low lens light"): ("Foreground blending", "Nominal lens light"),

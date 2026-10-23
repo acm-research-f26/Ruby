@@ -20,7 +20,7 @@ The lens/source assumptions are provisional, not established Ruby priors: one SI
 | Sensitivity factor | Tested values | Physical interpretation |
 | --- | --- | --- |
 | Source magnitude offset | 0, 1, 2, 3 mag | Each +1 mag makes the source about 2.512 times fainter. Source magnitudes are (21.5, 23.0), (22.5, 24.0), (23.5, 25.0), and (24.5, 26.0) for the two planes. |
-| Einstein-radius scale | 0.70, 0.85, 1.00, 1.15, 1.30 | Multiplies the 1.2 arcsec baseline, giving 0.84, 1.02, 1.20, 1.38, and 1.56 arcsec. |
+| Einstein-radius scale | 0.50, 0.55, 0.70, 0.85, 1.00, 1.15, 1.30 | Multiplies the 1.2 arcsec baseline, giving 0.60, 0.66, 0.84, 1.02, 1.20, 1.38, and 1.56 arcsec. |
 | Foreground-light flux scale | 0.5, 1, 2, 4 | Multiplies lens-galaxy flux; corresponding lens magnitudes are 21.503, 20.750, 19.997, and 19.245. This varies foreground brightness only; it does not vary source-lens separation, neighboring objects, or overlap geometry. |
 | Negative controls | theta_E = 0.01 arcsec, label 0 | Same general source/lens-light setup with negligible lensing. These test rejection of this specific weak-lens case, not broad real-world non-lens contamination. |
 | Replicates | 5 per positive condition | 13 positive conditions x 5 = 65 DSPL-like images; plus 5 negative controls = 70 images total. |
@@ -52,7 +52,7 @@ python run_zoobot_inference.py --manifest dspl_experiment/expanded_30rep/simulat
 python analyze_dspl_results.py --scores dspl_experiment/expanded_30rep/zoobot_scores.csv --output-dir dspl_experiment/expanded_30rep
 ```
 
-This design writes 390 positive condition images (13 conditions x 30 paired replicates) plus 100 negative controls, 490 condition rows total. PNGs are stored with the original DSPL pilot under `dspl_experiment/images/{faintness,arc_size,blending,negative_control}`. The first five replicates reuse byte-identical pilot images; the remaining replicates are added alongside them. The same 30 baseline scenes are shared across the three sweeps, so the expanded run has 430 unique image contents (330 positive, 100 controls). The original 70-image pilot manifest and scores remain unchanged.
+This design writes 450 positive condition images (15 conditions x 30 paired replicates) plus 100 negative controls, 550 condition rows total. PNGs are stored with the original DSPL pilot under `dspl_experiment/images/{faintness,arc_size,blending,negative_control}`. The first five replicates reuse byte-identical pilot images; the remaining replicates are added alongside them. The same 30 baseline scenes are shared across the three sweeps, so the expanded run has 490 unique image contents (390 positive, 100 controls). The original 70-image pilot manifest and scores remain unchanged.
 
 ## Zoobot inference status
 
@@ -142,7 +142,7 @@ The categories within each feature are compared only within that feature's sweep
 
 ## Expanded 30-replicate follow-up
 
-The follow-up used the same one-epoch checkpoint and the same argmax class decision. Each condition has 30 paired replicates; there are 390 positive condition rows and 100 negative-control rows. The three baseline settings share the same 30 scenes across sweeps, so row-level totals weight those baseline scenes three times. Unique-image metrics deduplicate identical rendered PNGs.
+The follow-up used the same one-epoch checkpoint and the same argmax class decision. Each condition has 30 paired replicates; there are 450 positive condition rows and 100 negative-control rows. The three baseline settings share the same 30 scenes across sweeps, so row-level totals weight those baseline scenes three times. Unique-image metrics deduplicate identical rendered PNGs.
 
 ### How to read the units and metrics
 
@@ -151,25 +151,25 @@ The follow-up used the same one-epoch checkpoint and the same argmax class decis
 | `lens_score`, mean, median, SD | Unitless score on a 0-1 scale | Zoobot's class-1 softmax output, where class 1 means lens. It is not guaranteed to be calibrated as a probability. SD is the sample standard deviation of scores within a condition. |
 | Detection / recall | Percent of positive examples classified as class 1 | Uses argmax: the image is called a lens when class 1 has the larger score. It is not a separately tuned threshold. |
 | False-positive rate (FPR) | Percent of label-0 controls classified as class 1 | Reported separately from lens detection rate. |
-| False negative (FN) | Count of label-1 lenses classified as class 0 | In the expanded run there are 27 unique FNs; all are from small-arc conditions. |
+| False negative (FN) | Count of label-1 lenses classified as class 0 | In the expanded run there are 87 unique FNs; all are from the smallest arc conditions (scales 0.50, 0.55, 0.70, and 0.85). |
 | Magnitude offset | Magnitudes (`mag`) added to both sources | Higher magnitude means fainter light; +1 mag is about 2.512 times less flux. |
 | Einstein-radius scale | Unitless multiplier of the 1.20 arcsec baseline | For example, 0.70 means $0.70 \times 1.20 = 0.84$ arcsec, not 0.70 arcsec. |
 | Foreground-light flux scale | Unitless multiple of baseline lens-galaxy flux | For example, 4 means four times the baseline foreground light. |
 | Lensed source flux | Lenstronomy model flux units | Sum of the modeled lensed source light, not calibrated detector counts or magnitudes. |
 | `n` / condition rows | Number of manifest entries at a setting | There are 30 entries per positive condition. Identical baseline scenes are intentionally shared across sweeps. |
-| Unique images | Distinct rendered image contents | The 490 condition rows correspond to 430 unique image contents because the three sweep baselines reuse the same 30 scenes. |
+| Unique images | Distinct rendered image contents | The 550 condition rows correspond to 490 unique image contents because the three sweep baselines reuse the same 30 scenes. |
 
-The 27 false negatives are 23/30 at scale 0.70 (0.84 arcsec) and 4/30 at scale 0.85 (1.02 arcsec). Row-based recall (363/390 = 93.08%) counts shared baseline scenes in each sweep; deduplicated recall (303/330 = 91.82%) counts each rendered image once. Both are synthetic-data summaries, not estimates from observed lenses.
+The 87 false negatives are 30/30 at scale 0.50 (0.60 arcsec), 30/30 at scale 0.55 (0.66 arcsec), 23/30 at scale 0.70 (0.84 arcsec), and 4/30 at scale 0.85 (1.02 arcsec). Row-based recall (363/450 = 80.67%) counts shared baseline scenes in each sweep; deduplicated recall (303/390 = 77.69%) counts each rendered image once. Both are synthetic-data summaries, not estimates from observed lenses.
 
 | Measure | Across condition rows | Deduplicated unique images | Meaning |
 | --- | ---: | ---: | --- |
-| Positive / control examples | 390 / 100 | 330 / 100 | There are 490 manifest rows and 430 unique image contents. |
-| True positive / false negative | 363 / 27 | 303 / 27 | Positive images classified as lens / missed. |
+| Positive / control examples | 450 / 100 | 390 / 100 | There are 550 manifest rows and 490 unique image contents. |
+| True positive / false negative | 363 / 87 | 303 / 87 | Positive images classified as lens / missed. |
 | True negative / false positive | 100 / 0 | 100 / 0 | Controls classified correctly / incorrectly flagged as lenses. |
-| Positive detection rate (recall) | 93.08% | 91.82% | Deduplicated estimate counts each rendered image once. |
+| Positive detection rate (recall) | 80.67% | 77.69% | Deduplicated estimate counts each rendered image once. |
 | Negative-control false-positive rate | 0/100 = 0% | 0/100 = 0% | Wilson 95% interval is 0-3.7%; zero observed is not proof of zero real-world contamination. |
-| Overall accuracy | 94.49% | 93.72% | Correct classifications divided by rows or unique images; synthetic data only. |
-| Mean lens score, positives / controls | 0.6730 / 0.1993 | See category means below | Class-1 softmax output; not guaranteed calibrated. |
+| Overall accuracy | 84.18% | 82.24% | Correct classifications divided by rows or unique images; synthetic data only. |
+| Mean lens score, positives / controls | 0.6199 / 0.1993 | See category means below | Class-1 softmax output; not guaranteed calibrated. |
 
 Per-condition results (mean +/- sample SD and median lens score):
 
@@ -179,6 +179,8 @@ Per-condition results (mean +/- sample SD and median lens score):
 | Faintness offset (mag) | 1 | 30 | 0.692 +/- 0.051 | 0.684 | 30/30 (100%) | -0.006 / 0 pp |
 | Faintness offset (mag) | 2 | 30 | 0.636 +/- 0.058 | 0.634 | 30/30 (100%) | -0.062 / 0 pp |
 | Faintness offset (mag) | 3 | 30 | 0.659 +/- 0.065 | 0.661 | 30/30 (100%) | -0.039 / 0 pp |
+| Arc-radius scale | 0.50 | 30 | 0.259 +/- 0.091 | 0.243 | 0/30 (0%) | -0.438 / -100 pp |
+| Arc-radius scale | 0.55 | 30 | 0.291 +/- 0.093 | 0.280 | 0/30 (0%) | -0.406 / -100 pp |
 | Arc-radius scale | 0.70 | 30 | 0.429 +/- 0.085 | 0.437 | 7/30 (23.3%) | -0.268 / -76.7 pp |
 | Arc-radius scale | 0.85 | 30 | 0.581 +/- 0.059 | 0.586 | 26/30 (86.7%) | -0.116 / -13.3 pp |
 | Arc-radius scale | 1.00 | 30 | 0.697 +/- 0.051 | 0.696 | 30/30 (100%) | 0.000 / 0 pp |
@@ -196,6 +198,7 @@ Grouped sensitivity categories use Wilson 95% intervals. The categories are prop
 | --- | ---: | ---: | ---: | --- |
 | Bright/moderate sources, offsets 0-1 mag | 60/60 | 100% (94.0-100%) | 0.695 | No misses in this bin; the interval still allows a nonzero miss rate. |
 | Faint sources, offsets 2-3 mag | 60/60 | 100% (94.0-100%) | 0.647 | Mean score is 0.047 below the brighter bin; retain faint cases and retest. |
+| Very small arcs, radius scales 0.50-0.55 | 0/60 | 0% (0-6.0%) | 0.275 | The model missed every very small arc in this synthetic test; strongest sensitivity gap. |
 | Small arcs, radius scales 0.70-0.85 | 33/60 | 55.0% (42.5-66.9%) | 0.505 | Persistent sensitivity gap; prioritize small arcs in training/evaluation coverage. |
 | Baseline arcs, radius scale 1.00 | 30/30 | 100% (88.6-100%) | 0.697 | Reference bin; no misses in 30 paired examples. |
 | Large arcs, radius scales 1.15-1.30 | 60/60 | 100% (94.0-100%) | 0.814 | Strong detection in these simulations; validate on independent data. |
@@ -204,7 +207,7 @@ Grouped sensitivity categories use Wilson 95% intervals. The categories are prop
 | High foreground light, scales 2-4 | 60/60 | 100% (94.0-100%) | 0.662 | Mean score is 0.035 below nominal; detection remained complete in this sample. |
 | Negative controls | 0/100 flagged | 0% FPR (0-3.7%) | 0.199 | Better constrained than the 5-control pilot, but these are weak-lens controls, not a diverse non-lens galaxy sample. |
 
-Across faintness offsets, all 120 examples were detected; mean scores dipped at +2 mag and rose slightly at +3, so the score trend is not monotonic. Across blending settings, all 120 examples were detected while the mean score declined from 0.697 at nominal foreground light to 0.640 at scale 4. Arc size remains the main weakness: detection was 7/30 at scale 0.70 and 26/30 at 0.85, compared with 30/30 at baseline and larger scales.
+Across faintness offsets, all 120 examples were detected; mean scores dipped at +2 mag and rose slightly at +3, so the score trend is not monotonic. Across blending settings, all 120 examples were detected while the mean score declined from 0.697 at nominal foreground light to 0.640 at scale 4. Arc size is the dominant weakness: detection was 0/30 at scales 0.50 and 0.55, 7/30 at scale 0.70, and 26/30 at scale 0.85, compared with 30/30 at baseline and larger scales.
 
 The expanded faintness-sweep mean lensed-flux contributions were:
 
