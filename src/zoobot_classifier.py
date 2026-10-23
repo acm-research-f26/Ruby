@@ -11,7 +11,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-ENCODER_NAME = "hf_hub:mwalmsley/zoobot-encoder-convnext_nano"
+ENCODER_NAME = "hf_hub:mwalmsley/zoobot-encoder-euclid"
+# Previous general-purpose checkpoint, kept for reference/comparison:
+# ENCODER_NAME = "hf_hub:mwalmsley/zoobot-encoder-convnext_nano"
 IMAGENET_MEAN = torch.tensor([0.485, 0.456, 0.406]).view(1, 3, 1, 1)
 IMAGENET_STD = torch.tensor([0.229, 0.224, 0.225]).view(1, 3, 1, 1)
 

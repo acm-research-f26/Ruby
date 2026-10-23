@@ -53,14 +53,21 @@ class LensSimulator:
                                kwargs_model=self.kwargs_model)
         self.image_model = self.sim_api.image_model_class({"supersampling_factor": 1})
 
-    def _sample_common(self, rng: np.random.Generator):
+    def _sample_common(self, rng: np.random.Generator, theta_e_override: float | None = None):
         lg, sg = self.cfg["lens_galaxy"], self.cfg["source_galaxy"]
 
         z_lens = rng.uniform(*lg["z_range"])
         z_source = rng.uniform(z_lens + 0.2, sg["z_range"][1])
         z_source = max(z_source, sg["z_range"][0])
         sigma_v = rng.uniform(*lg["velocity_dispersion_range"])
-        theta_e = einstein_radius_arcsec(sigma_v, z_lens, z_source, self.cosmo)
+        theta_e_derived = einstein_radius_arcsec(sigma_v, z_lens, z_source, self.cosmo)
+        # For controlled ring-size experiments: override the physically-derived
+        # theta_E with a directly chosen value, so ring size becomes a free,
+        # independently swept variable instead of a byproduct of sigma_v/z.
+        # Everything else (ellipticity, source position/brightness, noise) is
+        # still randomized, so a sweep bin reflects realistic variability at
+        # that ring size rather than one fixed configuration.
+        theta_e = theta_e_override if theta_e_override is not None else theta_e_derived
 
         e_lens = rng.uniform(*lg["ellipticity_range"])
         pa_lens = rng.uniform(0, np.pi)
@@ -94,7 +101,7 @@ class LensSimulator:
         }]
 
         meta = dict(z_lens=z_lens, z_source=z_source, sigma_v=sigma_v, theta_E=theta_e,
-                    source_x=source_x, source_y=source_y)
+                    theta_E_derived=theta_e_derived, source_x=source_x, source_y=source_y)
         return kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, meta
 
     def _render(self, kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, lensed: bool):
@@ -119,6 +126,15 @@ class LensSimulator:
     def sample_nonlens(self, rng: np.random.Generator):
         kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, meta = self._sample_common(rng)
         image = self._render(kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, lensed=False)
+        return image, meta
+
+    def sample_lens_with_ring_size(self, rng: np.random.Generator, theta_e: float):
+        """Like sample_lens, but theta_E (ring/arc radius, arcsec) is fixed to
+        the given value instead of derived from sampled physics -- for
+        controlled ring-size sweeps/filter-activation experiments."""
+        kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, meta = self._sample_common(
+            rng, theta_e_override=theta_e)
+        image = self._render(kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, lensed=True)
         return image, meta
 
 
