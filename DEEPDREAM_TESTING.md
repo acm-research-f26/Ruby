@@ -19,6 +19,27 @@ is the main bottleneck. See `outputs/evaluation_summary.txt` and
 the CNN converges to the same checkerboard texture regardless of input, suggestive of a
 simulation-specific shortcut rather than true arc/ring morphology.
 
+## Filter-level interpretability (this branch)
+
+This branch (`Filter-Analysis`) swaps the Zoobot classifier to the **Euclid-specific
+pretrained encoder** (`mwalmsley/zoobot-encoder-euclid`, verified ConvNeXt-Nano, 15.0M
+params) -- this is now the baseline going forward, not the general-purpose one. On top of
+it, we built filter-level (not just whole-image) interpretability: which of the encoder's
+individual channels respond to small-radius arcs (0.70"-1.00") vs. clearly larger ones, at
+each of its 4 processing depths ("stages").
+
+**Finding:** overlap between the two configs' top-activated filters is near-total at the
+shallowest stage (Jaccard 1.0 -- generic edge detectors don't care about ring size) and
+drops sharply at the deepest stage (Jaccard 0.64) -- ring-size sensitivity lives almost
+entirely in the deepest, most semantic layer. Naming the divergent deep-layer filters (via
+which real images activate them most, since per-filter DeepDream collapsed into
+indistinguishable noise -- see `outputs/filter_portraits/` for that negative result) showed
+the small-radius-specific filters are noisier, less clean ring detectors than the
+large-radius ones, and several aren't ring detectors at all (generic brightness/shape
+filters) -- a plausible mechanistic reason small rings are harder to detect: the network
+falls back on weaker, non-ring-specific cues. Full writeup: `outputs/filter_firing_report.json`
+and `outputs/top_activating_images.json`; see `outputs/README.md` for what every file is.
+
 ## Setup
 
 ```bash
@@ -30,24 +51,14 @@ pip install -r requirements.txt
 
 ## Repo layout
 
+See `src/README.md` for a full description of every script (grouped by purpose) and
+`outputs/README.md` for what every generated artifact is -- short version:
+
 ```
 configs/                  YAML configs for the lenstronomy simulator (physics, image, dataset, training params)
-src/
-  lens_sim.py              SIE + Sersic single-lens simulator (lenstronomy), fixed dataset-wide intensity scaling
-  dataset.py                Generates/saves a lens vs. non-lens .npz dataset from a config
-  export_images.py          Dumps a dataset's images as individual grayscale PNGs
-  preview.py / preview_*.py Comparison grids (lens vs non-lens, real vs sim, DeepDream outputs)
-  prepare_real_euclid.py    Preprocesses real Euclid Q1 FITS cutouts into the same dataset format
-  models.py                 SimpleLensCNN (small CNN classifier)
-  vit_model.py               Small ViT classifier (timm, trained from scratch)
-  zoobot_classifier.py       Frozen pretrained Zoobot encoder + trainable linear head
-  train_cnn.py / train_vit.py / train_zoobot.py   Training loops for each model
-  deepdream.py               Model-agnostic DeepDream engine (octave-based gradient ascent, optional
-                              blur/total-variation regularization)
-  deepdream_cnn.py / deepdream_vit.py / deepdream_zoobot.py   Per-model DeepDream runs
-  evaluate_all.py            Scores all 3 models on every test set (simulated + real)
+src/                       All code -- see src/README.md for the full file-by-file guide
 data/                       Datasets (.npz) -- large ones gitignored, regenerate via dataset.py
-outputs/                    Trained checkpoints, comparison grids, evaluation_summary.txt
+outputs/                    Trained checkpoints, comparison grids, reports -- see outputs/README.md
 ```
 
 ## Reproducing
@@ -62,6 +73,13 @@ python train_vit.py
 python train_zoobot.py
 python deepdream_cnn.py && python deepdream_vit.py && python deepdream_zoobot.py
 python evaluate_all.py
+
+# Filter-level interpretability (this branch):
+python train_zoobot_euclid.py       # trains the lens head on the Euclid-specific encoder
+python filter_firing.py             # ring-size sweep + per-stage filter overlap comparison
+python visualize_filters.py         # per-filter DeepDream (negative result -- see outputs/README.md)
+python top_activating_images.py     # the method that actually worked: real images per filter
+python preview_filter_portraits.py && python preview_top_activating.py   # build the review grids
 ```
 
 All simulated images use one **fixed, dataset-wide intensity scale** (`scale_low`/`scale_high`
