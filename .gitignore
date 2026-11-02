@@ -1,0 +1,29 @@
+# Python and OS clutter
+__pycache__/
+*.pyc
+.DS_Store
+
+# Too big for git: remake or download them (see sim/RESULTS.md)
+*.pt
+*.pth
+*.pkl
+*.npy
+*.npz
+data/cutouts/
+data/expand/
+data/manifest.csv
+sim/out/v1/
+sim/out/v2/
+sim/out/v3/
+
+# Other people's data: download from Zenodo (see sim/RESULTS.md)
+q1_discovery_engine_lens_catalog.csv
+data/zenodo_15003116/
+
+# Unconfirmed candidates: held back until an expert has checked them
+sim/out/final/candidates/
+sim/out/expand/scores.csv
+sim/out/expand/grade_c.csv
+sim/out/expand/non_lenses_top.csv
+sim/out/expand/sheet_grade_c.png
+sim/out/expand/sheet_non_lenses.png

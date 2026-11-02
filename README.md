@@ -1,47 +1,46 @@
- 
-# Project Overview & Problem Statement
+# Ruby: Zoobot trained on realistic simulated compound lenses
 
-Project RUBY leverages Deep Learning and Computer Vision techniques to detect rare and exotic Double-Source-Plane Lenses (DSPLs), also known as compound gravitational lenses. These types of lenses occur when multiple background sources at different redshifts align behind a foreground lens galaxy, producing nested Einstein rings at distinct radii.
+Part of **Project Ruby** (ACM Research, UT Dallas, Fall 2026). This branch asks how faint and how close a second ring can be before a lens finder stops recognizing it, and whether training on simulated compound lenses expands that limit without hurting ordinary lens finding.
 
-Large imaging surveys such as Euclid and the Vera Rubin Observatory Legacy Survey of Space and Time are expected to send back ~1 billion images of the universe, and out of these images we expect to find more than 100,000 strong gravitational lens systems, including many rare and exotic populations like the compound lenses mentioned before.
+All numbers, caveats and run commands are in **[sim/RESULTS.md](sim/RESULTS.md)**.
 
-Although various ML algorithms exist for classifying images as lenses vs. non lenses, even state-of-the art algorithms, are not able to classify certain types of compound lenses with
-- smaller Einstein radii, 
-- fainter arcs 
-- lens light blending with the arc light.
-Although only candidate DSPLs, these are still systems that we are interested in.
- 
-Project Ruby utilizes a Zoobot ConvNeXt model combined with model interpretability techniques (such as DeepDream) to understand why state-of-the-art models fail on these edge cases, enabling us to design an optimized architecture tailored for compound lens detection.
+## What we did
 
-# Dataset & Simulation Pipeline
-Because real training data for compound lenses is extremely scarce, we simulate realistic astronomical images using Lenstronomy, an open-source Python package for gravitational lens modeling.
+1. **Built a realistic simulator** (`sim/simulate.py`): two source distances, Euclid's published lens models, measured blur, lumpy sources and real host galaxies.
+2. **Retrained Zoobot with a third answer** (`sim/train_models.py`): not a lens, lens or compound. The 4 real compound lenses were never used for training.
+3. **Tested once on held-out real Euclid Q1 images** (`sim/final_test.py`), against 5 pass marks set before training.
+4. **Ran follow-up tests**, including a two-step setup and a bigger test on 5,000 new non-lenses.
 
-## Simulation Specifications:
-- Image Dimensions: 100 x 100 pixels
-- centered on the foreground lens system.
-- Filter Band: Grayscale images using the single IE band (found to perform better than multi-band color images for the model we are expanding upon).
-- Survey Parameter Emulation: Parameters are tuned to mirror the point-spread function (PSF) and sensor characteristics of the Euclid survey.
+## Main results
 
-So far, we’ve mainly focused on standard, single-lens systems. This has helped us get familiar with Lenstronomy and establish a baseline before moving on to more complex cases.
+- **Verdict:** no model passed all 5 pass marks. The 3-answer Zoobot passed 2, so the planned result is the detection map and the gap between simulated and real lenses.
+- **Real compound lenses:** the 4 known ones average rank 3.9 of 79 real lenses. Guessing gives 40, and painted-ring training gave 28–56. This rests on only 4 lenses, all obvious, and earlier models had already scored them.
+- **Faint limit:** on real lenses, the model stops reliably noticing an added outer source at about 1.5–2× the noise. Training helps at 2–6× and does nothing at 1× or below.
+- **Two-step setup:** when the baseline Zoobot finds lenses and the new model only checks them, lens finding stays at the baseline's 0.99 and all 4 compound lenses are still flagged. It flags 0.4–1.4% of 5,000 new non-lenses, so it stays a second step on lenses already found.
 
-## Current Progress & Next Steps in Simulation
-Completed: 
-Generated standard, single-lens baseline systems to establish pipelines and validate parameter distributions.
+**Still open:** whether the model reads second rings specifically, how close two rings can be before it stops separating them, where the faint limit sits on real compound lenses, and why the 4 real lenses do better than the detection map predicts.
 
-## In Progress:
-Simulating complex/irregular non-Sérsic background sources. Creating challenging compound lenses with faint, small-radius arcs.
+## Why Polar-Zoobot failed
 
-# Model Architecture & Preliminary Results
-Model Choice: Zoobot Bayesian CNN
-- Part of the Galaxy Zoo citizen Science project, it is pretrained on 92 million morphological classifications of galaxies
-- Transfer Learning Approach: Following the European Space Agency (ESA) methodology, early layers are frozen while the final classification head and leading ConvNeXt blocks are fine-tuned.
-- Validation: Zoobot was selected because it outperformed 20 alternative machine learning models (including Vision Transformers / ViTs) on Euclid Early Release Observations (ERO)
-## Key Experimental Findings So Far
-- Simulation-to-Real Domain Gap: Training Zoobot purely on simulated images and testing on real telescope data yielded accuracy only slightly above random guessing (~50%). This matches findings published by the Euclid consortium.
-- Real-to-Real Benchmark: Fine-tuning and testing directly on real images produced high accuracy, proving the model structure is sound, but highlighting the need for higher-fidelity simulations.
-## Interpretability: 
-Looked into utilizing DeepDream + Zoobot to understand what channels are influencing decision making, but inconclusive results. 
+Polar-Zoobot unwrapped each lens into a radius × angle strip. It did see faint and close rings on painted images, but Zoobot retrained on the same images saw them just as well or better, so it added nothing. On realistic simulations, polar alone fell below frozen Zoobot. See [the full explanation](sim/RESULTS.md#why-polar-zoobot-failed).
 
-# Astrophysical Significance & Future Applications
-Hubble Constant: High-precision detection of lensed systems with time-delay measurements aims to constrain the universe's expansion rate <1% uncertainty.
-Dark Matter & Dark Energy: Because a single compound lens provides two distinct lens-plane geometries, as few as 50 confirmed compound lenses can constrain the matter density(Gavazzi et al. 2008).Helps map dark matter halos and refine models ranging from the early Big Bang to cosmic expansion.
+## What's in this branch
+
+| Folder | Contents |
+|---|---|
+| `sim/` | Simulator, training and test scripts, and `RESULTS.md` |
+| `sim/out/` | Summaries, CSVs and figures |
+| `polar/` | Polar-Zoobot tests and their outputs |
+| `data/split.csv` | Which images are train, validation and test |
+
+Trained models, simulated images, Euclid cutouts, other people's data and unconfirmed candidate lists are left out. `sim/RESULTS.md` lists them and how to get or remake them.
+
+## Running it
+
+The scripts expect this folder at `~/ruby` and were run with Python 3.11 (`requirements-py311.txt`). Their inputs and commands are in [sim/RESULTS.md](sim/RESULTS.md#reproducing-the-results). The commands haven't been re-run end to end as one sequence.
+
+## Sources
+
+- Lens catalog and lens models: Euclid Q1 Strong Lensing Discovery Engine, Zenodo, doi:[10.5281/zenodo.15003116](https://doi.org/10.5281/zenodo.15003116)
+- Compound lens properties: Li et al. 2026, Euclid Q1 Strong Lensing Discovery Engine D, [arXiv:2503.15327](https://arxiv.org/abs/2503.15327)
+- Euclid Q1 MER catalog, NASA/IPAC IRSA, doi:[10.26131/IRSA602](https://doi.org/10.26131/IRSA602)
