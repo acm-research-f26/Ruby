@@ -1,0 +1,21 @@
+Test images: 4 compound lenses, 75 ordinary lenses, 300 non-lenses
+  seed 1: baseline P(lens) cutoff 0.501; compound lens scores at step one [1.    1.    1.    0.999]
+  seed 2: baseline P(lens) cutoff 0.413; compound lens scores at step one [0.999 1.    0.999 1.   ]
+  seed 3: baseline P(lens) cutoff 0.643; compound lens scores at step one [0.996 1.    0.997 0.997]
+
+ seed         method keep  lens_auc lenses_kept non_kept compound_kept  compound_flagged  ordinary_flagged  non_flagged  compound_mean_rank
+    1 3-answer alone         0.9824                                                    4                 8           16                6.00
+    1      two steps  95%    0.9930          76       26             4                 4                 8            6                4.25
+    1      two steps  90%    0.9930          74        7             4                 4                 8            3                4.25
+    1      two steps  99%    0.9930          78       45             4                 4                 8            9                5.00
+    2 3-answer alone         0.9758                                                    4                 5           16               10.00
+    2      two steps  95%    0.9917          75       13             4                 4                 4            3                5.00
+    2      two steps  90%    0.9917          74        8             4                 4                 3            3                4.50
+    2      two steps  99%    0.9917          76       36             4                 4                 4            6                6.25
+    3 3-answer alone         0.9785                                                    4                 5           11                5.50
+    3      two steps  95%    0.9851          73       19             4                 4                 3            2                3.00
+    3      two steps  90%    0.9851          70       10             4                 4                 3            2                3.00
+    3      two steps  99%    0.9851          78       46             4                 4                 5            4                3.75
+
+At the 95% cutoff, non-lenses flagged on 900 seed-images: 11; compound flagged 12 of 12; ordinary flagged 15 of 225
+Worth using by the rule set beforehand: yes [True, True, True]

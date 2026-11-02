@@ -1,0 +1,113 @@
+Seed 2: 5580 training images, 598 validation images on mps
+
+Training polar branch (0 min so far)
+    epoch 1: val AUC 0.7813
+    epoch 2: val AUC 0.7646
+    epoch 3: val AUC 0.8763
+    epoch 4: val AUC 0.8914
+    epoch 5: val AUC 0.7318
+    epoch 6: val AUC 0.8885
+    epoch 7: val AUC 0.9023
+    epoch 8: val AUC 0.8884
+    epoch 9: val AUC 0.7285
+    epoch 10: val AUC 0.9166
+    epoch 11: val AUC 0.9186
+    epoch 12: val AUC 0.9123
+    epoch 13: val AUC 0.9016
+    epoch 14: val AUC 0.9155
+    epoch 15: val AUC 0.9057
+    epoch 16: val AUC 0.9344
+    epoch 17: val AUC 0.9183
+    epoch 18: val AUC 0.8635
+    epoch 19: val AUC 0.9218
+    epoch 20: val AUC 0.9184
+    epoch 21: val AUC 0.9255
+  best validation AUC 0.934 (159k parameters)
+
+Fitting classifiers on frozen Zoobot features and on the plain profile (4 min so far)
+  frozen Zoobot: best validation AUC 0.849
+  profile only: best validation AUC 0.623
+
+Fine-tuning Zoobot end to end (train.py's settings) (5 min so far)
+    epoch 1: val AUC 0.9293
+    epoch 2: val AUC 0.9150
+    epoch 3: val AUC 0.9423
+    epoch 4: val AUC 0.9396
+    epoch 5: val AUC 0.9426
+    epoch 6: val AUC 0.9441
+    epoch 7: val AUC 0.9515
+    epoch 8: val AUC 0.9495
+    epoch 9: val AUC 0.9482
+    epoch 10: val AUC 0.9484
+  best validation AUC 0.951
+
+Training Polar-Zoobot end to end (Zoobot at train.py's rate, new parts faster) (15 min so far)
+    epoch 1: val AUC 0.8973
+    epoch 2: val AUC 0.9369
+    epoch 3: val AUC 0.9269
+    epoch 4: val AUC 0.9369
+    epoch 5: val AUC 0.9445
+    epoch 6: val AUC 0.9426
+    epoch 7: val AUC 0.9425
+    epoch 8: val AUC 0.9410
+  best validation AUC 0.944
+
+Testing (25 min so far)
+  width 0.68 done
+  width 1.0 done
+
+Double vs matched single, oval and off-centre rings, by outer ring brightness (0.5 = guessing, 1 = perfect):
+model       polar + zoobot  zoobot finetuned  polar  zoobot frozen  profile only  brightness only
+brightness                                                                                       
+0.5                  0.789             0.798  0.813          0.662         0.577            0.503
+1.0                  0.972             0.972  0.963          0.855         0.637            0.507
+1.5                  0.996             0.996  0.988          0.950         0.679            0.512
+2.0                  0.998             0.998  0.985          0.981         0.707            0.519
+3.0                  0.995             0.993  0.941          0.995         0.739            0.536
+
+Faint only (0.5-2x the noise), by distance:
+model     polar + zoobot  zoobot finetuned  polar  zoobot frozen  profile only  brightness only
+distance                                                                                       
+1.4                0.916             0.918  0.896          0.815         0.490            0.510
+1.6                0.965             0.968  0.966          0.906         0.635            0.510
+1.8                0.936             0.937  0.950          0.865         0.824            0.511
+
+Faint only, arcs instead of full outer rings:
+model     polar + zoobot  zoobot finetuned  polar  zoobot frozen  profile only  brightness only
+distance                                                                                       
+1.4                0.829             0.837  0.784          0.711         0.495            0.506
+1.6                0.906             0.911  0.898          0.815         0.576            0.505
+1.8                0.873             0.874  0.886          0.771         0.712            0.505
+
+Faint only, perfect circles exactly centred:
+model     polar + zoobot  zoobot finetuned  polar  zoobot frozen  profile only  brightness only
+distance                                                                                       
+1.4                0.920             0.919  0.919          0.818         0.478             0.51
+1.6                0.965             0.968  0.973          0.908         0.601             0.51
+1.8                0.934             0.938  0.954          0.866         0.839             0.51
+
+Faint only, full rings, by ring thickness:
+model  polar + zoobot  zoobot finetuned  polar  zoobot frozen  profile only  brightness only
+width                                                                                       
+0.68            0.939             0.942  0.941          0.868         0.628            0.509
+1.00            0.938             0.941  0.933          0.856         0.672            0.511
+
+Faint only, double vs plain single (the same inner ring, nothing else differs):
+model     polar + zoobot  zoobot finetuned  polar  zoobot frozen  profile only  brightness only
+distance                                                                                       
+1.4                0.909             0.911  0.886          0.801         0.460            0.506
+1.6                0.960             0.964  0.960          0.895         0.604            0.506
+1.8                0.934             0.934  0.947          0.851         0.806            0.505
+
+Real lenses (33 min so far)
+Rank among 79 real test lenses, 1 = most double-like (guessing averages 40):
+                             id  polar + zoobot  zoobot finetuned  polar  zoobot frozen  profile only  brightness only
+102018668_NEG595646727509469177              40                60     16             26            73               44
+102020061_NEG612388468493726389              77                75     15             44             6               50
+102021504_NEG666846889481107505              64                49     41             22            18               20
+  102159778_2735946368671378903              11                 1     51             56            40               67
+Mean rank of the compound lenses: polar + zoobot 48, zoobot finetuned 46, polar 31, zoobot frozen 37, profile only 34, brightness only 45
+
+Done (33 min so far)
+
+Saved to polar/out/faint_test/seed2/

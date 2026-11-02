@@ -1,0 +1,78 @@
+Semi-real: 41 real lenses with a Euclid radius, 5 versions each
+
+===== zoobot3 =====
+Ordinary lens-finding, compared with the same seed's baseline: 0.9824 vs. 0.9930 (-0.0106), 0.9758 vs. 0.9917 (-0.0159), 0.9785 vs. 0.9851 (-0.0067)
+False alarms, ordinary real lenses called compound: 11%, 7%, 7%; non-lenses called compound: 5%, 5%, 4%
+Detection map, cells of 42 at AUC 0.8 or more: 0 vs. frozen 0, 0 vs. frozen 0, 2 vs. frozen 0
+Semi-real AUC: 0.648 vs. frozen 0.578 (+0.069), 0.652 vs. frozen 0.590 (+0.063), 0.630 vs. frozen 0.616 (+0.014); faint 0.558, 0.573, 0.556; clear 0.807, 0.804, 0.771
+Real compound lenses, mean rank of 79: 3.8, 4.5, 3.5, average 3.9
+  seed 1 mean P(compound): simulated single 0.46, simulated double 0.54, ordinary real lens 0.21, real lens + outer source 0.36, real compound 0.79; double vs. single, all simulated test pairs 0.603
+  seed 2 mean P(compound): simulated single 0.40, simulated double 0.53, ordinary real lens 0.16, real lens + outer source 0.34, real compound 0.75; double vs. single, all simulated test pairs 0.622
+  seed 3 mean P(compound): simulated single 0.32, simulated double 0.47, ordinary real lens 0.12, real lens + outer source 0.27, real compound 0.87; double vs. single, all simulated test pairs 0.627
+Verdict:
+  FAIL  Ordinary lens-finding
+  PASS  False alarms
+  FAIL  Detection map
+  FAIL  Semi-real
+  PASS  Real compound lenses
+
+===== polar3 =====
+Ordinary lens-finding, compared with the same seed's baseline: 0.9614 vs. 0.9930 (-0.0317), 0.9621 vs. 0.9917 (-0.0296), 0.9564 vs. 0.9851 (-0.0288)
+False alarms, ordinary real lenses called compound: 23%, 1%, 3%; non-lenses called compound: 4%, 1%, 1%
+Detection map, cells of 42 at AUC 0.8 or more: 0 vs. frozen 0, 0 vs. frozen 0, 0 vs. frozen 0
+Semi-real AUC: 0.602 vs. frozen 0.578 (+0.023), 0.600 vs. frozen 0.590 (+0.011), 0.612 vs. frozen 0.616 (-0.004); faint 0.545, 0.544, 0.556; clear 0.698, 0.698, 0.713
+Real compound lenses, mean rank of 79: 11.0, 9.5, 13.5, average 11.3
+  seed 1 mean P(compound): simulated single 0.40, simulated double 0.45, ordinary real lens 0.36, real lens + outer source 0.42, real compound 0.61; double vs. single, all simulated test pairs 0.562
+  seed 2 mean P(compound): simulated single 0.29, simulated double 0.34, ordinary real lens 0.20, real lens + outer source 0.25, real compound 0.41; double vs. single, all simulated test pairs 0.565
+  seed 3 mean P(compound): simulated single 0.32, simulated double 0.35, ordinary real lens 0.27, real lens + outer source 0.31, real compound 0.42; double vs. single, all simulated test pairs 0.551
+Verdict:
+  FAIL  Ordinary lens-finding
+  FAIL  False alarms
+  FAIL  Detection map
+  FAIL  Semi-real
+  PASS  Real compound lenses
+
+===== frozen, for reference =====
+Real compound lenses, mean rank: 6.8, 12.0, 10.0
+Double vs. single, all simulated test pairs: 0.575, 0.573, 0.582
+
+Each compound lens, rank per seed:
+model            frozen             polar3             zoobot3          
+seed                  1     2     3      1     2     3       1    2    3
+lens                                                                    
+Cosmic Ammonite     3.0  27.0   9.0   12.0  12.0  16.0     3.0  8.0  3.0
+Cosmic Dartboard   15.0   6.0   7.0    5.0   2.0  31.0     1.0  1.0  1.0
+Galileo's Lens      1.0   2.0   2.0   26.0   4.0   3.0     6.0  2.0  4.0
+Teapot Lens         8.0  13.0  22.0    1.0  20.0   4.0     5.0  7.0  6.0
+
+Detection map, mean over seeds (rows = outer brightness, columns = distance):
+  frozen:
+d      1.1    1.2    1.3    1.4    1.6    1.8
+b                                            
+0.5  0.504  0.505  0.506  0.506  0.504  0.504
+1.0  0.514  0.516  0.520  0.521  0.518  0.519
+1.5  0.529  0.535  0.543  0.547  0.543  0.545
+2.0  0.549  0.558  0.571  0.577  0.577  0.579
+3.0  0.587  0.606  0.624  0.637  0.638  0.640
+4.0  0.619  0.641  0.660  0.676  0.681  0.680
+6.0  0.650  0.673  0.695  0.709  0.720  0.717
+  zoobot3:
+d      1.1    1.2    1.3    1.4    1.6    1.8
+b                                            
+0.5  0.504  0.505  0.506  0.507  0.506  0.505
+1.0  0.517  0.524  0.529  0.530  0.527  0.533
+1.5  0.544  0.561  0.576  0.576  0.581  0.595
+2.0  0.577  0.602  0.622  0.636  0.651  0.667
+3.0  0.632  0.663  0.697  0.727  0.752  0.763
+4.0  0.660  0.694  0.735  0.759  0.792  0.794
+6.0  0.671  0.707  0.742  0.760  0.789  0.786
+  polar3:
+d      1.1    1.2    1.3    1.4    1.6    1.8
+b                                            
+0.5  0.500  0.500  0.501  0.502  0.502  0.502
+1.0  0.503  0.506  0.509  0.512  0.513  0.516
+1.5  0.511  0.517  0.524  0.531  0.534  0.540
+2.0  0.522  0.533  0.544  0.554  0.561  0.571
+3.0  0.548  0.568  0.585  0.604  0.620  0.632
+4.0  0.572  0.597  0.619  0.644  0.665  0.673
+6.0  0.606  0.633  0.662  0.692  0.715  0.717

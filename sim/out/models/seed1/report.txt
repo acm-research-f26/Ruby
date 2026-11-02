@@ -1,0 +1,46 @@
+
+Loading images (0 min so far)
+  training: 1395 non-lenses, 346 real lenses (x4), 3000 simulated singles, 3000 simulated doubles
+  validation: 299 non-lenses, 74 real lenses, 600 simulated pairs
+
+Training Zoobot with 3 answers (0 min so far)
+
+Training the polar branch with 3 answers (11 min so far)
+
+Fitting the frozen baseline (14 min so far)
+
+Validation report (14 min so far)
+Lens finding, real lens vs. non-lens: baseline Zoobot 0.9920, zoobot3 0.9615, polar3 0.9552
+
+Double vs. single on simulated validation pairs (0.5 = guessing):
+  all pairs: zoobot3 0.604, polar3 0.526, frozen 0.593
+  zoobot3:
+         d 1.1-1.3  d 1.3-1.5  d 1.5-1.8
+b 0.5-1      0.496      0.501      0.506
+b 1-2        0.522      0.557      0.575
+b 2-4        0.606      0.672      0.697
+b 4-6        0.708      0.753      0.779
+  polar3:
+         d 1.1-1.3  d 1.3-1.5  d 1.5-1.8
+b 0.5-1      0.502      0.500      0.501
+b 1-2        0.507      0.501      0.507
+b 2-4        0.538      0.527      0.536
+b 4-6        0.562      0.609      0.605
+  frozen:
+         d 1.1-1.3  d 1.3-1.5  d 1.5-1.8
+b 0.5-1      0.524      0.516      0.521
+b 1-2        0.542      0.552      0.564
+b 2-4        0.621      0.625      0.646
+b 4-6        0.692      0.741      0.729
+
+Share called compound (P > 0.5):
+  zoobot3: non-lenses 12%, real lenses 49%, simulated singles 79%, simulated doubles 85%
+  polar3: non-lenses 0%, real lenses 0%, simulated singles 0%, simulated doubles 0%
+
+Warning check: real validation lenses + a simulated outer source (15 min so far)
+  43 real lenses with a Euclid radius, 5 versions each
+  zoobot3: with vs. without the outer source: AUC 0.617 (faint 0.542, clear 0.727)
+  polar3: with vs. without the outer source: AUC 0.556 (faint 0.506, clear 0.618)
+  frozen: with vs. without the outer source: AUC 0.596 (faint 0.530, clear 0.687)
+  zoobot3 mean P(compound): simulated single 0.58, simulated double 0.63, real lens 0.41, real lens + outer source 0.49
+  polar3 mean P(compound): simulated single 0.17, simulated double 0.18, real lens 0.20, real lens + outer source 0.21

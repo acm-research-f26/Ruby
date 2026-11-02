@@ -1,0 +1,14 @@
+Simulated outer sources: total light per unit of b, all validation pairs, 16/50/84%: [36.3, 57.3, 97.4]
+Simulated total light in noise units, 5/50/95%: [25.0, 108.0, 404.0]
+
+Checking the zero point: lens galaxy, published flux vs. light within 3" of the centre (lens and arcs together):
+  Cosmic Dartboard  published lens + sources   16.4, measured   33.1, ratio 2.02
+  Galileo's Lens    published lens + sources    8.0, measured   24.9, ratio 3.11
+  Cosmic Ammonite   published lens + sources   41.4, measured   90.5, ratio 2.18
+  Teapot Lens       published lens + sources   39.0, measured   86.4, ratio 2.22
+
+The 4 real compound lenses on the map:
+  Cosmic Dartboard  distance 2.91x; outer source total 544 noise units, more than 98% of simulated ones; brightness about 9.2x noise (5.5-15.2; 138 pairs); outer/inner light 0.76; nearest cell b=6, d=1.8: trained AUC 0.79, frozen 0.72; real score 0.93, mean rank 1.0
+  Galileo's Lens    distance 1.39x; outer source total 204 noise units, more than 78% of simulated ones; brightness about 3.6x noise (2.1-5.8; 133 pairs); outer/inner light 0.21; nearest cell b=4, d=1.4: trained AUC 0.76, frozen 0.68; real score 0.80, mean rank 4.0
+  Cosmic Ammonite   distance 1.14x; outer source total 169 noise units, more than 69% of simulated ones; brightness about 2.9x noise (1.7-4.7; 228 pairs); outer/inner light 0.17; nearest cell b=3, d=1.1: trained AUC 0.63, frozen 0.59; real score 0.79, mean rank 4.7
+  Teapot Lens       distance 1.44x; outer source total 225 noise units, more than 82% of simulated ones; brightness about 3.7x noise (2.2-6.0; 270 pairs); outer/inner light 0.52; nearest cell b=4, d=1.4: trained AUC 0.76, frozen 0.68; real score 0.70, mean rank 6.0

@@ -1,0 +1,19 @@
+comparison,model,seed,auc,spread
+simulated single,frozen,0,0.8568411949991562,0.0325929137485587
+simulated double,frozen,0,0.8693905710691661,0.03283184446953933
+painted single,frozen,0,0.9765757952832848,0.007425140961331756
+nothing added,frozen,0,0.9552833682914279,0.012002973891102397
+"real, shuffled",frozen,0,0.46712275380940804,0.042899065426115775
+lenses with a radius,frozen,0,0.8720384383699533,0.02980211239991954
+ring zone hidden,frozen,0,0.6711313702909469,0.025377056130722313
+only the ring zone,frozen,0,0.7811436788510009,0.02658414974823074
+simulated single,retrained,1,0.9187837837837838,
+simulated double,retrained,1,0.9092342342342342,
+painted single,retrained,1,0.9963963963963964,
+nothing added,retrained,1,0.9821171171171171,
+"real, shuffled",retrained,1,0.6216216216216217,
+lenses with a radius,retrained,1,0.9233333333333333,
+ring zone hidden,retrained,1,0.772170542635659,
+only the ring zone,retrained,1,0.8964341085271318,
+simulated single,retrained,2,0.9004954954954955,
+simulated single,retrained,3,0.9322972972972973,

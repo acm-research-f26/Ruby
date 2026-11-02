@@ -1,0 +1,47 @@
+Cosmic Dartboard: 10 target lenses. Lifted light 742 noise units (published source 2: 544), mean radius 1.72"; control lifts 385
+  plain score 0.26; own score 0.93
+  ring            rise +0.695, score 0.96, AUC 0.995, raises its own lens 100%
+  simulated       rise +0.196, score 0.46, AUC 0.714, raises its own lens 80%
+  control         rise +0.243, score 0.50, AUC 0.746, raises its own lens 91%
+  control scaled  rise +0.365, score 0.62, AUC 0.835, raises its own lens 92%
+Galileo's Lens: 48 target lenses. Lifted light 346 noise units (published source 2: 204), mean radius 1.95"; control lifts 147
+  plain score 0.15; own score 0.80
+  ring            rise +0.324, score 0.47, AUC 0.811, raises its own lens 97%
+  simulated       rise +0.369, score 0.51, AUC 0.815, raises its own lens 93%
+  control         rise +0.182, score 0.33, AUC 0.669, raises its own lens 77%
+  control scaled  rise +0.291, score 0.44, AUC 0.745, raises its own lens 82%
+Cosmic Ammonite: 39 target lenses. Lifted light 616 noise units (published source 2: 169), mean radius 1.59"; control lifts 241
+  plain score 0.15; own score 0.79
+  ring            rise +0.593, score 0.74, AUC 0.947, raises its own lens 98%
+  simulated       rise +0.308, score 0.46, AUC 0.793, raises its own lens 88%
+  control         rise +0.266, score 0.41, AUC 0.745, raises its own lens 88%
+  control scaled  rise +0.330, score 0.48, AUC 0.783, raises its own lens 88%
+Teapot Lens: 29 target lenses. Lifted light 986 noise units (published source 2: 225), mean radius 1.23"; control lifts 355
+  plain score 0.21; own score 0.70
+  ring            rise +0.530, score 0.74, AUC 0.928, raises its own lens 97%
+  simulated       rise +0.200, score 0.41, AUC 0.726, raises its own lens 82%
+  control         rise +0.287, score 0.50, AUC 0.760, raises its own lens 86%
+  control scaled  rise +0.265, score 0.48, AUC 0.743, raises its own lens 77%
+
+Rise by seed:
+seed                                 1      2      3
+lens             kind                               
+Cosmic Ammonite  control         0.228  0.254  0.316
+                 control scaled  0.313  0.305  0.372
+                 ring            0.545  0.567  0.668
+                 simulated       0.309  0.278  0.339
+Cosmic Dartboard control         0.270  0.232  0.228
+                 control scaled  0.392  0.352  0.349
+                 ring            0.668  0.654  0.764
+                 simulated       0.283  0.144  0.161
+Galileo's Lens   control         0.150  0.182  0.213
+                 control scaled  0.260  0.281  0.332
+                 ring            0.230  0.363  0.379
+                 simulated       0.312  0.371  0.424
+Teapot Lens      control         0.265  0.294  0.302
+                 control scaled  0.270  0.269  0.257
+                 ring            0.511  0.550  0.530
+                 simulated       0.262  0.187  0.152
+
+Mean rise: ring +0.536, simulated +0.268, control +0.245, control scaled +0.313
+Rings rising at least 2x simulated: 2 of 4; within 25%: 1 of 4. Reading set beforehand: the test doesn't work

@@ -1,0 +1,94 @@
+Seed 1: 5580 training images, 598 validation images on mps
+
+Training polar branch
+    epoch 1: val AUC 0.5215
+    epoch 2: val AUC 0.5514
+    epoch 3: val AUC 0.5490
+    epoch 4: val AUC 0.5375
+    epoch 5: val AUC 0.5522
+    epoch 6: val AUC 0.5534
+    epoch 7: val AUC 0.5499
+    epoch 8: val AUC 0.5462
+    epoch 9: val AUC 0.5558
+    epoch 10: val AUC 0.5568
+    epoch 11: val AUC 0.5289
+    epoch 12: val AUC 0.5553
+    epoch 13: val AUC 0.5538
+    epoch 14: val AUC 0.5210
+    epoch 15: val AUC 0.4968
+  best validation AUC 0.557 (208k parameters)
+
+Fitting classifier on frozen Zoobot features
+  best validation AUC 0.770
+
+Fine-tuning Zoobot end to end (train.py's settings)
+    epoch 1: val AUC 0.8312
+    epoch 2: val AUC 0.8561
+    epoch 3: val AUC 0.8654
+    epoch 4: val AUC 0.8727
+    epoch 5: val AUC 0.8813
+    epoch 6: val AUC 0.8773
+    epoch 7: val AUC 0.8807
+    epoch 8: val AUC 0.8834
+    epoch 9: val AUC 0.8843
+    epoch 10: val AUC 0.8922
+    epoch 11: val AUC 0.8742
+    epoch 12: val AUC 0.8954
+    epoch 13: val AUC 0.8964
+    epoch 14: val AUC 0.9017
+    epoch 15: val AUC 0.8978
+    epoch 16: val AUC 0.8821
+    epoch 17: val AUC 0.9077
+    epoch 18: val AUC 0.9083
+    epoch 19: val AUC 0.8994
+    epoch 20: val AUC 0.8989
+    epoch 21: val AUC 0.9035
+  best validation AUC 0.908
+
+Testing
+  width 0.68 done
+  width 1.0 done
+
+Double vs matched thick single, oval and off-centre rings, by distance (0.5 = guessing, 1 = perfect):
+model     brightness only  polar  zoobot finetuned  zoobot frozen
+distance                                                         
+1.1                 0.499  0.496             0.576          0.528
+1.2                 0.499  0.490             0.926          0.753
+1.3                 0.497  0.464             0.993          0.894
+
+Same, arcs instead of full outer rings:
+model     brightness only  polar  zoobot finetuned  zoobot frozen
+distance                                                         
+1.1                 0.499  0.498             0.544          0.518
+1.2                 0.499  0.495             0.836          0.664
+1.3                 0.498  0.484             0.957          0.794
+
+Same, perfect circles exactly centred:
+model     brightness only  polar  zoobot finetuned  zoobot frozen
+distance                                                         
+1.1                 0.499  0.496             0.576          0.529
+1.2                 0.499  0.488             0.923          0.767
+1.3                 0.497  0.454             0.994          0.891
+
+Full rings at 1.2-1.3x, by outer ring brightness:
+model       brightness only  polar  zoobot finetuned  zoobot frozen
+brightness                                                         
+2                     0.496  0.487             0.928          0.747
+3                     0.498  0.484             0.971          0.856
+4                     0.499  0.478             0.972          0.875
+6                     0.500  0.458             0.967          0.816
+
+Full rings at 1.2-1.3x, by ring thickness:
+model  brightness only  polar  zoobot finetuned  zoobot frozen
+width                                                         
+0.68             0.498  0.476             0.994          0.874
+1.00             0.499  0.477             0.925          0.773
+
+Double vs ordinary thin single (false-alarm check, should be high):
+model     brightness only  polar  zoobot finetuned  zoobot frozen
+distance                                                         
+1.1                 0.499  0.646             0.788          0.629
+1.2                 0.511  0.726             0.938          0.839
+1.3                 0.518  0.789             0.995          0.940
+
+Saved to polar/out/quick_test/seed1/

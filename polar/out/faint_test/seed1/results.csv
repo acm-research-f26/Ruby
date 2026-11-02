@@ -1,0 +1,721 @@
+model,width,distance,brightness,shape,against,auc
+polar + zoobot,0.68,1.4,0.5,rings,matched,0.7863666666666668
+zoobot finetuned,0.68,1.4,0.5,rings,matched,0.8016666666666667
+polar,0.68,1.4,0.5,rings,matched,0.7908999999999999
+zoobot frozen,0.68,1.4,0.5,rings,matched,0.6635777777777777
+profile only,0.68,1.4,0.5,rings,matched,0.4930111111111112
+brightness only,0.68,1.4,0.5,rings,matched,0.5031777777777777
+polar + zoobot,0.68,1.4,0.5,arcs,matched,0.6868888888888889
+zoobot finetuned,0.68,1.4,0.5,arcs,matched,0.6868666666666666
+polar,0.68,1.4,0.5,arcs,matched,0.6573
+zoobot frozen,0.68,1.4,0.5,arcs,matched,0.5812333333333333
+profile only,0.68,1.4,0.5,arcs,matched,0.4968111111111111
+brightness only,0.68,1.4,0.5,arcs,matched,0.5017222222222223
+polar + zoobot,0.68,1.4,0.5,round centred,matched,0.7918111111111111
+zoobot finetuned,0.68,1.4,0.5,round centred,matched,0.8035
+polar,0.68,1.4,0.5,round centred,matched,0.8285555555555555
+zoobot frozen,0.68,1.4,0.5,round centred,matched,0.6564666666666668
+profile only,0.68,1.4,0.5,round centred,matched,0.49788888888888894
+brightness only,0.68,1.4,0.5,round centred,matched,0.5026222222222222
+polar + zoobot,0.68,1.4,0.5,rings,plain,0.7791111111111111
+zoobot finetuned,0.68,1.4,0.5,rings,plain,0.788611111111111
+polar,0.68,1.4,0.5,rings,plain,0.7799333333333334
+zoobot frozen,0.68,1.4,0.5,rings,plain,0.6446444444444444
+profile only,0.68,1.4,0.5,rings,plain,0.4834111111111111
+brightness only,0.68,1.4,0.5,rings,plain,0.5022444444444445
+polar + zoobot,0.68,1.4,1.0,rings,matched,0.9722111111111111
+zoobot finetuned,0.68,1.4,1.0,rings,matched,0.9766888888888889
+polar,0.68,1.4,1.0,rings,matched,0.9570444444444445
+zoobot frozen,0.68,1.4,1.0,rings,matched,0.8711888888888889
+profile only,0.68,1.4,1.0,rings,matched,0.4879555555555556
+brightness only,0.68,1.4,1.0,rings,matched,0.5054000000000001
+polar + zoobot,0.68,1.4,1.0,arcs,matched,0.8777999999999999
+zoobot finetuned,0.68,1.4,1.0,arcs,matched,0.8907
+polar,0.68,1.4,1.0,arcs,matched,0.8511666666666668
+zoobot frozen,0.68,1.4,1.0,arcs,matched,0.7201444444444444
+profile only,0.68,1.4,1.0,arcs,matched,0.49462222222222224
+brightness only,0.68,1.4,1.0,arcs,matched,0.5032333333333333
+polar + zoobot,0.68,1.4,1.0,round centred,matched,0.9788555555555556
+zoobot finetuned,0.68,1.4,1.0,round centred,matched,0.9812444444444444
+polar,0.68,1.4,1.0,round centred,matched,0.9791888888888889
+zoobot frozen,0.68,1.4,1.0,round centred,matched,0.8614777777777778
+profile only,0.68,1.4,1.0,round centred,matched,0.4947111111111111
+brightness only,0.68,1.4,1.0,round centred,matched,0.5061777777777778
+polar + zoobot,0.68,1.4,1.0,rings,plain,0.9743111111111111
+zoobot finetuned,0.68,1.4,1.0,rings,plain,0.9780333333333333
+polar,0.68,1.4,1.0,rings,plain,0.9557000000000001
+zoobot frozen,0.68,1.4,1.0,rings,plain,0.8407111111111111
+profile only,0.68,1.4,1.0,rings,plain,0.4693777777777778
+brightness only,0.68,1.4,1.0,rings,plain,0.5036111111111111
+polar + zoobot,0.68,1.4,1.5,rings,matched,0.9956111111111111
+zoobot finetuned,0.68,1.4,1.5,rings,matched,0.9958777777777779
+polar,0.68,1.4,1.5,rings,matched,0.9812444444444445
+zoobot frozen,0.68,1.4,1.5,rings,matched,0.9592555555555555
+profile only,0.68,1.4,1.5,rings,matched,0.4862444444444444
+brightness only,0.68,1.4,1.5,rings,matched,0.510311111111111
+polar + zoobot,0.68,1.4,1.5,arcs,matched,0.971211111111111
+zoobot finetuned,0.68,1.4,1.5,arcs,matched,0.9703222222222222
+polar,0.68,1.4,1.5,arcs,matched,0.9301222222222222
+zoobot frozen,0.68,1.4,1.5,arcs,matched,0.8497333333333333
+profile only,0.68,1.4,1.5,arcs,matched,0.4922444444444445
+brightness only,0.68,1.4,1.5,arcs,matched,0.5058
+polar + zoobot,0.68,1.4,1.5,round centred,matched,0.9966777777777778
+zoobot finetuned,0.68,1.4,1.5,round centred,matched,0.9965555555555555
+polar,0.68,1.4,1.5,round centred,matched,0.9880000000000001
+zoobot frozen,0.68,1.4,1.5,round centred,matched,0.9588666666666668
+profile only,0.68,1.4,1.5,round centred,matched,0.4905555555555556
+brightness only,0.68,1.4,1.5,round centred,matched,0.5102222222222222
+polar + zoobot,0.68,1.4,1.5,rings,plain,0.9945888888888889
+zoobot finetuned,0.68,1.4,1.5,rings,plain,0.9943666666666667
+polar,0.68,1.4,1.5,rings,plain,0.9788
+zoobot frozen,0.68,1.4,1.5,rings,plain,0.9452777777777778
+profile only,0.68,1.4,1.5,rings,plain,0.45757777777777775
+brightness only,0.68,1.4,1.5,rings,plain,0.5061222222222223
+polar + zoobot,0.68,1.4,2.0,rings,matched,0.9975
+zoobot finetuned,0.68,1.4,2.0,rings,matched,0.9974
+polar,0.68,1.4,2.0,rings,matched,0.9804777777777778
+zoobot frozen,0.68,1.4,2.0,rings,matched,0.9825222222222223
+profile only,0.68,1.4,2.0,rings,matched,0.4835666666666667
+brightness only,0.68,1.4,2.0,rings,matched,0.515311111111111
+polar + zoobot,0.68,1.4,2.0,arcs,matched,0.9816111111111111
+zoobot finetuned,0.68,1.4,2.0,arcs,matched,0.9801555555555554
+polar,0.68,1.4,2.0,arcs,matched,0.9515333333333333
+zoobot frozen,0.68,1.4,2.0,arcs,matched,0.9141
+profile only,0.68,1.4,2.0,arcs,matched,0.4918111111111111
+brightness only,0.68,1.4,2.0,arcs,matched,0.507888888888889
+polar + zoobot,0.68,1.4,2.0,round centred,matched,0.9982
+zoobot finetuned,0.68,1.4,2.0,round centred,matched,0.9972777777777778
+polar,0.68,1.4,2.0,round centred,matched,0.9845333333333334
+zoobot frozen,0.68,1.4,2.0,round centred,matched,0.9830777777777777
+profile only,0.68,1.4,2.0,round centred,matched,0.48573333333333335
+brightness only,0.68,1.4,2.0,round centred,matched,0.5150888888888889
+polar + zoobot,0.68,1.4,2.0,rings,plain,0.9960777777777777
+zoobot finetuned,0.68,1.4,2.0,rings,plain,0.9949333333333333
+polar,0.68,1.4,2.0,rings,plain,0.9823666666666666
+zoobot frozen,0.68,1.4,2.0,rings,plain,0.9800888888888889
+profile only,0.68,1.4,2.0,rings,plain,0.44652222222222226
+brightness only,0.68,1.4,2.0,rings,plain,0.5083333333333333
+polar + zoobot,0.68,1.4,3.0,rings,matched,0.9949111111111111
+zoobot finetuned,0.68,1.4,3.0,rings,matched,0.9930555555555556
+polar,0.68,1.4,3.0,rings,matched,0.9297777777777778
+zoobot frozen,0.68,1.4,3.0,rings,matched,0.9934555555555556
+profile only,0.68,1.4,3.0,rings,matched,0.4795666666666667
+brightness only,0.68,1.4,3.0,rings,matched,0.5265111111111112
+polar + zoobot,0.68,1.4,3.0,arcs,matched,0.9933222222222222
+zoobot finetuned,0.68,1.4,3.0,arcs,matched,0.9937222222222223
+polar,0.68,1.4,3.0,arcs,matched,0.9669
+zoobot frozen,0.68,1.4,3.0,arcs,matched,0.9704666666666667
+profile only,0.68,1.4,3.0,arcs,matched,0.4907111111111111
+brightness only,0.68,1.4,3.0,arcs,matched,0.5137333333333334
+polar + zoobot,0.68,1.4,3.0,round centred,matched,0.9959666666666667
+zoobot finetuned,0.68,1.4,3.0,round centred,matched,0.9915333333333333
+polar,0.68,1.4,3.0,round centred,matched,0.9116111111111111
+zoobot frozen,0.68,1.4,3.0,round centred,matched,0.9945999999999999
+profile only,0.68,1.4,3.0,round centred,matched,0.4732888888888889
+brightness only,0.68,1.4,3.0,round centred,matched,0.5259333333333334
+polar + zoobot,0.68,1.4,3.0,rings,plain,0.9954111111111111
+zoobot finetuned,0.68,1.4,3.0,rings,plain,0.9947666666666668
+polar,0.68,1.4,3.0,rings,plain,0.9450555555555555
+zoobot frozen,0.68,1.4,3.0,rings,plain,0.9916777777777778
+profile only,0.68,1.4,3.0,rings,plain,0.43223333333333336
+brightness only,0.68,1.4,3.0,rings,plain,0.5137055555555556
+polar + zoobot,0.68,1.6,0.5,rings,matched,0.8568888888888888
+zoobot finetuned,0.68,1.6,0.5,rings,matched,0.8737666666666667
+polar,0.68,1.6,0.5,rings,matched,0.8828777777777779
+zoobot frozen,0.68,1.6,0.5,rings,matched,0.7135444444444443
+profile only,0.68,1.6,0.5,rings,matched,0.5499777777777777
+brightness only,0.68,1.6,0.5,rings,matched,0.5029111111111111
+polar + zoobot,0.68,1.6,0.5,arcs,matched,0.7299777777777777
+zoobot finetuned,0.68,1.6,0.5,arcs,matched,0.7314444444444445
+polar,0.68,1.6,0.5,arcs,matched,0.7418777777777779
+zoobot frozen,0.68,1.6,0.5,arcs,matched,0.6193333333333334
+profile only,0.68,1.6,0.5,arcs,matched,0.5297222222222222
+brightness only,0.68,1.6,0.5,arcs,matched,0.5019111111111112
+polar + zoobot,0.68,1.6,0.5,round centred,matched,0.8718000000000001
+zoobot finetuned,0.68,1.6,0.5,round centred,matched,0.8743
+polar,0.68,1.6,0.5,round centred,matched,0.9042777777777777
+zoobot frozen,0.68,1.6,0.5,round centred,matched,0.7146
+profile only,0.68,1.6,0.5,round centred,matched,0.5383222222222223
+brightness only,0.68,1.6,0.5,round centred,matched,0.5026333333333333
+polar + zoobot,0.68,1.6,0.5,rings,plain,0.8449666666666668
+zoobot finetuned,0.68,1.6,0.5,rings,plain,0.8598888888888889
+polar,0.68,1.6,0.5,rings,plain,0.8804111111111111
+zoobot frozen,0.68,1.6,0.5,rings,plain,0.6998111111111112
+profile only,0.68,1.6,0.5,rings,plain,0.538488888888889
+brightness only,0.68,1.6,0.5,rings,plain,0.5018111111111112
+polar + zoobot,0.68,1.6,1.0,rings,matched,0.9910555555555556
+zoobot finetuned,0.68,1.6,1.0,rings,matched,0.9893111111111111
+polar,0.68,1.6,1.0,rings,matched,0.9805777777777778
+zoobot frozen,0.68,1.6,1.0,rings,matched,0.9274777777777778
+profile only,0.68,1.6,1.0,rings,matched,0.5957777777777777
+brightness only,0.68,1.6,1.0,rings,matched,0.5067777777777778
+polar + zoobot,0.68,1.6,1.0,arcs,matched,0.9270888888888889
+zoobot finetuned,0.68,1.6,1.0,arcs,matched,0.9225444444444444
+polar,0.68,1.6,1.0,arcs,matched,0.9165888888888889
+zoobot frozen,0.68,1.6,1.0,arcs,matched,0.7861666666666667
+profile only,0.68,1.6,1.0,arcs,matched,0.554
+brightness only,0.68,1.6,1.0,arcs,matched,0.5034888888888889
+polar + zoobot,0.68,1.6,1.0,round centred,matched,0.9932
+zoobot finetuned,0.68,1.6,1.0,round centred,matched,0.9931888888888888
+polar,0.68,1.6,1.0,round centred,matched,0.9893555555555555
+zoobot frozen,0.68,1.6,1.0,round centred,matched,0.9239111111111111
+profile only,0.68,1.6,1.0,round centred,matched,0.5738111111111112
+brightness only,0.68,1.6,1.0,round centred,matched,0.5062
+polar + zoobot,0.68,1.6,1.0,rings,plain,0.9901222222222222
+zoobot finetuned,0.68,1.6,1.0,rings,plain,0.9902222222222222
+polar,0.68,1.6,1.0,rings,plain,0.9800444444444445
+zoobot frozen,0.68,1.6,1.0,rings,plain,0.9031555555555555
+profile only,0.68,1.6,1.0,rings,plain,0.5761000000000001
+brightness only,0.68,1.6,1.0,rings,plain,0.5034555555555555
+polar + zoobot,0.68,1.6,1.5,rings,matched,0.9984333333333334
+zoobot finetuned,0.68,1.6,1.5,rings,matched,0.9982444444444445
+polar,0.68,1.6,1.5,rings,matched,0.9881666666666666
+zoobot frozen,0.68,1.6,1.5,rings,matched,0.9872777777777779
+profile only,0.68,1.6,1.5,rings,matched,0.6372222222222221
+brightness only,0.68,1.6,1.5,rings,matched,0.5113888888888889
+polar + zoobot,0.68,1.6,1.5,arcs,matched,0.9803999999999999
+zoobot finetuned,0.68,1.6,1.5,arcs,matched,0.9824777777777778
+polar,0.68,1.6,1.5,arcs,matched,0.9647111111111112
+zoobot frozen,0.68,1.6,1.5,arcs,matched,0.9056666666666666
+profile only,0.68,1.6,1.5,arcs,matched,0.5778666666666666
+brightness only,0.68,1.6,1.5,arcs,matched,0.5057111111111111
+polar + zoobot,0.68,1.6,1.5,round centred,matched,0.9987999999999999
+zoobot finetuned,0.68,1.6,1.5,round centred,matched,0.9983
+polar,0.68,1.6,1.5,round centred,matched,0.9918
+zoobot frozen,0.68,1.6,1.5,round centred,matched,0.9867111111111111
+profile only,0.68,1.6,1.5,round centred,matched,0.6063666666666666
+brightness only,0.68,1.6,1.5,round centred,matched,0.5105999999999999
+polar + zoobot,0.68,1.6,1.5,rings,plain,0.9981444444444444
+zoobot finetuned,0.68,1.6,1.5,rings,plain,0.9980222222222223
+polar,0.68,1.6,1.5,rings,plain,0.9883555555555555
+zoobot frozen,0.68,1.6,1.5,rings,plain,0.9840444444444445
+profile only,0.68,1.6,1.5,rings,plain,0.6068444444444444
+brightness only,0.68,1.6,1.5,rings,plain,0.5059944444444444
+polar + zoobot,0.68,1.6,2.0,rings,matched,0.9993222222222222
+zoobot finetuned,0.68,1.6,2.0,rings,matched,0.9973666666666667
+polar,0.68,1.6,2.0,rings,matched,0.9867444444444444
+zoobot frozen,0.68,1.6,2.0,rings,matched,0.9942333333333333
+profile only,0.68,1.6,2.0,rings,matched,0.6741666666666667
+brightness only,0.68,1.6,2.0,rings,matched,0.5176444444444445
+polar + zoobot,0.68,1.6,2.0,arcs,matched,0.9922333333333333
+zoobot finetuned,0.68,1.6,2.0,arcs,matched,0.9907999999999999
+polar,0.68,1.6,2.0,arcs,matched,0.9739444444444444
+zoobot frozen,0.68,1.6,2.0,arcs,matched,0.9600666666666667
+profile only,0.68,1.6,2.0,arcs,matched,0.5962555555555555
+brightness only,0.68,1.6,2.0,arcs,matched,0.5081555555555556
+polar + zoobot,0.68,1.6,2.0,round centred,matched,0.9994222222222222
+zoobot finetuned,0.68,1.6,2.0,round centred,matched,0.9988666666666667
+polar,0.68,1.6,2.0,round centred,matched,0.9866222222222223
+zoobot frozen,0.68,1.6,2.0,round centred,matched,0.9958
+profile only,0.68,1.6,2.0,round centred,matched,0.6372333333333333
+brightness only,0.68,1.6,2.0,round centred,matched,0.5169333333333334
+polar + zoobot,0.68,1.6,2.0,rings,plain,0.9992444444444444
+zoobot finetuned,0.68,1.6,2.0,rings,plain,0.9984333333333333
+polar,0.68,1.6,2.0,rings,plain,0.9885777777777778
+zoobot frozen,0.68,1.6,2.0,rings,plain,0.9915222222222222
+profile only,0.68,1.6,2.0,rings,plain,0.6329777777777778
+brightness only,0.68,1.6,2.0,rings,plain,0.5087222222222222
+polar + zoobot,0.68,1.6,3.0,rings,matched,0.9984666666666666
+zoobot finetuned,0.68,1.6,3.0,rings,matched,0.9864111111111111
+polar,0.68,1.6,3.0,rings,matched,0.9529222222222222
+zoobot frozen,0.68,1.6,3.0,rings,matched,0.9969777777777779
+profile only,0.68,1.6,3.0,rings,matched,0.7286999999999999
+brightness only,0.68,1.6,3.0,rings,matched,0.5318333333333334
+polar + zoobot,0.68,1.6,3.0,arcs,matched,0.9964444444444445
+zoobot finetuned,0.68,1.6,3.0,arcs,matched,0.9947111111111111
+polar,0.68,1.6,3.0,arcs,matched,0.9781222222222222
+zoobot frozen,0.68,1.6,3.0,arcs,matched,0.9835666666666667
+profile only,0.68,1.6,3.0,arcs,matched,0.6345777777777778
+brightness only,0.68,1.6,3.0,arcs,matched,0.5147777777777778
+polar + zoobot,0.68,1.6,3.0,round centred,matched,0.9993
+zoobot finetuned,0.68,1.6,3.0,round centred,matched,0.9918555555555556
+polar,0.68,1.6,3.0,round centred,matched,0.9355555555555555
+zoobot frozen,0.68,1.6,3.0,round centred,matched,0.9963777777777778
+profile only,0.68,1.6,3.0,round centred,matched,0.6900111111111111
+brightness only,0.68,1.6,3.0,round centred,matched,0.5306
+polar + zoobot,0.68,1.6,3.0,rings,plain,0.9987222222222222
+zoobot finetuned,0.68,1.6,3.0,rings,plain,0.9882777777777778
+polar,0.68,1.6,3.0,rings,plain,0.9643666666666667
+zoobot frozen,0.68,1.6,3.0,rings,plain,0.9935888888888889
+profile only,0.68,1.6,3.0,rings,plain,0.6830111111111111
+brightness only,0.68,1.6,3.0,rings,plain,0.5145222222222223
+polar + zoobot,0.68,1.8,0.5,rings,matched,0.7008111111111112
+zoobot finetuned,0.68,1.8,0.5,rings,matched,0.7033333333333334
+polar,0.68,1.8,0.5,rings,matched,0.7664111111111112
+zoobot frozen,0.68,1.8,0.5,rings,matched,0.6153444444444445
+profile only,0.68,1.8,0.5,rings,matched,0.6274333333333334
+brightness only,0.68,1.8,0.5,rings,matched,0.5022
+polar + zoobot,0.68,1.8,0.5,arcs,matched,0.5895
+zoobot finetuned,0.68,1.8,0.5,arcs,matched,0.5823555555555555
+polar,0.68,1.8,0.5,arcs,matched,0.6204222222222222
+zoobot frozen,0.68,1.8,0.5,arcs,matched,0.5622555555555555
+profile only,0.68,1.8,0.5,arcs,matched,0.5707555555555556
+brightness only,0.68,1.8,0.5,arcs,matched,0.5011
+polar + zoobot,0.68,1.8,0.5,round centred,matched,0.6994555555555555
+zoobot finetuned,0.68,1.8,0.5,round centred,matched,0.6957
+polar,0.68,1.8,0.5,round centred,matched,0.7944000000000001
+zoobot frozen,0.68,1.8,0.5,round centred,matched,0.6202444444444444
+profile only,0.68,1.8,0.5,round centred,matched,0.6026
+brightness only,0.68,1.8,0.5,round centred,matched,0.5022444444444444
+polar + zoobot,0.68,1.8,0.5,rings,plain,0.6813666666666667
+zoobot finetuned,0.68,1.8,0.5,rings,plain,0.6891444444444443
+polar,0.68,1.8,0.5,rings,plain,0.7455555555555555
+zoobot frozen,0.68,1.8,0.5,rings,plain,0.6111333333333333
+profile only,0.68,1.8,0.5,rings,plain,0.6145555555555556
+brightness only,0.68,1.8,0.5,rings,plain,0.5013333333333334
+polar + zoobot,0.68,1.8,1.0,rings,matched,0.9678
+zoobot finetuned,0.68,1.8,1.0,rings,matched,0.9636888888888888
+polar,0.68,1.8,1.0,rings,matched,0.9675
+zoobot frozen,0.68,1.8,1.0,rings,matched,0.8485777777777778
+profile only,0.68,1.8,1.0,rings,matched,0.733688888888889
+brightness only,0.68,1.8,1.0,rings,matched,0.5067888888888888
+polar + zoobot,0.68,1.8,1.0,arcs,matched,0.8465777777777778
+zoobot finetuned,0.68,1.8,1.0,arcs,matched,0.8426444444444444
+polar,0.68,1.8,1.0,arcs,matched,0.8531999999999998
+zoobot frozen,0.68,1.8,1.0,arcs,matched,0.710088888888889
+profile only,0.68,1.8,1.0,arcs,matched,0.6386111111111112
+brightness only,0.68,1.8,1.0,arcs,matched,0.5032777777777777
+polar + zoobot,0.68,1.8,1.0,round centred,matched,0.9697
+zoobot finetuned,0.68,1.8,1.0,round centred,matched,0.9684444444444443
+polar,0.68,1.8,1.0,round centred,matched,0.9792777777777778
+zoobot frozen,0.68,1.8,1.0,round centred,matched,0.858211111111111
+profile only,0.68,1.8,1.0,round centred,matched,0.6930111111111111
+brightness only,0.68,1.8,1.0,round centred,matched,0.5059666666666667
+polar + zoobot,0.68,1.8,1.0,rings,plain,0.9626444444444445
+zoobot finetuned,0.68,1.8,1.0,rings,plain,0.9676777777777779
+polar,0.68,1.8,1.0,rings,plain,0.9682111111111111
+zoobot frozen,0.68,1.8,1.0,rings,plain,0.8387777777777778
+profile only,0.68,1.8,1.0,rings,plain,0.7134
+brightness only,0.68,1.8,1.0,rings,plain,0.5026333333333334
+polar + zoobot,0.68,1.8,1.5,rings,matched,0.9977555555555556
+zoobot finetuned,0.68,1.8,1.5,rings,matched,0.9966333333333334
+polar,0.68,1.8,1.5,rings,matched,0.9856111111111112
+zoobot frozen,0.68,1.8,1.5,rings,matched,0.9779111111111112
+profile only,0.68,1.8,1.5,rings,matched,0.8125222222222221
+brightness only,0.68,1.8,1.5,rings,matched,0.5123111111111112
+polar + zoobot,0.68,1.8,1.5,arcs,matched,0.943311111111111
+zoobot finetuned,0.68,1.8,1.5,arcs,matched,0.9446777777777778
+polar,0.68,1.8,1.5,arcs,matched,0.9421777777777778
+zoobot frozen,0.68,1.8,1.5,arcs,matched,0.8561888888888889
+profile only,0.68,1.8,1.5,arcs,matched,0.6887444444444445
+brightness only,0.68,1.8,1.5,arcs,matched,0.5057444444444446
+polar + zoobot,0.68,1.8,1.5,round centred,matched,0.9984222222222223
+zoobot finetuned,0.68,1.8,1.5,round centred,matched,0.9980666666666667
+polar,0.68,1.8,1.5,round centred,matched,0.9863333333333333
+zoobot frozen,0.68,1.8,1.5,round centred,matched,0.9806555555555555
+profile only,0.68,1.8,1.5,round centred,matched,0.765311111111111
+brightness only,0.68,1.8,1.5,round centred,matched,0.5113666666666666
+polar + zoobot,0.68,1.8,1.5,rings,plain,0.9968666666666667
+zoobot finetuned,0.68,1.8,1.5,rings,plain,0.9973777777777777
+polar,0.68,1.8,1.5,rings,plain,0.9857111111111112
+zoobot frozen,0.68,1.8,1.5,rings,plain,0.9712333333333334
+profile only,0.68,1.8,1.5,rings,plain,0.7938444444444445
+brightness only,0.68,1.8,1.5,rings,plain,0.5053888888888889
+polar + zoobot,0.68,1.8,2.0,rings,matched,0.9991
+zoobot finetuned,0.68,1.8,2.0,rings,matched,0.9987666666666667
+polar,0.68,1.8,2.0,rings,matched,0.9840666666666666
+zoobot frozen,0.68,1.8,2.0,rings,matched,0.9900777777777777
+profile only,0.68,1.8,2.0,rings,matched,0.8683000000000001
+brightness only,0.68,1.8,2.0,rings,matched,0.5187444444444445
+polar + zoobot,0.68,1.8,2.0,arcs,matched,0.9887333333333334
+zoobot finetuned,0.68,1.8,2.0,arcs,matched,0.9881111111111112
+polar,0.68,1.8,2.0,arcs,matched,0.9646333333333333
+zoobot frozen,0.68,1.8,2.0,arcs,matched,0.9512333333333334
+profile only,0.68,1.8,2.0,arcs,matched,0.7392444444444444
+brightness only,0.68,1.8,2.0,arcs,matched,0.5087999999999999
+polar + zoobot,0.68,1.8,2.0,round centred,matched,0.9994555555555557
+zoobot finetuned,0.68,1.8,2.0,round centred,matched,0.9990111111111112
+polar,0.68,1.8,2.0,round centred,matched,0.9781333333333333
+zoobot frozen,0.68,1.8,2.0,round centred,matched,0.9927555555555555
+profile only,0.68,1.8,2.0,round centred,matched,0.8199555555555555
+brightness only,0.68,1.8,2.0,round centred,matched,0.51815
+polar + zoobot,0.68,1.8,2.0,rings,plain,0.9988666666666666
+zoobot finetuned,0.68,1.8,2.0,rings,plain,0.9983444444444445
+polar,0.68,1.8,2.0,rings,plain,0.9875888888888888
+zoobot frozen,0.68,1.8,2.0,rings,plain,0.9886777777777778
+profile only,0.68,1.8,2.0,rings,plain,0.8473111111111112
+brightness only,0.68,1.8,2.0,rings,plain,0.5084888888888889
+polar + zoobot,0.68,1.8,3.0,rings,matched,0.9987555555555555
+zoobot finetuned,0.68,1.8,3.0,rings,matched,0.9909333333333332
+polar,0.68,1.8,3.0,rings,matched,0.9704333333333334
+zoobot frozen,0.68,1.8,3.0,rings,matched,0.9933333333333334
+profile only,0.68,1.8,3.0,rings,matched,0.9284777777777777
+brightness only,0.68,1.8,3.0,rings,matched,0.5368777777777778
+polar + zoobot,0.68,1.8,3.0,arcs,matched,0.9948666666666667
+zoobot finetuned,0.68,1.8,3.0,arcs,matched,0.9887
+polar,0.68,1.8,3.0,arcs,matched,0.9770777777777778
+zoobot frozen,0.68,1.8,3.0,arcs,matched,0.9880333333333333
+profile only,0.68,1.8,3.0,arcs,matched,0.8062444444444445
+brightness only,0.68,1.8,3.0,arcs,matched,0.5178222222222222
+polar + zoobot,0.68,1.8,3.0,round centred,matched,0.9991777777777777
+zoobot finetuned,0.68,1.8,3.0,round centred,matched,0.9961111111111112
+polar,0.68,1.8,3.0,round centred,matched,0.9240777777777778
+zoobot frozen,0.68,1.8,3.0,round centred,matched,0.9926333333333333
+profile only,0.68,1.8,3.0,round centred,matched,0.8919333333333335
+brightness only,0.68,1.8,3.0,round centred,matched,0.5353777777777777
+polar + zoobot,0.68,1.8,3.0,rings,plain,0.996788888888889
+zoobot finetuned,0.68,1.8,3.0,rings,plain,0.9919666666666667
+polar,0.68,1.8,3.0,rings,plain,0.9587444444444444
+zoobot frozen,0.68,1.8,3.0,rings,plain,0.9866777777777779
+profile only,0.68,1.8,3.0,rings,plain,0.9078666666666667
+brightness only,0.68,1.8,3.0,rings,plain,0.5156666666666667
+polar + zoobot,1.0,1.4,0.5,rings,matched,0.7003222222222223
+zoobot finetuned,1.0,1.4,0.5,rings,matched,0.6949222222222221
+polar,1.0,1.4,0.5,rings,matched,0.6807222222222222
+zoobot frozen,1.0,1.4,0.5,rings,matched,0.587111111111111
+profile only,1.0,1.4,0.5,rings,matched,0.5004888888888889
+brightness only,1.0,1.4,0.5,rings,matched,0.5033222222222222
+polar + zoobot,1.0,1.4,0.5,arcs,matched,0.6118
+zoobot finetuned,1.0,1.4,0.5,arcs,matched,0.6060444444444445
+polar,1.0,1.4,0.5,arcs,matched,0.5989666666666668
+zoobot frozen,1.0,1.4,0.5,arcs,matched,0.5562888888888889
+profile only,1.0,1.4,0.5,arcs,matched,0.500211111111111
+brightness only,1.0,1.4,0.5,arcs,matched,0.5027555555555556
+polar + zoobot,1.0,1.4,0.5,round centred,matched,0.7059222222222222
+zoobot finetuned,1.0,1.4,0.5,round centred,matched,0.6981222222222222
+polar,1.0,1.4,0.5,round centred,matched,0.7029777777777777
+zoobot frozen,1.0,1.4,0.5,round centred,matched,0.5882111111111111
+profile only,1.0,1.4,0.5,round centred,matched,0.4917111111111111
+brightness only,1.0,1.4,0.5,round centred,matched,0.5037333333333334
+polar + zoobot,1.0,1.4,0.5,rings,plain,0.6789
+zoobot finetuned,1.0,1.4,0.5,rings,plain,0.6741666666666667
+polar,1.0,1.4,0.5,rings,plain,0.6569444444444444
+zoobot frozen,1.0,1.4,0.5,rings,plain,0.5780777777777778
+profile only,1.0,1.4,0.5,rings,plain,0.4844111111111111
+brightness only,1.0,1.4,0.5,rings,plain,0.5033666666666666
+polar + zoobot,1.0,1.4,1.0,rings,matched,0.9336666666666666
+zoobot finetuned,1.0,1.4,1.0,rings,matched,0.9222444444444444
+polar,1.0,1.4,1.0,rings,matched,0.9052111111111111
+zoobot frozen,1.0,1.4,1.0,rings,matched,0.7514666666666667
+profile only,1.0,1.4,1.0,rings,matched,0.5017666666666666
+brightness only,1.0,1.4,1.0,rings,matched,0.5083333333333333
+polar + zoobot,1.0,1.4,1.0,arcs,matched,0.7792888888888888
+zoobot finetuned,1.0,1.4,1.0,arcs,matched,0.7791444444444444
+polar,1.0,1.4,1.0,arcs,matched,0.7449555555555555
+zoobot frozen,1.0,1.4,1.0,arcs,matched,0.6313888888888889
+profile only,1.0,1.4,1.0,arcs,matched,0.5018444444444445
+brightness only,1.0,1.4,1.0,arcs,matched,0.5046444444444445
+polar + zoobot,1.0,1.4,1.0,round centred,matched,0.9395666666666667
+zoobot finetuned,1.0,1.4,1.0,round centred,matched,0.9350222222222223
+polar,1.0,1.4,1.0,round centred,matched,0.9451222222222223
+zoobot frozen,1.0,1.4,1.0,round centred,matched,0.7610222222222222
+profile only,1.0,1.4,1.0,round centred,matched,0.48511111111111116
+brightness only,1.0,1.4,1.0,round centred,matched,0.507688888888889
+polar + zoobot,1.0,1.4,1.0,rings,plain,0.9271888888888888
+zoobot finetuned,1.0,1.4,1.0,rings,plain,0.9149333333333334
+polar,1.0,1.4,1.0,rings,plain,0.9056333333333333
+zoobot frozen,1.0,1.4,1.0,rings,plain,0.7224000000000002
+profile only,1.0,1.4,1.0,rings,plain,0.4721333333333333
+brightness only,1.0,1.4,1.0,rings,plain,0.5056555555555555
+polar + zoobot,1.0,1.4,1.5,rings,matched,0.9931222222222222
+zoobot finetuned,1.0,1.4,1.5,rings,matched,0.9890444444444445
+polar,1.0,1.4,1.5,rings,matched,0.9770222222222222
+zoobot frozen,1.0,1.4,1.5,rings,matched,0.9018999999999999
+profile only,1.0,1.4,1.5,rings,matched,0.5039666666666667
+brightness only,1.0,1.4,1.5,rings,matched,0.5134444444444445
+polar + zoobot,1.0,1.4,1.5,arcs,matched,0.9110333333333334
+zoobot finetuned,1.0,1.4,1.5,arcs,matched,0.8997
+polar,1.0,1.4,1.5,arcs,matched,0.8681666666666666
+zoobot frozen,1.0,1.4,1.5,arcs,matched,0.7436333333333334
+profile only,1.0,1.4,1.5,arcs,matched,0.5037888888888888
+brightness only,1.0,1.4,1.5,arcs,matched,0.5069444444444444
+polar + zoobot,1.0,1.4,1.5,round centred,matched,0.9946777777777778
+zoobot finetuned,1.0,1.4,1.5,round centred,matched,0.9936888888888888
+polar,1.0,1.4,1.5,round centred,matched,0.9893444444444444
+zoobot frozen,1.0,1.4,1.5,round centred,matched,0.9072222222222224
+profile only,1.0,1.4,1.5,round centred,matched,0.47905555555555557
+brightness only,1.0,1.4,1.5,round centred,matched,0.5133444444444444
+polar + zoobot,1.0,1.4,1.5,rings,plain,0.9916111111111111
+zoobot finetuned,1.0,1.4,1.5,rings,plain,0.9912666666666666
+polar,1.0,1.4,1.5,rings,plain,0.9763999999999999
+zoobot frozen,1.0,1.4,1.5,rings,plain,0.8925111111111111
+profile only,1.0,1.4,1.5,rings,plain,0.46201111111111115
+brightness only,1.0,1.4,1.5,rings,plain,0.5087777777777779
+polar + zoobot,1.0,1.4,2.0,rings,matched,0.9977555555555556
+zoobot finetuned,1.0,1.4,2.0,rings,matched,0.9973555555555556
+polar,1.0,1.4,2.0,rings,matched,0.9853222222222222
+zoobot frozen,1.0,1.4,2.0,rings,matched,0.9613777777777779
+profile only,1.0,1.4,2.0,rings,matched,0.5084888888888889
+brightness only,1.0,1.4,2.0,rings,matched,0.5205000000000001
+polar + zoobot,1.0,1.4,2.0,arcs,matched,0.9714333333333334
+zoobot finetuned,1.0,1.4,2.0,arcs,matched,0.9644111111111111
+polar,1.0,1.4,2.0,arcs,matched,0.9322000000000001
+zoobot frozen,1.0,1.4,2.0,arcs,matched,0.8384666666666667
+profile only,1.0,1.4,2.0,arcs,matched,0.5027
+brightness only,1.0,1.4,2.0,arcs,matched,0.5110444444444444
+polar + zoobot,1.0,1.4,2.0,round centred,matched,0.9983222222222222
+zoobot finetuned,1.0,1.4,2.0,round centred,matched,0.9976222222222222
+polar,1.0,1.4,2.0,round centred,matched,0.9898666666666667
+zoobot frozen,1.0,1.4,2.0,round centred,matched,0.9659
+profile only,1.0,1.4,2.0,round centred,matched,0.4744222222222222
+brightness only,1.0,1.4,2.0,round centred,matched,0.5193777777777778
+polar + zoobot,1.0,1.4,2.0,rings,plain,0.9965999999999999
+zoobot finetuned,1.0,1.4,2.0,rings,plain,0.9970000000000001
+polar,1.0,1.4,2.0,rings,plain,0.9825666666666666
+zoobot frozen,1.0,1.4,2.0,rings,plain,0.9591666666666666
+profile only,1.0,1.4,2.0,rings,plain,0.4549777777777778
+brightness only,1.0,1.4,2.0,rings,plain,0.5130222222222222
+polar + zoobot,1.0,1.4,3.0,rings,matched,0.9960555555555555
+zoobot finetuned,1.0,1.4,3.0,rings,matched,0.9938
+polar,1.0,1.4,3.0,rings,matched,0.9289888888888889
+zoobot frozen,1.0,1.4,3.0,rings,matched,0.9914111111111111
+profile only,1.0,1.4,3.0,rings,matched,0.5195000000000001
+brightness only,1.0,1.4,3.0,rings,matched,0.5344333333333333
+polar + zoobot,1.0,1.4,3.0,arcs,matched,0.9945333333333334
+zoobot finetuned,1.0,1.4,3.0,arcs,matched,0.9916777777777778
+polar,1.0,1.4,3.0,arcs,matched,0.961488888888889
+zoobot frozen,1.0,1.4,3.0,arcs,matched,0.9387444444444445
+profile only,1.0,1.4,3.0,arcs,matched,0.516
+brightness only,1.0,1.4,3.0,arcs,matched,0.5172555555555556
+polar + zoobot,1.0,1.4,3.0,round centred,matched,0.9973444444444444
+zoobot finetuned,1.0,1.4,3.0,round centred,matched,0.9946999999999999
+polar,1.0,1.4,3.0,round centred,matched,0.9135555555555555
+zoobot frozen,1.0,1.4,3.0,round centred,matched,0.9921555555555555
+profile only,1.0,1.4,3.0,round centred,matched,0.4667777777777778
+brightness only,1.0,1.4,3.0,round centred,matched,0.5344333333333334
+polar + zoobot,1.0,1.4,3.0,rings,plain,0.9963111111111111
+zoobot finetuned,1.0,1.4,3.0,rings,plain,0.9936555555555555
+polar,1.0,1.4,3.0,rings,plain,0.9211555555555556
+zoobot frozen,1.0,1.4,3.0,rings,plain,0.9822555555555554
+profile only,1.0,1.4,3.0,rings,plain,0.4410222222222222
+brightness only,1.0,1.4,3.0,rings,plain,0.5199222222222223
+polar + zoobot,1.0,1.6,0.5,rings,matched,0.8955444444444444
+zoobot finetuned,1.0,1.6,0.5,rings,matched,0.9019777777777779
+polar,1.0,1.6,0.5,rings,matched,0.9061111111111111
+zoobot frozen,1.0,1.6,0.5,rings,matched,0.7346777777777778
+profile only,1.0,1.6,0.5,rings,matched,0.5759444444444445
+brightness only,1.0,1.6,0.5,rings,matched,0.5028888888888889
+polar + zoobot,1.0,1.6,0.5,arcs,matched,0.7695111111111111
+zoobot finetuned,1.0,1.6,0.5,arcs,matched,0.7719666666666667
+polar,1.0,1.6,0.5,arcs,matched,0.7645444444444445
+zoobot frozen,1.0,1.6,0.5,arcs,matched,0.6427777777777778
+profile only,1.0,1.6,0.5,arcs,matched,0.5411444444444444
+brightness only,1.0,1.6,0.5,arcs,matched,0.5019888888888888
+polar + zoobot,1.0,1.6,0.5,round centred,matched,0.9077666666666668
+zoobot finetuned,1.0,1.6,0.5,round centred,matched,0.9128333333333333
+polar,1.0,1.6,0.5,round centred,matched,0.9365333333333333
+zoobot frozen,1.0,1.6,0.5,round centred,matched,0.7453111111111111
+profile only,1.0,1.6,0.5,round centred,matched,0.5690444444444445
+brightness only,1.0,1.6,0.5,round centred,matched,0.5029777777777777
+polar + zoobot,1.0,1.6,0.5,rings,plain,0.8868222222222224
+zoobot finetuned,1.0,1.6,0.5,rings,plain,0.8893555555555557
+polar,1.0,1.6,0.5,rings,plain,0.8886555555555555
+zoobot frozen,1.0,1.6,0.5,rings,plain,0.7373888888888889
+profile only,1.0,1.6,0.5,rings,plain,0.5578666666666667
+brightness only,1.0,1.6,0.5,rings,plain,0.5025111111111111
+polar + zoobot,1.0,1.6,1.0,rings,matched,0.9972000000000001
+zoobot finetuned,1.0,1.6,1.0,rings,matched,0.9971555555555556
+polar,1.0,1.6,1.0,rings,matched,0.9913000000000001
+zoobot frozen,1.0,1.6,1.0,rings,matched,0.9516777777777777
+profile only,1.0,1.6,1.0,rings,matched,0.6445666666666665
+brightness only,1.0,1.6,1.0,rings,matched,0.5076555555555555
+polar + zoobot,1.0,1.6,1.0,arcs,matched,0.9538777777777777
+zoobot finetuned,1.0,1.6,1.0,arcs,matched,0.9563444444444444
+polar,1.0,1.6,1.0,arcs,matched,0.9422222222222222
+zoobot frozen,1.0,1.6,1.0,arcs,matched,0.8081444444444444
+profile only,1.0,1.6,1.0,arcs,matched,0.5850777777777778
+brightness only,1.0,1.6,1.0,arcs,matched,0.5038666666666667
+polar + zoobot,1.0,1.6,1.0,round centred,matched,0.9962777777777778
+zoobot finetuned,1.0,1.6,1.0,round centred,matched,0.9971888888888889
+polar,1.0,1.6,1.0,round centred,matched,0.9948777777777777
+zoobot frozen,1.0,1.6,1.0,round centred,matched,0.9504888888888889
+profile only,1.0,1.6,1.0,round centred,matched,0.6335
+brightness only,1.0,1.6,1.0,round centred,matched,0.5075777777777777
+polar + zoobot,1.0,1.6,1.0,rings,plain,0.9956888888888888
+zoobot finetuned,1.0,1.6,1.0,rings,plain,0.9963333333333333
+polar,1.0,1.6,1.0,rings,plain,0.9908222222222222
+zoobot frozen,1.0,1.6,1.0,rings,plain,0.9381555555555555
+profile only,1.0,1.6,1.0,rings,plain,0.6130777777777778
+brightness only,1.0,1.6,1.0,rings,plain,0.505
+polar + zoobot,1.0,1.6,1.5,rings,matched,0.9992888888888888
+zoobot finetuned,1.0,1.6,1.5,rings,matched,0.9991333333333333
+polar,1.0,1.6,1.5,rings,matched,0.9940333333333333
+zoobot frozen,1.0,1.6,1.5,rings,matched,0.9928000000000001
+profile only,1.0,1.6,1.5,rings,matched,0.7021222222222222
+brightness only,1.0,1.6,1.5,rings,matched,0.5139555555555556
+polar + zoobot,1.0,1.6,1.5,arcs,matched,0.9895888888888889
+zoobot finetuned,1.0,1.6,1.5,arcs,matched,0.9895888888888889
+polar,1.0,1.6,1.5,arcs,matched,0.9778555555555557
+zoobot frozen,1.0,1.6,1.5,arcs,matched,0.9311444444444444
+profile only,1.0,1.6,1.5,arcs,matched,0.6173888888888889
+brightness only,1.0,1.6,1.5,arcs,matched,0.5072555555555556
+polar + zoobot,1.0,1.6,1.5,round centred,matched,0.9994666666666666
+zoobot finetuned,1.0,1.6,1.5,round centred,matched,0.9994555555555555
+polar,1.0,1.6,1.5,round centred,matched,0.9961666666666666
+zoobot frozen,1.0,1.6,1.5,round centred,matched,0.9938666666666667
+profile only,1.0,1.6,1.5,round centred,matched,0.6895
+brightness only,1.0,1.6,1.5,round centred,matched,0.5136444444444445
+polar + zoobot,1.0,1.6,1.5,rings,plain,0.9993111111111111
+zoobot finetuned,1.0,1.6,1.5,rings,plain,0.9991222222222222
+polar,1.0,1.6,1.5,rings,plain,0.9939111111111112
+zoobot frozen,1.0,1.6,1.5,rings,plain,0.9900222222222222
+profile only,1.0,1.6,1.5,rings,plain,0.6606444444444444
+brightness only,1.0,1.6,1.5,rings,plain,0.5083111111111112
+polar + zoobot,1.0,1.6,2.0,rings,matched,0.9995777777777777
+zoobot finetuned,1.0,1.6,2.0,rings,matched,0.9991666666666666
+polar,1.0,1.6,2.0,rings,matched,0.9929111111111111
+zoobot frozen,1.0,1.6,2.0,rings,matched,0.9974000000000001
+profile only,1.0,1.6,2.0,rings,matched,0.7525444444444445
+brightness only,1.0,1.6,2.0,rings,matched,0.5207111111111111
+polar + zoobot,1.0,1.6,2.0,arcs,matched,0.9958
+zoobot finetuned,1.0,1.6,2.0,arcs,matched,0.9976111111111111
+polar,1.0,1.6,2.0,arcs,matched,0.9832
+zoobot frozen,1.0,1.6,2.0,arcs,matched,0.9740555555555555
+profile only,1.0,1.6,2.0,arcs,matched,0.6470888888888888
+brightness only,1.0,1.6,2.0,arcs,matched,0.5119777777777778
+polar + zoobot,1.0,1.6,2.0,round centred,matched,0.9997
+zoobot finetuned,1.0,1.6,2.0,round centred,matched,0.9997666666666667
+polar,1.0,1.6,2.0,round centred,matched,0.9925111111111111
+zoobot frozen,1.0,1.6,2.0,round centred,matched,0.9980444444444444
+profile only,1.0,1.6,2.0,round centred,matched,0.7377555555555556
+brightness only,1.0,1.6,2.0,round centred,matched,0.5203777777777778
+polar + zoobot,1.0,1.6,2.0,rings,plain,0.9993
+zoobot finetuned,1.0,1.6,2.0,rings,plain,0.9988222222222222
+polar,1.0,1.6,2.0,rings,plain,0.9925555555555555
+zoobot frozen,1.0,1.6,2.0,rings,plain,0.9948333333333332
+profile only,1.0,1.6,2.0,rings,plain,0.7013777777777778
+brightness only,1.0,1.6,2.0,rings,plain,0.5123444444444445
+polar + zoobot,1.0,1.6,3.0,rings,matched,0.9986222222222223
+zoobot finetuned,1.0,1.6,3.0,rings,matched,0.9881555555555556
+polar,1.0,1.6,3.0,rings,matched,0.9681222222222222
+zoobot frozen,1.0,1.6,3.0,rings,matched,0.9992666666666667
+profile only,1.0,1.6,3.0,rings,matched,0.8245333333333333
+brightness only,1.0,1.6,3.0,rings,matched,0.5390333333333334
+polar + zoobot,1.0,1.6,3.0,arcs,matched,0.9978111111111111
+zoobot finetuned,1.0,1.6,3.0,arcs,matched,0.9973444444444445
+polar,1.0,1.6,3.0,arcs,matched,0.9894555555555555
+zoobot frozen,1.0,1.6,3.0,arcs,matched,0.9908222222222223
+profile only,1.0,1.6,3.0,arcs,matched,0.7013
+brightness only,1.0,1.6,3.0,arcs,matched,0.5205222222222222
+polar + zoobot,1.0,1.6,3.0,round centred,matched,0.9994111111111111
+zoobot finetuned,1.0,1.6,3.0,round centred,matched,0.9927777777777778
+polar,1.0,1.6,3.0,round centred,matched,0.9519222222222222
+zoobot frozen,1.0,1.6,3.0,round centred,matched,0.9981333333333333
+profile only,1.0,1.6,3.0,round centred,matched,0.8109888888888891
+brightness only,1.0,1.6,3.0,round centred,matched,0.5384
+polar + zoobot,1.0,1.6,3.0,rings,plain,0.9984777777777778
+zoobot finetuned,1.0,1.6,3.0,rings,plain,0.9829111111111111
+polar,1.0,1.6,3.0,rings,plain,0.9640444444444445
+zoobot frozen,1.0,1.6,3.0,rings,plain,0.9952222222222222
+profile only,1.0,1.6,3.0,rings,plain,0.7672666666666668
+brightness only,1.0,1.6,3.0,rings,plain,0.5208444444444444
+polar + zoobot,1.0,1.8,0.5,rings,matched,0.8433666666666666
+zoobot finetuned,1.0,1.8,0.5,rings,matched,0.8481777777777778
+polar,1.0,1.8,0.5,rings,matched,0.8793888888888889
+zoobot frozen,1.0,1.8,0.5,rings,matched,0.6889444444444445
+profile only,1.0,1.8,0.5,rings,matched,0.6844
+brightness only,1.0,1.8,0.5,rings,matched,0.503411111111111
+polar + zoobot,1.0,1.8,0.5,arcs,matched,0.7008777777777777
+zoobot finetuned,1.0,1.8,0.5,arcs,matched,0.6989777777777777
+polar,1.0,1.8,0.5,arcs,matched,0.7231777777777778
+zoobot frozen,1.0,1.8,0.5,arcs,matched,0.5999222222222222
+profile only,1.0,1.8,0.5,arcs,matched,0.6044888888888889
+brightness only,1.0,1.8,0.5,arcs,matched,0.5022777777777778
+polar + zoobot,1.0,1.8,0.5,round centred,matched,0.8436555555555557
+zoobot finetuned,1.0,1.8,0.5,round centred,matched,0.8569444444444444
+polar,1.0,1.8,0.5,round centred,matched,0.9105777777777778
+zoobot frozen,1.0,1.8,0.5,round centred,matched,0.6895666666666667
+profile only,1.0,1.8,0.5,round centred,matched,0.6687
+brightness only,1.0,1.8,0.5,round centred,matched,0.5026888888888889
+polar + zoobot,1.0,1.8,0.5,rings,plain,0.8186333333333333
+zoobot finetuned,1.0,1.8,0.5,rings,plain,0.8340444444444445
+polar,1.0,1.8,0.5,rings,plain,0.8649777777777778
+zoobot frozen,1.0,1.8,0.5,rings,plain,0.6670444444444444
+profile only,1.0,1.8,0.5,rings,plain,0.6670222222222222
+brightness only,1.0,1.8,0.5,rings,plain,0.5020666666666667
+polar + zoobot,1.0,1.8,1.0,rings,matched,0.9938777777777777
+zoobot finetuned,1.0,1.8,1.0,rings,matched,0.9924999999999999
+polar,1.0,1.8,1.0,rings,matched,0.9875222222222223
+zoobot frozen,1.0,1.8,1.0,rings,matched,0.9314222222222222
+profile only,1.0,1.8,1.0,rings,matched,0.8192222222222223
+brightness only,1.0,1.8,1.0,rings,matched,0.5074888888888889
+polar + zoobot,1.0,1.8,1.0,arcs,matched,0.9257777777777777
+zoobot finetuned,1.0,1.8,1.0,arcs,matched,0.9297
+polar,1.0,1.8,1.0,arcs,matched,0.9308000000000001
+zoobot frozen,1.0,1.8,1.0,arcs,matched,0.7827777777777778
+profile only,1.0,1.8,1.0,arcs,matched,0.6894777777777779
+brightness only,1.0,1.8,1.0,arcs,matched,0.5039111111111112
+polar + zoobot,1.0,1.8,1.0,round centred,matched,0.9935555555555556
+zoobot finetuned,1.0,1.8,1.0,round centred,matched,0.9933777777777778
+polar,1.0,1.8,1.0,round centred,matched,0.9932
+zoobot frozen,1.0,1.8,1.0,round centred,matched,0.9335666666666667
+profile only,1.0,1.8,1.0,round centred,matched,0.8000222222222222
+brightness only,1.0,1.8,1.0,round centred,matched,0.5073888888888889
+polar + zoobot,1.0,1.8,1.0,rings,plain,0.994
+zoobot finetuned,1.0,1.8,1.0,rings,plain,0.9935333333333334
+polar,1.0,1.8,1.0,rings,plain,0.988588888888889
+zoobot frozen,1.0,1.8,1.0,rings,plain,0.9245222222222221
+profile only,1.0,1.8,1.0,rings,plain,0.7974222222222221
+brightness only,1.0,1.8,1.0,rings,plain,0.5044555555555555
+polar + zoobot,1.0,1.8,1.5,rings,matched,0.9992888888888889
+zoobot finetuned,1.0,1.8,1.5,rings,matched,0.9993555555555556
+polar,1.0,1.8,1.5,rings,matched,0.9938777777777779
+zoobot frozen,1.0,1.8,1.5,rings,matched,0.9940444444444444
+profile only,1.0,1.8,1.5,rings,matched,0.9001555555555556
+brightness only,1.0,1.8,1.5,rings,matched,0.5140555555555556
+polar + zoobot,1.0,1.8,1.5,arcs,matched,0.9824111111111111
+zoobot finetuned,1.0,1.8,1.5,arcs,matched,0.9836333333333332
+polar,1.0,1.8,1.5,arcs,matched,0.9732333333333333
+zoobot frozen,1.0,1.8,1.5,arcs,matched,0.921811111111111
+profile only,1.0,1.8,1.5,arcs,matched,0.7674666666666667
+brightness only,1.0,1.8,1.5,arcs,matched,0.5076666666666667
+polar + zoobot,1.0,1.8,1.5,round centred,matched,0.9992777777777777
+zoobot finetuned,1.0,1.8,1.5,round centred,matched,0.9991555555555556
+polar,1.0,1.8,1.5,round centred,matched,0.994488888888889
+zoobot frozen,1.0,1.8,1.5,round centred,matched,0.9941666666666666
+profile only,1.0,1.8,1.5,round centred,matched,0.8825
+brightness only,1.0,1.8,1.5,round centred,matched,0.5133111111111112
+polar + zoobot,1.0,1.8,1.5,rings,plain,0.9995222222222222
+zoobot finetuned,1.0,1.8,1.5,rings,plain,0.9988666666666667
+polar,1.0,1.8,1.5,rings,plain,0.9937777777777778
+zoobot frozen,1.0,1.8,1.5,rings,plain,0.9900666666666667
+profile only,1.0,1.8,1.5,rings,plain,0.8800111111111112
+brightness only,1.0,1.8,1.5,rings,plain,0.5077
+polar + zoobot,1.0,1.8,2.0,rings,matched,0.9993555555555556
+zoobot finetuned,1.0,1.8,2.0,rings,matched,0.9994555555555557
+polar,1.0,1.8,2.0,rings,matched,0.9928555555555555
+zoobot frozen,1.0,1.8,2.0,rings,matched,0.9947222222222223
+profile only,1.0,1.8,2.0,rings,matched,0.9418666666666667
+brightness only,1.0,1.8,2.0,rings,matched,0.5232111111111111
+polar + zoobot,1.0,1.8,2.0,arcs,matched,0.994388888888889
+zoobot finetuned,1.0,1.8,2.0,arcs,matched,0.9948888888888888
+polar,1.0,1.8,2.0,arcs,matched,0.9820333333333333
+zoobot frozen,1.0,1.8,2.0,arcs,matched,0.9793222222222222
+profile only,1.0,1.8,2.0,arcs,matched,0.8224666666666667
+brightness only,1.0,1.8,2.0,arcs,matched,0.5111111111111111
+polar + zoobot,1.0,1.8,2.0,round centred,matched,0.9996555555555556
+zoobot finetuned,1.0,1.8,2.0,round centred,matched,0.9995333333333334
+polar,1.0,1.8,2.0,round centred,matched,0.9900666666666667
+zoobot frozen,1.0,1.8,2.0,round centred,matched,0.9965555555555555
+profile only,1.0,1.8,2.0,round centred,matched,0.9298111111111111
+brightness only,1.0,1.8,2.0,round centred,matched,0.5219666666666667
+polar + zoobot,1.0,1.8,2.0,rings,plain,0.9998111111111111
+zoobot finetuned,1.0,1.8,2.0,rings,plain,0.9994444444444445
+polar,1.0,1.8,2.0,rings,plain,0.9931555555555556
+zoobot frozen,1.0,1.8,2.0,rings,plain,0.9921444444444444
+profile only,1.0,1.8,2.0,rings,plain,0.9266222222222222
+brightness only,1.0,1.8,2.0,rings,plain,0.5117333333333334
+polar + zoobot,1.0,1.8,3.0,rings,matched,0.9989666666666667
+zoobot finetuned,1.0,1.8,3.0,rings,matched,0.9941444444444445
+polar,1.0,1.8,3.0,rings,matched,0.9799777777777777
+zoobot frozen,1.0,1.8,3.0,rings,matched,0.9893555555555554
+profile only,1.0,1.8,3.0,rings,matched,0.9743111111111111
+brightness only,1.0,1.8,3.0,rings,matched,0.5450055555555555
+polar + zoobot,1.0,1.8,3.0,arcs,matched,0.9980666666666667
+zoobot finetuned,1.0,1.8,3.0,arcs,matched,0.9960777777777777
+polar,1.0,1.8,3.0,arcs,matched,0.9899666666666667
+zoobot frozen,1.0,1.8,3.0,arcs,matched,0.9926555555555555
+profile only,1.0,1.8,3.0,arcs,matched,0.8748222222222223
+brightness only,1.0,1.8,3.0,arcs,matched,0.5207777777777778
+polar + zoobot,1.0,1.8,3.0,round centred,matched,0.9991666666666666
+zoobot finetuned,1.0,1.8,3.0,round centred,matched,0.9969111111111112
+polar,1.0,1.8,3.0,round centred,matched,0.9602777777777778
+zoobot frozen,1.0,1.8,3.0,round centred,matched,0.9928111111111111
+profile only,1.0,1.8,3.0,round centred,matched,0.9692222222222222
+brightness only,1.0,1.8,3.0,round centred,matched,0.5440555555555556
+polar + zoobot,1.0,1.8,3.0,rings,plain,0.9978111111111111
+zoobot finetuned,1.0,1.8,3.0,rings,plain,0.9888333333333333
+polar,1.0,1.8,3.0,rings,plain,0.9727777777777777
+zoobot frozen,1.0,1.8,3.0,rings,plain,0.989
+profile only,1.0,1.8,3.0,rings,plain,0.9668333333333334
+brightness only,1.0,1.8,3.0,rings,plain,0.5217444444444445

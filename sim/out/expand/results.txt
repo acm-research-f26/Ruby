@@ -1,0 +1,28 @@
+5000 new non-lenses, 1932 grade C candidates, 149 ordinary validation and test lenses
+
+Trust check: largest score change on old test images, per seed [0.0, 0.0, 0.0] (limit 0.01): ok
+Known compound lenses flagged, of 4, per seed: [4, 4, 4]
+
+New non-lenses
+  seed 1: step one keeps 293; 3-answer alone flags 273; two steps flag 70 of 5000 = 1.400% (95% interval 1.110% to 1.765%); 1.425% without broken images
+  seed 2: step one keeps 214; 3-answer alone flags 205; two steps flag 24 of 5000 = 0.480% (95% interval 0.323% to 0.713%); 0.475% without broken images
+  seed 3: step one keeps 240; 3-answer alone flags 129; two steps flag 20 of 5000 = 0.400% (95% interval 0.259% to 0.617%); 0.413% without broken images
+  images with blocks of zero pixels: 159 of 5000
+  flagged on all 3 seeds: 5
+  on 1.09M galaxies, per seed: [15260, 5232, 4360] false alarms (rough, assumes this sample is representative)
+  earlier estimate, from 300 non-lenses: 1.2%
+  Reading set beforehand: stays a second step on lenses already found
+
+Lens finding on the 79 test lenses, against the new non-lenses (old 300 in brackets)
+  seed 1: baseline 0.9940 (0.9930); 3-answer alone 0.9867
+  seed 2: baseline 0.9927 (0.9917); 3-answer alone 0.9791
+  seed 3: baseline 0.9874 (0.9851); 3-answer alone 0.9813
+
+Grade C candidates vs. ordinary validation and test lenses (no pass or fail)
+  seed 1: step one keeps 88.0% vs. 95.3%; two steps flag 16.8% vs. 12.8%
+  seed 2: step one keeps 81.1% vs. 94.6%; two steps flag 12.7% vs. 7.4%
+  seed 3: step one keeps 80.2% vs. 93.3%; two steps flag 9.6% vs. 6.7%
+
+Lowest mean score of a known compound lens: 0.70
+  grade C at or above it and kept on all seeds: 48; flagged on all 3 seeds: 90
+  new non-lenses at or above it and kept on all seeds: 2

@@ -1,0 +1,23 @@
+polar/diagnose_polar.py, seed 1, same training and validation images as quick_test.py
+AUC, double vs matched thick single. Wider polar was designed AFTER seeing quick_test's result.
+original polar val 0.557 (61s) | wider polar val 0.866 (229s, 140,706 parameters) | profile only val 0.571
+
+oval, off-centre full rings
+distance  polar original  polar wider  profile only
+1.1       0.496           0.566        0.500
+1.2       0.489           0.929        0.499
+1.3       0.464           0.980        0.449
+
+arcs
+1.1       0.498           0.533        0.500
+1.2       0.495           0.821        0.500
+1.3       0.484           0.923        0.472
+
+perfect circles, centred
+1.1       0.496           0.580        0.496
+1.2       0.488           0.952        0.484
+1.3       0.454           0.991        0.403
+
+full rings at 1.2-1.3x by thickness
+0.68      0.476           0.990        0.460
+1.00      0.477           0.920        0.488

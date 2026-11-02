@@ -1,0 +1,21 @@
+Part 1: 43 real validation lenses with a Euclid radius; every version adds the same total light
+  seed 1, brightness 2+: mean rise in score, outer +0.218, same radius +0.116, blob +0.058; with vs. without AUC 0.715, 0.665, 0.581
+    outer minus same, 95% interval [0.064 0.14 ]; outer minus blob [0.135 0.186]
+  seed 2, brightness 2+: mean rise in score, outer +0.274, same radius +0.124, blob +0.035; with vs. without AUC 0.745, 0.652, 0.550
+    outer minus same, 95% interval [0.103 0.197]; outer minus blob [0.203 0.276]
+  seed 3, brightness 2+: mean rise in score, outer +0.286, same radius +0.117, blob +0.024; with vs. without AUC 0.751, 0.650, 0.548
+    outer minus same, 95% interval [0.108 0.225]; outer minus blob [0.221 0.304]
+  mean rise by brightness, all seeds:
+b          1      2      3      4      6
+arm                                     
+blob   0.046  0.057  0.051  0.030  0.017
+outer  0.024  0.157  0.288  0.312  0.279
+same   0.015  0.064  0.106  0.160  0.146
+  Verdict for part 1: mixed
+
+Part 2: hide a zone on the real compound lenses. Score = mean over 3 seeds and 10 noise draws
+  Cosmic Dartboard  full 0.93. Hide outer (0.9, 2.4): 0.20 (falls more than 96% of ordinary); hide inner (0.3, 0.7): 0.85; hide control (2.5, 4.0): 0.85. Meets the rule
+  Cosmic Ammonite   full 0.79. Hide outer (1.4, 1.9): 0.55 (falls more than 99% of ordinary); hide inner (0.9, 1.4): 0.42; hide control (2.2, 2.7): 0.76. Meets the rule
+  Galileo's Lens    full 0.80. Hide outer (1.6, 2.3): 0.30 (falls more than 100% of ordinary); hide inner (1.0, 1.6): 0.40; hide control (2.6, 3.3): 0.74. Meets the rule
+  Teapot Lens       full 0.70. Hide outer (0.95, 1.7): 0.78 (falls more than 53% of ordinary); hide inner (0.4, 0.95): 0.42; hide control (2.0, 2.75): 0.61. Misses the rule
+  Verdict for part 2: outer ring (3 of 4 lenses)

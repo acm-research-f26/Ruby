@@ -1,0 +1,58 @@
+
+Loading images (0 min so far)
+  train: 346 real lenses (221 with a radius), 1000 simulated
+  val: 74 real lenses (43 with a radius), 300 simulated
+
+Frozen Zoobot + a simple classifier (0 min so far)
+  simulated single       AUC 0.844 (folds vary by 0.014)
+  simulated double       AUC 0.852 (folds vary by 0.019)
+  painted single         AUC 0.977 (folds vary by 0.007)
+  nothing added          AUC 0.945 (folds vary by 0.011)
+  real, shuffled         AUC 0.467 (folds vary by 0.043)
+  lenses with a radius   AUC 0.863 (folds vary by 0.020)
+  ring zone hidden       AUC 0.650 (folds vary by 0.041)
+  only the ring zone     AUC 0.777 (folds vary by 0.020)
+
+Retrained Zoobot (0 min so far)
+  simulated single       seed 1: AUC 0.909, later epochs 0.898 (2 min so far)
+  simulated double       seed 1: AUC 0.911, later epochs 0.897 (4 min so far)
+  painted single         seed 1: AUC 0.996, later epochs 0.995 (7 min so far)
+  nothing added          seed 1: AUC 0.984, later epochs 0.980 (9 min so far)
+  real, shuffled         seed 1: AUC 0.622, later epochs 0.569 (9 min so far)
+  lenses with a radius   seed 1: AUC 0.939, later epochs 0.905 (13 min so far)
+  ring zone hidden       seed 1: AUC 0.703, later epochs 0.614 (16 min so far)
+  only the ring zone     seed 1: AUC 0.864, later epochs 0.821 (19 min so far)
+  simulated single       seed 2: AUC 0.904, later epochs 0.882 (23 min so far)
+  real, shuffled         seed 2: AUC 0.376, later epochs 0.359 (23 min so far)
+  simulated single       seed 3: AUC 0.900, later epochs 0.887 (25 min so far)
+  real, shuffled         seed 3: AUC 0.611, later epochs 0.524 (26 min so far)
+
+What the main model looks at (26 min so far)
+  Share called real at a 0.5 cutoff: real lenses 81%, simulated 13%
+  How realistic a simulated lens looks, against what we drew (rank correlation, + = looks more real):
+    theta_e   +0.10
+    q         +0.09
+    inner     +0.14
+    b         -0.06
+    d         +0.03
+    re1       +0.04
+    offset1   -0.04
+    inter     +0.02
+    with a neighbouring source: 0.21, without: 0.21 (mean score)
+
+Result (26 min so far)
+model                 frozen  retrained  retrained, later epochs
+comparison                                                      
+simulated single       0.844      0.904                    0.889
+simulated double       0.852      0.911                    0.897
+painted single         0.977      0.996                    0.995
+nothing added          0.945      0.984                    0.980
+real, shuffled         0.467      0.536                    0.484
+lenses with a radius   0.863      0.939                    0.905
+ring zone hidden       0.650      0.703                    0.614
+only the ring zone     0.777      0.864                    0.821
+
+Retrained Zoobot, real vs. simulated single, per seed: [0.909 0.904 0.9  ], later epochs [0.898 0.882 0.887]
+Real vs. shuffled, per seed: [0.622 0.376 0.611], later epochs [0.569 0.359 0.524]
+Passes (all below 0.90): False
+Trusted: shuffled 0.536 within 0.4-0.6: True; painted 0.996 above simulated 0.904: True
