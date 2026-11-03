@@ -7,7 +7,7 @@ Every script here, grouped by what it does. Run everything from inside `src/`
 
 | File | What it does |
 |---|---|
-| `lens_sim.py` | The lens simulator itself (SIE + Sersic, via lenstronomy). `LensSimulator.sample_lens()` / `.sample_nonlens()` draw a random lens/non-lens image from a config. `.sample_lens_with_ring_size(rng, theta_e)` fixes the ring size (Einstein radius) to a chosen value instead of deriving it from physics -- added for the ring-size sweep experiments on this branch. Also has the fixed (non-per-image) intensity scaling used everywhere. |
+| `lens_sim.py` | The lens simulator itself (SIE + Sersic, via lenstronomy). `LensSimulator.sample_lens()` / `.sample_nonlens()` draw a random lens/non-lens image from a config. `.sample_lens_with_ring_size(rng, theta_e)` fixes the ring size (Einstein radius) instead of deriving it from physics. `.sample_lensed_arc_only(rng, theta_e=None)` renders JUST the lensed source light (no lens-galaxy light, no noise) -- used for lens injection, and optionally at a fixed ring size for the double-ring sensitivity test. `.sample_background_only(rng)` renders lens-galaxy light + noise with NO source at all -- the canvas two arcs get painted onto. Also has the fixed (non-per-image) intensity scaling used everywhere. |
 | `dataset.py` | Generates and saves a full labeled lens/non-lens `.npz` dataset from a config file (e.g. `configs/sim_config_large.yaml`). |
 | `export_images.py` | Dumps a saved dataset's images as individual grayscale PNGs, for browsing. |
 | `prepare_real_euclid.py` | Turns the real Euclid Q1 FITS cutouts (`data/real_euclid/`) into the same `.npz` format as the simulated data, so every model can be evaluated on real images the same way. |
@@ -43,6 +43,26 @@ Every script here, grouped by what it does. Run everything from inside `src/`
 | `filter_firing.py` | The main ring-size experiment: generates a small-radius (0.70"-1.00") and a baseline (1.60"-2.40") image set using `lens_sim.sample_lens_with_ring_size`, runs both through the Zoobot encoder, and at each of its 4 stages compares which filters are most active (top 10%) via Jaccard overlap. Saves `outputs/filter_firing_report.json`. |
 | `visualize_filters.py` | Attempted to name the divergent filters by running per-filter DeepDream (gradient ascent targeting one channel at a time) from noise. **This didn't work** -- every filter converged to indistinguishable noise. Kept as a documented negative result; see `outputs/filter_portraits/`. |
 | `top_activating_images.py` | The method that actually worked: instead of synthesizing an image, finds which *real* images (from the full simulated pool + the 23 real Euclid images) activate each divergent filter most strongly. This is what the filter names in the writeup are based on. Saves `outputs/top_activating_images.json`. |
+
+## Lens injection (real-data augmentation)
+
+| File | What it does |
+|---|---|
+| `lens_injection.py` | Builds a training set that paints simulated arcs onto REAL non-lens Euclid backgrounds (HOLISMOKES-style), holding out a clean real eval split. Two versions in the same file's history: v1 (injected positives only) caused the model to learn "real-texture signature = lens" as a shortcut (confirmed via diagnostic -- see `evaluate_lens_injection.py`); v2 adds the SAME donor backgrounds as plain negatives too, which breaks that shortcut. |
+| `train_zoobot_injected.py` / `train_zoobot_injected_v2.py` | Train the Zoobot head on the v1 / v2 injected datasets respectively. |
+| `evaluate_lens_injection.py` | Before/after comparison (sim-only vs. v1 vs. v2) on the clean 17-image held-out real set. This is where the shortcut-learning problem was actually caught -- not assumed, diagnosed from real probability outputs. |
+
+## Compound lens detection (classical, no ML)
+
+Given a verified single lens, does it actually show evidence of being compound
+(two Einstein rings)? No training data needed -- this is signal processing,
+not a learned model.
+
+| File | What it does |
+|---|---|
+| `radial_profile.py` | The core method. `radial_profile()` azimuthally averages flux vs. radius from the lens center. `detrend()` subtracts a smoothed version of that profile to isolate local bumps (rings) from the smooth galaxy-light decline. `count_rings()` finds peaks in the residual (robust MAD-based threshold, minimum peak separation to avoid one clumpy arc looking like two). `angular_profile()` / `angular_coverage()` / `classify_peak()` then check each peak's *shape*: a genuine ring spreads flux across a wide angular range at that radius, a companion galaxy or artifact concentrates in one narrow wedge -- this is what tells a real second ring apart from an unrelated nearby object. Every threshold here is calibrated empirically against real/simulated data, documented inline, not guessed. |
+| `preview_radial_profiles.py` | Grid of real lenses + simulated single lenses with their profiles, peak classifications (red=ring-like, orange=point-like/companion), and angular coverage annotated. |
+| `double_ring_sensitivity.py` | The validation step that was missing before: builds synthetic double rings (two independent arcs at controlled radius separation + brightness ratio, combined on one background) and sweeps both parameters to measure actual detection rate -- not just whether the method stays quiet on single lenses. Produces `outputs/double_ring_sensitivity.npz` / `_heatmap.png`. Finding: detection rate is weak (7-20%) at close separation (<1.5x, where rings genuinely blend -- matches known domain expectation) and good (47-80%) at wider separation. |
 
 ## Evaluation
 

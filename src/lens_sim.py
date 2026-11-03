@@ -137,6 +137,32 @@ class LensSimulator:
         image = self._render(kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, lensed=True)
         return image, meta
 
+    def sample_lensed_arc_only(self, rng: np.random.Generator, theta_e: float | None = None):
+        """Renders JUST the lensed source light -- no lens-galaxy light, no sky
+        noise -- for injecting onto a real (non-simulated) background image.
+        This is the HOLISMOKES-style "lens injection" technique: the resulting
+        training image keeps real noise/PSF/background statistics from the
+        donor image, with only the arc itself synthetic.
+
+        theta_e: if given, fixes the ring radius instead of deriving it from
+        sampled physics -- used to build two independent arcs at controlled
+        radii for the double-ring sensitivity test (see double_ring_sim.py)."""
+        kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, meta = self._sample_common(
+            rng, theta_e_override=theta_e)
+        _, kwargs_source, _ = self.sim_api.magnitude2amplitude(kwargs_lens_light_mag, kwargs_source_mag)
+        arc = self.image_model.source_surface_brightness(kwargs_source, kwargs_lens=kwargs_lens)
+        return arc, meta
+
+    def sample_background_only(self, rng: np.random.Generator):
+        """Lens-galaxy light + sky noise, with NO source/arc at all -- the
+        canvas that two independent arcs get painted onto for the double-ring
+        sensitivity test."""
+        kwargs_lens, kwargs_lens_light_mag, kwargs_source_mag, meta = self._sample_common(rng)
+        kwargs_lens_light, _, _ = self.sim_api.magnitude2amplitude(kwargs_lens_light_mag, kwargs_source_mag)
+        image = self.image_model.image(kwargs_lens, [], kwargs_lens_light, source_add=False)
+        noise = self.sim_api.noise_for_model(model=image)
+        return image + noise, meta
+
 
 def fixed_linear_scale(image: np.ndarray, lo: float, hi: float) -> np.ndarray:
     """Linear scaling to [0, 1] using a FIXED (lo, hi) shared across the whole

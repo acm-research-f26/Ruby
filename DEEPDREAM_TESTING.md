@@ -40,6 +40,28 @@ filters) -- a plausible mechanistic reason small rings are harder to detect: the
 falls back on weaker, non-ring-specific cues. Full writeup: `outputs/filter_firing_report.json`
 and `outputs/top_activating_images.json`; see `outputs/README.md` for what every file is.
 
+## Lens injection: a real fix, with a real caveat
+
+Painting simulated arcs onto REAL non-lens Euclid backgrounds (HOLISMOKES-style) instead of
+training on pure simulation. Headline: recall went from 0.42 to 0.92 but precision collapsed
+from 1.00 to 0.69, diagnosed (not assumed) as a shortcut -- the model partly learned "real
+image texture = lens" rather than "arc = lens" -- and the fix attempt showed that shortcut
+was substantially *where the recall gain came from* in the first place.
+**Full writeup, including how the diagnosis was done: [`LENS_INJECTION.md`](LENS_INJECTION.md).**
+
+## Compound lens detection: a classical (non-ML) method, validated both ways
+
+Given a verified single lens, does its radial brightness profile show evidence of a second
+ring? No training data needed: azimuthally-averaged flux vs. radius, peak-finding on the
+residual after subtracting the smooth galaxy-light decline, then an angular-shape check
+(a genuine ring spreads flux across a wide angle range; a companion galaxy or artifact
+concentrates in one narrow wedge) to tell a real second ring apart from an unrelated nearby
+object. Validated both for false positives (0/12 on known-single lenses) AND for whether it
+actually detects a real second ring when one exists (a quantified sensitivity sweep, 7-80%
+depending on how separated the rings are -- weakest exactly where rings visually blend,
+matching what the team already expected).
+**Full writeup, function by function: [`COMPOUND_LENS_DETECTION.md`](COMPOUND_LENS_DETECTION.md).**
+
 ## Setup
 
 ```bash
@@ -80,6 +102,15 @@ python filter_firing.py             # ring-size sweep + per-stage filter overlap
 python visualize_filters.py         # per-filter DeepDream (negative result -- see outputs/README.md)
 python top_activating_images.py     # the method that actually worked: real images per filter
 python preview_filter_portraits.py && python preview_top_activating.py   # build the review grids
+
+# Lens injection:
+python lens_injection.py            # builds the v2 (injection + plain-negative) training set
+python train_zoobot_injected_v2.py
+python evaluate_lens_injection.py   # before/after on the clean held-out real set
+
+# Compound lens detection (no training needed):
+python preview_radial_profiles.py       # specificity check + the main result grids
+python double_ring_sensitivity.py       # sensitivity sweep (takes a few minutes)
 ```
 
 All simulated images use one **fixed, dataset-wide intensity scale** (`scale_low`/`scale_high`
@@ -98,6 +129,13 @@ Euclid Q1 mirror (no login required).
 ## Next steps
 
 See the full findings/recommendations report for details. In short: acquire more real labeled
-data (we used 23 of the ~497 public candidates), make the simulator more realistic (real
+data (we used 23 of the ~497 public candidates -- this is now also the direct blocker on
+lens injection, not just general accuracy), make the simulator more realistic (real
 backgrounds, PSF variation, detector artifacts), fine-tune more of the Zoobot encoder once more
 real data is available, and investigate the CNN's checkerboard-texture shortcut.
+
+For compound lens detection specifically: the close-separation regime (<1.5x) is the clear
+weak spot and matches a known hard case, so improving sensitivity there (vs. accepting it as
+a physical blending limit) would need a different approach, not just more threshold tuning.
+Also worth real validation against the 4 known real compound lenses named in Wilde et al.
+2022 (archival HST/HSC imaging) rather than only the synthetic two-arc proxy used here.
