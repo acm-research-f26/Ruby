@@ -7,7 +7,7 @@ Last updated Nov 2, 2026. Every number here comes from the saved outputs listed 
 - **No model passed all 5 pass marks.** The 3-answer Zoobot passed 2. By the rule we set before training, the result to report is the detection map and the gap between simulated and real lenses.
 - **Strongest result:** trained on realistic simulations, the 3-answer Zoobot ranked the 4 real compound lenses 3.9 of 79 on average. Guessing gives 40, the pass mark was 23, and painted-ring training gave 28 to 56.
 - **Faint limit:** on real lenses, the model stops reliably noticing an added outer source at about 1.5–2× the noise. Training helps at 2–6× and does nothing at 1× or below.
-- **Close limit:** not established. The score barely changes from 1.8× down to 1.1×, but that doesn't show the model can separate close rings.
+- **Close limit:** the outer position still counts for clearly more than the same extra light down to about 1.2× (frozen Zoobot about 1.3×). That number depends on the cutoff, and it doesn't show the model can separate close rings.
 - **Lens finding:** used alone, the model costs about 0.01 AUC of ordinary lens finding. Using the baseline to find lenses and this model only to check them avoids that cost.
 - **False alarms:** on 5,000 new non-lenses, that two-step setup flags 0.4–1.4% depending on the seed. By the rule set beforehand, it stays a second step on lenses already found.
 
@@ -177,6 +177,7 @@ All of these ran after the final test, so none can change the verdict.
 | Real-lens map | Yes | In between |
 | Ring transplant test | Yes | The test doesn't work |
 | Bigger test on new images | Yes | Stays a second step |
+| Close-ring test | Yes | Close limit 1.2×, frozen 1.3×; the gap reading doesn't work as a test |
 
 ### Basic checks
 
@@ -269,6 +270,32 @@ That would be roughly 1,100 false alarms on 1.09M galaxies. It doesn't change th
 
 48 grade C candidates are kept on every seed and score at least 0.70, the lowest mean score of a known compound lens. That doesn't make them compound lenses. By eye, many of the top 20 show clutter, streaks or close neighbours, so they need an expert. A high score on a new non-lens could also be a real lens nobody has found: 2 of them score at least 0.70.
 
+### Close-ring test
+
+Each of 84 real lenses gets a simulated source at 1.1× to 1.8×, brightness 2–6× the noise, compared with the same total light placed two other ways: at the inner ring's radius, and spread into one thick band with no gap. The rules are in the `close_ring_test.py` header, set before scoring.
+
+| Distance | Gap at median radius (0.87″) | Outer / same, 3-answer | Outer / same, frozen | Outer vs. thick AUC, 3-answer | Outer vs. thick AUC, frozen |
+|---|---|---|---|---|---|
+| 1.1× | 0.09″ | 1.37 | 1.21 | 0.55 | 0.54 |
+| 1.2× | 0.17″ | 1.65 | 1.41 | 0.61 | 0.57 |
+| 1.3× | 0.26″ | 1.90 | 1.56 | 0.65 | 0.60 |
+| 1.4× | 0.35″ | 2.10 | 1.65 | 0.69 | 0.61 |
+| 1.6× | 0.52″ | 2.24 | 1.80 | 0.71 | 0.63 |
+| 1.8× | 0.69″ | 2.35 | 1.88 | 0.71 | 0.62 |
+
+**Readings set beforehand:**
+
+- **Close limit (outer at least 1.5× same on every seed):** 1.2× for the 3-answer Zoobot, 1.3× for frozen, so training expands it by one step. At the median radius, the gap at 1.2× is smaller than the 0.2″ blur, so this means the model responds to light farther out, not that it separates the rings.
+- **Gap reading (outer beats thick on every seed):** 1.1× for both models, so training doesn't expand it.
+- **Trust check:** passed, with a mean difference of 0.010 from the real-lens map.
+
+**Why these readings need care, all noticed after scoring:**
+
+- **The gap reading doesn't work as a test.** It passes at 1.1×, where the gap is well below the blur, and untouched frozen Zoobot passes too. The thick band spreads the light thinly, so it is fainter than a compact source. The test was not redesigned after seeing this.
+- **There is no sharp limit.** The ratio rises smoothly, and the limit moves with the cutoff (3-answer, frozen): 1.25× gives 1.1, 1.2; 1.5× gives 1.2, 1.3; 1.75× gives 1.3, 1.8; 2× gives 1.6, none. The 3-answer Zoobot is ahead at every cutoff.
+- **Training's edge isn't specific to close rings.** The outer source beats the same light 64–70% of the time for the 3-answer Zoobot and 59–65% for frozen, about 5 points ahead at every distance.
+- **Lens size points away from seeing a gap.** The ratio is much higher on small lenses (median radius 0.73″: 1.62 at 1.1×, 4.74 at 1.8×) than on large ones (1.20″: 1.28 to 1.52), although large lenses have the wider gaps. Light at a small lens's inner radius may be getting lost in the galaxy's glare, but that wasn't tested.
+
 ## Why Polar-Zoobot failed
 
 Polar-Zoobot unwraps the lens into a radius × angle strip, so a close gap isn't shrunk away and light around the ring can add up.
@@ -324,6 +351,7 @@ Polar alone's 19, 31, 22 looks good but isn't selective: it called 58–76% of r
 - The model responds much more to light at an outer ring's position than to nearby clutter, and hiding the outer ring lowers the score on 3 of the 4 compound lenses.
 - It works best as a second step on lenses that have already been found. Its two-step false-alarm rate on 5,000 new non-lenses is 0.4–1.4%.
 - The baseline's 0.99 lens finding holds up against 5,000 new non-lenses.
+- An outer source counts for clearly more than the same extra light down to about 1.2× for the 3-answer Zoobot and 1.3× for frozen. That is a working limit that depends on the cutoff, not a measured ability to separate rings.
 
 **We can't say:**
 
@@ -379,6 +407,7 @@ Most scripts overwrite their output folder when re-run. Retrained models may not
 | Ring transplant test | `python -I sim/transplant_test.py` |
 | New Q1 images | `python -I sim/get_more_images.py` |
 | Bigger test | `python -I sim/bigger_test.py` |
+| Close-ring test | `python -I sim/close_ring_test.py` |
 
 ## Files
 
@@ -395,6 +424,7 @@ All paths are relative to `~/ruby`.
 | Real-lens map | `sim/out/final/real_map/` |
 | Ring transplant test | `sim/out/final/transplant/` |
 | Bigger test: `results.txt` | `sim/out/expand/` |
+| Close-ring test: `results.txt`, `cells.csv`, `rises.csv`, figures | `sim/out/final/close_ring/` |
 | Realism check | `sim/out/realism/{v1,v2,v3}/` |
 | Validation reports | `sim/out/models/`, `sim/out/models2/` |
 | Polar tests: summaries, CSVs, figures | `polar/out/quick_test/`, `polar/out/faint_test/` |
