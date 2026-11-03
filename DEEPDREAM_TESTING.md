@@ -62,6 +62,19 @@ depending on how separated the rings are -- weakest exactly where rings visually
 matching what the team already expected).
 **Full writeup, function by function: [`COMPOUND_LENS_DETECTION.md`](COMPOUND_LENS_DETECTION.md).**
 
+## Real-world test: ranking 79 real Euclid lenses for compound likelihood
+
+The full pipeline above, run end-to-end on an independent 79-image real
+Euclid test set (75 ordinary lenses + 4 unconfirmed compound candidates),
+producing a 1-79 ranked score for human-review triage rather than a hard
+yes/no. This run also surfaced and fixed a real bug in the ring-counter
+(a `scipy.find_peaks` prominence-measurement quirk that was inflating noise
+ripples into false "second rings"), and a related scoring bug (raw peak
+count outranking true peak quality). 2 of the 4 known candidates land at
+rank 1 and 15 of 79; the other 2 show only a single strong ring with no
+second peak at any strength -- read as a real, stated result, not spun.
+**Full writeup: [`REAL_WORLD_TEST.md`](REAL_WORLD_TEST.md).**
+
 ## Setup
 
 ```bash
@@ -111,6 +124,10 @@ python evaluate_lens_injection.py   # before/after on the clean held-out real se
 # Compound lens detection (no training needed):
 python preview_radial_profiles.py       # specificity check + the main result grids
 python double_ring_sensitivity.py       # sensitivity sweep (takes a few minutes)
+
+# Real-world test (79 real Euclid lenses, ranked):
+python validate_on_real_compound.py     # 3-system archival-HST companion check
+python score_real_test_set.py           # the full 79-image ranked scoring
 ```
 
 All simulated images use one **fixed, dataset-wide intensity scale** (`scale_low`/`scale_high`

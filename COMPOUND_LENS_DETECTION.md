@@ -104,6 +104,34 @@ visually blend, and a radius-based method genuinely struggles to resolve
 them. That the quantified result matches the qualitative expectation is a
 useful sanity check that the method is measuring something real.
 
+## Update: a real prominence-measurement bug, found via a new real-world test
+
+Running this detector on a new, independent 79-image real Euclid test set
+(see [`REAL_WORLD_TEST.md`](REAL_WORLD_TEST.md)) flagged 38/79 (48%) as
+compound -- far above the 0/12 and 1/12 false-positive rates measured here.
+Inspecting the flagged profiles directly (not just the number) showed why:
+`scipy.signal.find_peaks`'s default prominence measurement reuses the
+deepest valley it can reach without crossing a *higher* peak as the
+reference for every peak, including distant, unrelated ones -- so one real,
+deep dip right after the genuine ring was inflating the apparent
+significance of tiny noise ripples all the way out to the image edge.
+Fixed via `find_peaks`'s `wlen` parameter, now exposed as
+`count_rings(..., local_window_px=10.0)`, which caps how far outward a
+peak's prominence is allowed to be measured. This fix cut the new set's
+false-positive rate to 30/79 with **no change at all** to this page's 0/12
+and 1/12 results and no material change to the sensitivity sweep table
+above (re-run after the fix; same shape, same close-vs-wide pattern). A
+tighter window suppresses more false positives but starts costing real
+sensitivity at wide (3-4x) separations -- 10px was chosen as the point that
+fixes this specific failure mode without touching that tradeoff. Full
+reasoning: `local_window_px` in the `count_rings()` docstring in
+`src/radial_profile.py`.
+
+This is a reminder that **specificity measured on 12 images doesn't
+guarantee specificity on a different real dataset** -- the fix came from
+actually running the method on new data and looking at what it found, not
+from more theorizing about the existing calibration set.
+
 ## Known limitations (stated plainly)
 
 - **Close-separation blind spot.** Below ~1.5x radius ratio, detection is

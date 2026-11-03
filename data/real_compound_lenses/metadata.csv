@@ -1,0 +1,7 @@
+filename,system_name,ra,dec,band,source
+SL2SJ02176-0513/SL2SJ02176-0513_F814W.fits,SL2SJ02176-0513,34.40483,-5.22487,F814W,"Tu et al. 2009, A&A 501, 475 (discovery); HST archival imaging, proposal 12064, ACS/WFC F814W, obs_id hst_12064_0z_acs_wfc_f814w_jbew0z, MAST/STScI"
+SL2SJ02176-0513/SL2SJ02176-0513_F606W.fits,SL2SJ02176-0513,34.40483,-5.22487,F606W,"Tu et al. 2009, A&A 501, 475 (discovery); HST archival imaging, proposal 10876, ACS/WFC F606W, obs_id hst_10876_04_acs_wfc_f606w_j9s804, MAST/STScI"
+J1148+1930/J1148+1930_F814W.fits,J1148+1930,177.1381,19.50089,F814W,"Schuldt et al. 2019, A&A 631, A40 (modeling; 'Cosmic Horseshoe'); HST archival imaging, proposal 11602, WFC3/UVIS F814W, obs_id hst_11602_02_wfc3_uvis_f814w_ib4802, MAST/STScI"
+J1148+1930/J1148+1930_F606W.fits,J1148+1930,177.1381,19.50089,F606W,"Schuldt et al. 2019, A&A 631, A40 (modeling; 'Cosmic Horseshoe'); HST archival imaging, proposal 11602, WFC3/UVIS F606W, obs_id hst_11602_02_wfc3_uvis_f606w_ib4802, MAST/STScI"
+SDSSJ0946+1006/SDSSJ0946+1006_F814W.fits,SDSSJ0946+1006,146.73617,10.11467,F814W,"Gavazzi et al. 2008, ApJ 677, 1046 (discovery, 'Jackpot Lens'); HST archival imaging, proposal 10886, ACS/WFC F814W, obs_id hst_10886_14_acs_wfc_f814w_j9op14, MAST/STScI"
+SDSSJ0946+1006/SDSSJ0946+1006_F160W.fits,SDSSJ0946+1006,146.73617,10.11467,F160W,"Gavazzi et al. 2008, ApJ 677, 1046 (discovery, 'Jackpot Lens'); HST archival imaging, proposal 11202, WFC3/IR F160W, obs_id hst_11202_83_wfc3_ir_f160w_ia1l83, MAST/STScI"

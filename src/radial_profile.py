@@ -113,7 +113,7 @@ def classify_peak(image: np.ndarray, center: tuple[float, float], radius: float,
 
 def count_rings(image: np.ndarray, center: tuple[float, float] | None = None,
                  n_bins: int = 40, prominence_sigma: float = 2.0, min_radius_px: float = 3.0,
-                 min_peak_separation_px: float = 9.0):
+                 min_peak_separation_px: float = 9.0, local_window_px: float = 10.0):
     """Returns (n_peaks_found, radii_of_peaks, radii, raw_profile, residual).
 
     prominence_sigma: a peak must stick up at least this many standard
@@ -127,7 +127,29 @@ def count_rings(image: np.ndarray, center: tuple[float, float] | None = None,
     azimuthally-averaged profile even though it's genuinely one ring --
     checked empirically on 12 known-single simulated lenses, spurious gaps
     cluster at 5-7.5px. This floor merges those; a real second ring should be
-    separated by considerably more than one ring's own clumpiness."""
+    separated by considerably more than one ring's own clumpiness.
+
+    local_window_px: caps the radius (in bins, via scipy's `wlen`) that
+    find_peaks is allowed to look outward when measuring a peak's
+    prominence. Without this, scipy measures prominence against the lowest
+    valley reachable without crossing a HIGHER peak -- on a profile with one
+    strong ring near the center and a long, flat, low-amplitude noise tail
+    beyond it, that one deep post-ring dip gets reused as the reference
+    valley for every small ripple all the way out to the image edge,
+    inflating their apparent significance even though each ripple is tiny
+    relative to its own immediate neighborhood. Found by running this
+    detector on a new 79-image real Euclid test set: 38/79 were flagged
+    "compound" (vs. 0/12 and 1/12 false positives on the original
+    simulated/real calibration sets), and inspecting the flagged profiles
+    showed exactly this pattern -- 2nd/3rd "peaks" sitting in an otherwise
+    flat residual tail. Restricting the prominence window to a local
+    neighborhood fixes it (same case: 38/79 -> 30/79 flagged) without
+    changing the 0/12 and 1/12 specificity results on the original
+    calibration sets. A tighter window (tested down to ~6px) suppresses
+    more of the false positives but starts costing real sensitivity at wide
+    (3-4x) genuine ring separations in the double_ring_sensitivity sweep;
+    10px was chosen as the point that fixes the specific failure mode above
+    while leaving that sweep's results materially unchanged."""
     radii, profile = radial_profile(image, center, n_bins)
     residual = detrend(profile)
     # Ignore the innermost few bins -- that's the galaxy core, not a ring.
@@ -141,11 +163,24 @@ def count_rings(image: np.ndarray, center: tuple[float, float] | None = None,
     prominence = prominence_sigma * noise_floor
     bin_width = radii[1] - radii[0]
     distance_bins = max(1, int(round(min_peak_separation_px / bin_width)))
-    peak_idx, props = find_peaks(residual[valid], prominence=prominence, distance=distance_bins)
+    wlen_bins = max(3, int(round(local_window_px / bin_width)))
+    peak_idx, props = find_peaks(residual[valid], prominence=prominence, distance=distance_bins,
+                                  wlen=wlen_bins)
     peak_radii = radii[valid][peak_idx]
+    # How many multiples of the noise floor each peak's prominence reaches --
+    # the signal-strength signal that count_rings computed internally but
+    # previously threw away after thresholding. Needed to tell a genuine
+    # strong second ring apart from a peak that only just barely cleared
+    # prominence_sigma, since both pass the same ring-like/point-like shape
+    # check but aren't equally trustworthy.
+    peak_sigma = props["prominences"] / noise_floor if noise_floor > 0 else np.zeros_like(peak_radii)
 
     center_xy = center if center is not None else (image.shape[0] / 2, image.shape[1] / 2)
-    classifications = [classify_peak(image, center_xy, r) for r in peak_radii]
+    classifications = []
+    for r, sigma in zip(peak_radii, peak_sigma):
+        c = classify_peak(image, center_xy, r)
+        c["prominence_sigma"] = float(sigma)
+        classifications.append(c)
     n_ring_like = sum(1 for c in classifications if c["classification"] == "ring-like")
 
     return n_ring_like, classifications, radii, profile, residual
