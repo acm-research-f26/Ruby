@@ -6,7 +6,7 @@ All numbers, caveats and run commands are in **[sim/RESULTS.md](sim/RESULTS.md)*
 
 ## What we did
 
-1. **Built a realistic simulator** (`sim/simulate.py`): two source distances, Euclid's published lens models, measured blur, lumpy sources and real host galaxies.
+1. **Built a realistic simulator** (`sim/simulate.py`): two source distances, Euclid's published lens models, measured blur, lumpy sources and real host galaxies. [How it works](sim/SIMULATION.md).
 2. **Retrained Zoobot with a third answer** (`sim/train_models.py`): not a lens, lens or compound. The 4 real compound lenses were never used for training.
 3. **Tested once on held-out real Euclid Q1 images** (`sim/final_test.py`), against 5 pass marks set before training.
 4. **Ran follow-up tests**, including a two-step setup, a bigger test on 5,000 new non-lenses and a close-ring test.
@@ -29,7 +29,7 @@ Polar-Zoobot unwrapped each lens into a radius × angle strip. It did see faint 
 
 | Folder | Contents |
 |---|---|
-| `sim/` | Simulator, training and test scripts, and `RESULTS.md` |
+| `sim/` | Simulator, training and test scripts, `RESULTS.md` and `SIMULATION.md` |
 | `sim/out/` | Summaries, CSVs and figures |
 | `polar/` | Polar-Zoobot tests and their outputs |
 | `data/split.csv` | Which images are train, validation and test |

@@ -29,7 +29,7 @@ Last updated Nov 2, 2026. Every number here comes from the saved outputs listed 
 
 **The 4 compound lenses:** Cosmic Dartboard, Galileo's Lens, Cosmic Ammonite and Teapot Lens. All are grade A. They are convincingly modelled candidates, not spectroscopically confirmed.
 
-**Simulations (`sim/out/v2`):** 3,000 / 600 / 600 pairs of single and double, using two source distances, Euclid's published lens models, the measured blur of about 0.2″, real host galaxies and lumpy sources.
+**Simulations (`sim/out/v2`, full details in [SIMULATION.md](SIMULATION.md)):** 3,000 / 600 / 600 pairs of single and double, using two source distances, Euclid's published lens models, the measured blur of about 0.2″, real host galaxies and lumpy sources.
 
 - Distance `d` is the outer ring's radius divided by the inner ring's, from 1.1× to 1.8×.
 - Brightness `b` is the bright part of the outer source in noise units, from 0.5× to 6×.
