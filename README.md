@@ -1,6 +1,6 @@
 # Ruby: Zoobot trained on realistic simulated compound lenses
 
-Part of **Project Ruby** (ACM Research, UT Dallas, Fall 2026). This branch asks how faint and how close a second ring can be before a lens finder stops recognizing it, and whether training on simulated compound lenses expands that limit without hurting ordinary lens finding.
+This branch asks how faint and how close a second ring can be before a lens finder stops recognizing it, and whether training on simulated compound lenses expands that limit without hurting ordinary lens finding.
 
 All numbers, caveats and run commands are in **[sim/RESULTS.md](sim/RESULTS.md)**.
 
