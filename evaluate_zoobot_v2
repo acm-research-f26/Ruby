@@ -1,0 +1,105 @@
+import os
+import torch
+import pandas as pd
+import numpy as np
+from torch.utils.data import Dataset, DataLoader
+from sklearn.metrics import accuracy_score, classification_report
+from zoobot.pytorch.training.finetune import FinetuneableZoobotClassifier
+
+def apply_radial_brightness_filter(matrix, inner_radius=6, outer_radius=20, min_brightness=0.05):
+    """Suppresses the blinding central galaxy core to isolate and reveal secondary rings."""
+    h, w = matrix.shape
+    center_y, center_x = h / 2.0, w / 2.0
+    y, x = np.ogrid[:h, :w]
+    distances = np.sqrt((y - center_y)**2 + (x - center_x)**2)
+    mask = np.clip((distances - inner_radius) / (outer_radius - inner_radius), 0, 1)
+    brightness_multiplier = min_brightness + (1.0 - min_brightness) * mask
+    return matrix * brightness_multiplier
+
+class DSPLDataset(Dataset):
+    """Loads, filters central glare, and normalizes generated lens simulation matrices for evaluation."""
+    def __init__(self, metadata_csv, split_name='test'):
+        all_df = pd.read_csv(metadata_csv)
+        self.df = all_df[all_df['split'] == split_name].reset_index(drop=True)
+        
+    def __len__(self):
+        return len(self.df)
+        
+    def __getitem__(self, idx):
+        row = self.df.iloc[idx]
+        
+        # Point to your exact image matrix folder root
+        base_dir = r"C:\Users\prisc\zoobot" 
+        full_image_path = os.path.join(base_dir, row['image_path'])
+        matrix = np.load(full_image_path)
+        
+        # Apply our verified double-lens optimization
+        matrix = apply_radial_brightness_filter(matrix, inner_radius=6, outer_radius=20, min_brightness=0.05)
+        
+        # Normalization
+        m_min, m_max = matrix.min(), matrix.max()
+        if (m_max - m_min) > 0:
+            matrix = (matrix - m_min) / (m_max - m_min)
+            
+        tensor = torch.tensor(matrix).float().unsqueeze(0)
+        
+        meta_metrics = {
+            'true_label': int(row['is_lens']),
+            'magnitude': float(row['magnitude']),
+            'arc_size': float(row['arc_size']),
+            'blended': int(row['blended'])
+        }
+        return tensor, meta_metrics
+
+print("Loading Zoobot Engine with Fine-Tuned Local Weights...")
+model = FinetuneableZoobotClassifier(
+    name='hf_hub:mwalmsley/zoobot-encoder-convnext_nano',
+    num_classes=2,
+    greyscale=True
+)
+
+# Load your freshly trained local weights file
+checkpoint_path = 'finetuned_double_lens_zoobot.pt'
+model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu')))
+model.eval()
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model.to(device)
+
+metadata_file = r"C:\Users\prisc\zoobot\dspl_test_metadata.csv"
+dataset = DSPLDataset(metadata_file, split_name='test')
+dataloader = DataLoader(dataset, batch_size=200, shuffle=False)
+
+all_probabilities = []
+all_predictions = []
+
+print(f"Assembling prediction blocks for {len(dataset)} isolated test items...")
+for images_batch, _ in dataloader:
+    images_batch = images_batch.to(device)
+    
+    with torch.no_grad():
+        logits = model(images_batch)
+        probabilities_tensor = torch.softmax(logits, dim=1)
+        
+        probs = probabilities_tensor[:, 1].cpu().numpy()
+        preds = torch.argmax(probabilities_tensor, dim=1).cpu().numpy()
+        
+        all_probabilities.extend(probs)
+        all_predictions.extend(preds)
+
+# Map everything to an analysis frame for testing performance reports
+analysis_df = pd.read_csv(metadata_file)
+analysis_df = analysis_df[analysis_df['split'] == 'test'].reset_index(drop=True)
+
+analysis_df['true_label'] = analysis_df['is_lens']
+analysis_df['predicted_label'] = all_predictions
+analysis_df['pred_probability'] = all_probabilities
+
+print(f"\n================ TOTAL OVERALL {len(analysis_df)} IMAGE PERFORMANCE ================")
+print(classification_report(
+    analysis_df['true_label'], 
+    analysis_df['predicted_label'], 
+    labels=[0, 1], 
+    target_names=['Non-Lens', 'Lens'], 
+    zero_division=0
+))
