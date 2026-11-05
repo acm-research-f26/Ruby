@@ -1,0 +1,44 @@
+=== ACHIEVED vs TARGET (compound; lens_mag over all images) ===
+lens_mag        target [20.0,22.3]  achieved min=20.001 p5=20.245 median=21.143 p95=22.021 max=22.300  frac_in_range=1.000
+s1_mag_lensed   target [22.3,23.3]  achieved min=22.301 p5=22.343 median=22.789 p95=23.232 max=23.299  frac_in_range=1.000
+s2_mag_lensed   target [23.2,24.4]  achieved min=23.200 p5=23.226 median=23.458 p95=23.987 max=24.375  frac_in_range=1.000
+theta_E1        target [0.45,1.2]  achieved min=0.453 p5=0.510 median=0.764 p95=1.072 max=1.197  frac_in_range=1.000
+theta_E2        target [0.9,1.5]  achieved min=0.901 p5=0.943 median=1.194 p95=1.455 max=1.500  frac_in_range=1.000
+beta            target [0.5,0.85]  achieved min=0.500 p5=0.520 median=0.684 p95=0.830 max=0.850  frac_in_range=1.000
+q_mass          target [0.6,0.8]  achieved min=0.600 p5=0.608 median=0.702 p95=0.790 max=0.800  frac_in_range=1.000
+gamma           target [1.6,2.2]  achieved min=1.600 p5=1.636 median=1.895 p95=2.168 max=2.200  frac_in_range=1.000
+theta_sis1      target [0.1,0.5]  achieved min=0.101 p5=0.119 median=0.301 p95=0.486 max=0.499  frac_in_range=1.000
+
+=== extra diagnostics ===
+s1: intrinsic mag p5/50/95 = [24.43 25.1  25.79], magnification p5/50/95 = [ 5.3  8.4 14.2], nvis median 118
+s2: intrinsic mag p5/50/95 = [25.46 26.25 27.09], magnification p5/50/95 = [ 6.1 12.2 26.9], nvis median 36
+single/nearby: lensed mag min/max 22.30/24.39, intrinsic p5/50/95 [24.63 25.62 26.57], mu p5/50/95 [ 5.4 10.7 20. ]
+theta_E1/theta_E2 vs beta (compound): corr = 0.884 ; mean |ratio-beta| = 0.05
+zs1, zs2 (compound) median: 0.97 1.69 ; z_l median 0.52
+
+=== SAME LENS-GALAXY POPULATION: KS between classes (want small, p>0.01) ===
+pair          compound vs non_lens  nearby vs non_lens  single vs non_lens
+feature                                                                   
+lens_R                       0.037               0.046               0.041
+lens_mag                     0.034               0.054               0.057
+lens_n                       0.041               0.064               0.051
+lens_q_light                 0.055               0.034               0.062
+sigma_v                      0.044               0.052               0.064
+z_l                          0.045               0.066               0.067
+single theta_E vs compound theta_E2: KS=0.030 p=0.759
+single gamma vs compound gamma: KS=0.028 p=0.828
+
+=== KS (compound vs negative class) on image summary stats ===
+vs     single  nearby  non_lens
+stat                           
+npix3   0.171   0.065     0.451
+peak    0.047   0.030     0.046
+ring    0.235   0.067     0.492
+total   0.178   0.042     0.276
+GB on summary stats, compound vs other lenses (single+nearby): 0.704
+   compound vs single: 0.752
+   compound vs nearby: 0.699
+GB on summary stats, compound vs non_lens: 0.981
+Einstein radius alone (theta_E2 for compound, theta_E for others), compound vs other lenses: AUROC=0.492 (0.5 = no info)
+   radius alone, compound vs single: 0.491
+   radius alone, compound vs nearby: 0.493
