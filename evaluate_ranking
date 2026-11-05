@@ -1,0 +1,122 @@
+import os
+import torch
+import pandas as pd
+import numpy as np
+from torch.utils.data import Dataset, DataLoader
+from zoobot.pytorch.training.finetune import FinetuneableZoobotClassifier
+
+def apply_radial_brightness_filter(matrix, inner_radius=6, outer_radius=20, min_brightness=0.05):
+    """
+    CUSTOM OPTIMIZATION FILTER: Suppresses the blinding central galaxy core glare 
+    to bring hidden, faint secondary outer rings into visibility.
+    """
+    h, w = matrix.shape
+    center_y, center_x = h / 2.0, w / 2.0
+    y, x = np.ogrid[:h, :w]
+    distances = np.sqrt((y - center_y)**2 + (x - center_x)**2)
+    mask = np.clip((distances - inner_radius) / (outer_radius - inner_radius), 0, 1)
+    brightness_multiplier = min_brightness + (1.0 - min_brightness) * mask
+    return matrix * brightness_multiplier
+
+class UnlabeledTestDataset(Dataset):
+    """Loads, filters, and prepares your unseen test data for 3-class validation."""
+    def __init__(self, metadata_csv, base_dir):
+        self.df = pd.read_csv(metadata_csv)
+        self.base_dir = base_dir
+        
+    def __len__(self):
+        return len(self.df)
+        
+    def __getitem__(self, idx):
+        row = self.df.iloc[idx]
+        
+        # --- FIXED: Use the verified 'npy_file' column header from the spreadsheet ---
+        clean_row_path = str(row['npy_file']).replace('\\', '/')
+        file_path = os.path.join(self.base_dir, clean_row_path)
+        matrix = np.load(file_path)
+        
+        # Apply your custom dimming filter to reveal the second outer ring
+        matrix = apply_radial_brightness_filter(matrix, inner_radius=6, outer_radius=20, min_brightness=0.05)
+        
+        # Normalization
+        m_min, m_max = matrix.min(), matrix.max()
+        if (m_max - m_min) > 0:
+            matrix = (matrix - m_min) / (m_max - m_min)
+            
+        tensor = torch.tensor(matrix).float().unsqueeze(0)
+        return tensor, row['npy_file']
+
+# 1. INITIALIZE ENGINE WITH YOUR TRAINED 3-CLASS WEIGHTS
+print("Loading Zoobot Engine with Fine-Tuned 3-Class Weights...")
+model = FinetuneableZoobotClassifier(
+    name='hf_hub:mwalmsley/zoobot-encoder-convnext_nano',
+    num_classes=3,
+    greyscale=True
+)
+
+checkpoint_path = 'finetuned_3class_lens_zoobot.pt'
+model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu')))
+model.eval()
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model.to(device)
+
+# 2. DEFINE SYSTEM TARGET EXTRACT PATHS
+csv_path = r"C:\Users\prisc\Downloads\test_lenses_79\test_lenses_79\test_lenses.csv"
+dataset_folder_root = r"C:\Users\prisc\Downloads\test_lenses_79\test_lenses_79"
+
+test_dataset = UnlabeledTestDataset(csv_path, dataset_folder_root)
+test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+
+records = []
+print(f"Extracting likelihood spectrum for {len(test_dataset)} catalog files...")
+
+for images, paths in test_dataloader:
+    images = images.to(device)
+    with torch.no_grad():
+        logits = model(images)
+        probabilities = torch.softmax(logits, dim=1).cpu().numpy()
+        
+    for path, prob in zip(paths, probabilities):
+        # Continuous Lens Likelihood Score = Single Lens Prob (Index 1) + Double Lens Prob (Index 2)
+        lens_score = float(prob[1] + prob[2])
+        records.append({
+            'npy_file': path,
+            'lens_probability': lens_score,
+            'non_lens_prob': float(prob[0]),
+            'single_lens_prob': float(prob[1]),
+            'double_lens_prob': float(prob[2])
+        })
+
+# 3. BUILD LEADERBOARD RANKINGS AND SORT BY LIKELIHOOD
+results_df = pd.DataFrame(records)
+results_df = results_df.sort_values(by='lens_probability', ascending=False).reset_index(drop=True)
+results_df['rank'] = results_df.index + 1
+
+# Export rankings sheet for your project records
+results_df.to_csv("zoobot_likelihood_rankings.csv", index=False)
+
+# 4. RENDER EXTRACTED BREAKDOWN FOR THE 4 CONFIRMED TARGET LENSES
+target_lenses = [
+    "npy/102018668_NEG595646727509469177.npy",
+    "npy/102019123_NEG564667438505382529.npy",
+    "npy/102019125_NEG583028233504223644.npy",
+    "npy/102019126_NEG589597149505340169.npy"
+]
+
+print("\n================ ZOOBOT CONTINUOUS SPECTRAL PERFORMANCE ================")
+print(f"Total Dataset Images Profiled: {len(results_df)}")
+print("-" * 75)
+
+for lens in target_lenses:
+    # --- FIXED: Check against 'npy_file' column key layout ---
+    match = results_df[results_df['npy_file'] == lens]
+    if len(match) > 0:
+        row = match.iloc[0]
+        print(f"File ID: {lens.split('/')[-1]}")
+        print(f" -> Lens Likelihood Score : {row['lens_probability']:.4%}")
+        print(f" -> Placed Rank Position   : #{int(row['rank'])} out of {len(results_df)}")
+        print(f" -> Morphology Class Split : [Non: {row['non_lens_prob']:.3f} | Single: {row['single_lens_prob']:.3f} | Double: {row['double_lens_prob']:.3f}]")
+        print("-" * 75)
+    else:
+        print(f"Warning: File path match missing from archive pool context: {lens}")
