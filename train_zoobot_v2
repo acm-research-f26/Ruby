@@ -1,0 +1,114 @@
+import os
+import torch
+import pandas as pd
+import numpy as np
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
+from zoobot.pytorch.training.finetune import FinetuneableZoobotClassifier
+
+def apply_radial_brightness_filter(matrix, inner_radius=6, outer_radius=20, min_brightness=0.05):
+    """Suppresses the blinding central galaxy core to isolate and reveal secondary rings."""
+    h, w = matrix.shape
+    center_y, center_x = h / 2.0, w / 2.0
+    y, x = np.ogrid[:h, :w]
+    distances = np.sqrt((y - center_y)**2 + (x - center_x)**2)
+    mask = np.clip((distances - inner_radius) / (outer_radius - inner_radius), 0, 1)
+    brightness_multiplier = min_brightness + (1.0 - min_brightness) * mask
+    return matrix * brightness_multiplier
+
+class DSPLDataset(Dataset):
+    """Loads, filters central glare, and normalizes generated lens simulation matrices."""
+    def __init__(self, metadata_csv, split_name='train'):
+        all_df = pd.read_csv(metadata_csv)
+        # Check if the requested split exists, otherwise fallback to whatever data is present
+        if 'split' in all_df.columns and split_name in all_df['split'].values:
+            self.df = all_df[all_df['split'] == split_name].reset_index(drop=True)
+        else:
+            print(f"Warning: '{split_name}' split not found or column missing. Using all available rows instead.")
+            self.df = all_df.reset_index(drop=True)
+        
+    def __len__(self):
+        return len(self.df)
+        
+    def __getitem__(self, idx):
+        row = self.df.iloc[idx]
+         # --- FIXED: Tell python exactly where your dspl_dataset folder lives ---
+        base_dir = r"C:\Users\prisc\zoobot" 
+        full_image_path = os.path.join(base_dir, row['image_path'])
+        matrix = np.load(full_image_path)
+        
+        # Apply our verified double-lens optimization
+        matrix = apply_radial_brightness_filter(matrix, inner_radius=6, outer_radius=20, min_brightness=0.05)
+        
+        # Normalization
+        m_min, m_max = matrix.min(), matrix.max()
+        if (m_max - m_min) > 0:
+            matrix = (matrix - m_min) / (m_max - m_min)
+            
+        tensor = torch.tensor(matrix).float().unsqueeze(0)
+        label = int(row['is_lens'])
+        
+        return tensor, label
+
+# 1. INITIALIZE MODEL ENGINE
+print("Loading Zoobot Pretrained Checkpoint Engine...")
+model = FinetuneableZoobotClassifier(
+    name='hf_hub:mwalmsley/zoobot-encoder-convnext_nano',
+    num_classes=2,
+    greyscale=True
+)
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model.to(device)
+
+# --- SET UP TRAINING PARAMETERS ---
+model.train()  # Change Zoobot configuration to active learning mode
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.AdamW(model.parameters(), lr=1e-4)
+
+# 2. PREPARE DATA STREAM PIPELINE
+metadata_file = r"C:\Users\prisc\zoobot\dspl_test_metadata.csv"
+train_dataset = DSPLDataset(metadata_file, split_name='train')
+train_dataloader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+
+# 3. RUN THE LEARNING LOOPS
+epochs = 5 
+print(f"Beginning active training loop for {epochs} epochs on computing hardware: {device}...")
+
+for epoch in range(epochs):
+    running_loss = 0.0
+    correct_predictions = 0
+    total_samples = 0
+    
+    for images, labels in train_dataloader:
+        images = images.to(device)
+        labels = labels.to(device)
+        
+        # Clear engine tracking steps
+        optimizer.zero_grad()
+        
+        # Forward pass: process filtered inputs
+        logits = model(images)
+        loss = criterion(logits, labels)
+        
+        # Backward pass: map structural corrections
+        loss.backward()
+        
+        # Step: execute model parameter weights adjustments
+        optimizer.step()
+        
+        # Accumulate metrics
+        running_loss += loss.item() * images.size(0)
+        preds = torch.argmax(logits, dim=1)
+        correct_predictions += (preds == labels).sum().item()
+        total_samples += labels.size(0)
+        
+    epoch_loss = running_loss / total_samples
+    epoch_acc = correct_predictions / total_samples
+    print(f"Epoch [{epoch+1}/{epochs}] complete -> Loss: {epoch_loss:.4f} | Training Accuracy: {epoch_acc:.3f}")
+
+# 4. SAVE NEW MODEL EXECUTABLE WEIGHTS FILE
+output_path = 'finetuned_double_lens_zoobot.pt'
+torch.save(model.state_dict(), output_path)
+print(f"\nSuccess! Newly trained weights are saved to disk at: {output_path}")
