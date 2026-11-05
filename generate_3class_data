@@ -1,0 +1,128 @@
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from lenstronomy.LensModel.lens_model import LensModel
+from lenstronomy.LightModel.light_model import LightModel
+from lenstronomy.Data.pixel_grid import PixelGrid
+from lenstronomy.Data.psf import PSF
+from lenstronomy.ImSim.image_model import ImageModel
+
+# --- NEW: UNIQUE OUTPUT DIR FOR 3-CLASS SYSTEM ---
+output_dir = "dspl_3class_dataset"
+os.makedirs(output_dir, exist_ok=True)
+
+# Scale up configuration parameter settings
+num_images = 600  # Set back to your target batch size
+num_pix = 64
+delta_pix = 0.04
+transform_pix2coord = np.array([[delta_pix, 0], [0, delta_pix]])
+ra_at_xy_0 = -delta_pix * (num_pix - 1) / 2
+dec_at_xy_0 = -delta_pix * (num_pix - 1) / 2
+
+pixel_grid = PixelGrid(num_pix, num_pix, transform_pix2coord, ra_at_xy_0, dec_at_xy_0)
+psf = PSF(psf_type='GAUSSIAN', fwhm=0.15)
+
+lens_light_model = LightModel(light_model_list=['SERSIC_ELLIPSE'])
+source_model_list = ['SERSIC_ELLIPSE', 'SERSIC_ELLIPSE']
+source_model = LightModel(light_model_list=source_model_list)
+
+# --- DEFINED SEPARATE LENS GEOMETRY ENGINES ---
+lens_model_double = LensModel(lens_model_list=['SIE', 'SIE'], multi_plane=True, lens_redshift_list=[0.3, 0.6], z_source=1.2)
+lens_model_single = LensModel(lens_model_list=['SIE'])
+lens_model_empty = LensModel(lens_model_list=[])
+
+dataset_records = []
+print(f"Generating {num_images} randomized images across 3 structured classes...")
+
+# Create an evenly distributed label array (1/3rd Non-Lens, 1/3rd Single Lens, 1/3rd Double Lens)
+items_per_class = num_images // 3
+class_labels = np.array([0] * items_per_class + [1] * items_per_class + [2] * items_per_class)
+np.random.shuffle(class_labels)
+
+for i, class_label in enumerate(class_labels):
+    # Determine split subset: 70% Train, 30% Test
+    split_group = "train" if np.random.uniform(0, 1) < 0.7 else "test"
+    
+    amp_lens = np.random.uniform(65000, 105000)
+    amp_src1 = np.random.uniform(15000, 55000)
+    amp_src2 = np.random.uniform(10000, 35000)
+    
+    theta_E_main = np.random.uniform(0.65, 0.85) # Bumped up slightly to give rings breathing room
+    theta_E_inter = np.random.uniform(0.20, 0.35)
+    
+    e1_l = np.random.uniform(-0.15, 0.15)
+    e2_l = np.random.uniform(-0.15, 0.15)
+    
+    is_blended = np.random.choice([0, 1], p=[0.5, 0.5])
+    
+    kwargs_lens_light = [{
+        'amp': amp_lens, 'R_sersic': np.random.uniform(0.09, 0.15), 'n_sersic': np.random.uniform(3.5, 4.5),
+        'e1': e1_l, 'e2': e2_l, 'center_x': np.random.uniform(-0.01, 0.01), 'center_y': np.random.uniform(-0.01, 0.01)
+    }]
+    
+    if is_blended == 1:
+        kwargs_lens_light.append({
+            'amp': np.random.uniform(30000, 60000), 'R_sersic': np.random.uniform(0.07, 0.13), 'n_sersic': 1.0,
+            'e1': np.random.uniform(-0.1, 0.1), 'e2': np.random.uniform(-0.1, 0.1), 
+            'center_x': np.random.choice([np.random.uniform(-0.9, -0.4), np.random.uniform(0.4, 0.9)]),
+            'center_y': np.random.choice([np.random.uniform(-0.9, -0.4), np.random.uniform(0.4, 0.9)])
+        })
+        extended_light_model = LightModel(light_model_list=['SERSIC_ELLIPSE', 'SERSIC_ELLIPSE'])
+    
+    # Define source properties common across single and double structures
+    kwargs_source = [
+        {'amp': amp_src1, 'R_sersic': np.random.uniform(0.04, 0.06), 'n_sersic': 1.0, 'e1': np.random.uniform(-0.1, 0.1), 'e2': np.random.uniform(-0.1, 0.1), 'center_x': np.random.uniform(-0.02, 0.02), 'center_y': np.random.uniform(-0.02, 0.02)},
+        {'amp': amp_src2, 'R_sersic': np.random.uniform(0.05, 0.08), 'n_sersic': 1.0, 'e1': np.random.uniform(-0.1, 0.1), 'e2': np.random.uniform(-0.1, 0.1), 'center_x': np.random.uniform(-0.04, 0.04), 'center_y': np.random.uniform(-0.04, 0.04)}
+    ]
+
+    # --- BLOCK 2: SPLIT LOGIC INTO 3 EXPLICIT FORMS ---
+    if class_label == 2:  # DOUBLE LENS
+        kwargs_lens = [
+            {'theta_E': theta_E_main, 'e1': e1_l, 'e2': e2_l, 'center_x': 0.0, 'center_y': 0.0},
+            {'theta_E': theta_E_inter, 'e1': np.random.uniform(-0.2, 0.2), 'e2': np.random.uniform(-0.2, 0.2), 'center_x': np.random.uniform(-0.03, 0.03), 'center_y': np.random.uniform(-0.03, 0.03)}
+        ]
+        engine = ImageModel(pixel_grid, psf, lens_model_double, source_model, extended_light_model if is_blended == 1 else lens_light_model)
+        clean_image = engine.image(kwargs_lens, kwargs_source, kwargs_lens_light)
+        proxy_magnitude = 25.0 - 2.5 * np.log10(amp_src2)
+        calculated_size = theta_E_main * 2.0
+        prefix = "double_lens"
+        
+    elif class_label == 1:  # SINGLE LENS
+        kwargs_lens = [{'theta_E': theta_E_main, 'e1': e1_l, 'e2': e2_l, 'center_x': 0.0, 'center_y': 0.0}]
+        engine = ImageModel(pixel_grid, psf, lens_model_single, source_model, extended_light_model if is_blended == 1 else lens_light_model)
+        clean_image = engine.image(kwargs_lens, kwargs_source, kwargs_lens_light)
+        proxy_magnitude = 25.0 - 2.5 * np.log10(amp_src1)
+        calculated_size = theta_E_main * 2.0
+        prefix = "single_lens"
+        
+    else:  # NON-LENS (GALAXY ONLY)
+        kwargs_source_empty = [{'amp': 0, 'R_sersic': 0.1, 'n_sersic': 1.0, 'e1': 0.0, 'e2': 0.0, 'center_x': 0, 'center_y': 0}] * 2
+        engine = ImageModel(pixel_grid, psf, lens_model_empty, source_model, extended_light_model if is_blended == 1 else lens_light_model)
+        clean_image = engine.image(kwargs_lens=[], kwargs_source=kwargs_source_empty, kwargs_lens_light=kwargs_lens_light)
+        proxy_magnitude = 0.0 
+        calculated_size = 0.0
+        prefix = "non_lens"
+
+    background_rms = np.random.uniform(11.0, 19.0)
+    noise = np.random.normal(100.0, background_rms, clean_image.shape)
+    noisy_image = clean_image + noise
+    
+    npy_filename = os.path.join(output_dir, f"{prefix}_{i:04d}.npy")
+    png_filename = os.path.join(output_dir, f"{prefix}_{i:04d}.png")
+    
+    np.save(npy_filename, noisy_image)
+    plt.imsave(png_filename, noisy_image, cmap='gray', origin='lower', vmin=70, vmax=400)
+    
+    dataset_records.append({
+        'image_path': npy_filename,
+        'class_label': class_label,  # 0, 1, or 2
+        'magnitude': proxy_magnitude, 
+        'arc_size': calculated_size,               
+        'blended': is_blended,
+        'split': split_group
+    })
+
+df = pd.DataFrame(dataset_records)
+df.to_csv("dspl_3class_metadata.csv", index=False)
+print("Success! Created a balanced batch of 600 3-class split catalog items.")
