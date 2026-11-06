@@ -1,0 +1,44 @@
+Testing-Data: 3000 images, {'single': 1000, 'compound': 1000, 'nearby': 500, 'non_lens': 500}
+
+Trust check, our simulated test pairs, double vs. single AUROC (limit 0.01):
+   model  seed   now  before  difference
+ zoobot3     1 0.603   0.603        -0.0
+baseline     1 0.575   0.575         0.0
+ zoobot3     2 0.622   0.622        -0.0
+baseline     2 0.573   0.573        -0.0
+ zoobot3     3 0.627   0.627         0.0
+baseline     3 0.582   0.582        -0.0
+  ok
+
+zoobot3
+  AUROC, compound vs. all others: 0.916, 0.931, 0.924 (mean 0.924); 95% intervals 0.904-0.926, 0.922-0.940, 0.913-0.933
+    vs. single    0.888, 0.905, 0.897 (mean 0.897)
+    vs. nearby    0.892, 0.915, 0.902 (mean 0.903)
+    vs. non_lens  0.994, 1.000, 0.999 (mean 0.997)
+  FPR at 80% recall: 14.1%, 10.5%, 10.0% (mean 11.5%); recall reached 80.1%, 80.1%, 80.1%
+    single    19.0%, 14.2%, 13.2% (mean 15.5%)
+    nearby    18.4%, 13.6%, 13.4% (mean 15.1%)
+    non_lens  0.0%, 0.0%, 0.0% (mean 0.0%)
+
+baseline
+  AUROC, compound vs. all others: 0.842, 0.900, 0.897 (mean 0.880); 95% intervals 0.827-0.858, 0.887-0.912, 0.884-0.908
+    vs. single    0.820, 0.880, 0.888 (mean 0.862)
+    vs. nearby    0.788, 0.855, 0.826 (mean 0.823)
+    vs. non_lens  0.942, 0.985, 0.984 (mean 0.970)
+  FPR at 80% recall: 30.1%, 16.8%, 16.7% (mean 21.2%); recall reached 80.1%, 80.1%, 80.1%
+    single    35.7%, 20.5%, 17.0% (mean 24.4%)
+    nearby    43.6%, 25.8%, 32.2% (mean 33.9%)
+    non_lens  5.6%, 0.4%, 0.4% (mean 2.1%)
+
+lens only
+  AUROC, compound vs. all others: 0.552, 0.586, 0.653 (mean 0.597); 95% intervals 0.531-0.571, 0.565-0.606, 0.634-0.671
+    vs. single    0.410, 0.468, 0.548 (mean 0.475)
+    vs. nearby    0.386, 0.408, 0.516 (mean 0.437)
+    vs. non_lens  1.000, 0.998, 0.999 (mean 0.999)
+  FPR at 80% recall: 63.5%, 60.5%, 54.8% (mean 59.6%); recall reached 80.1%, 80.1%, 80.1%
+    single    83.6%, 78.9%, 72.3% (mean 78.3%)
+    nearby    86.8%, 84.2%, 74.4% (mean 81.8%)
+    non_lens  0.0%, 0.0%, 0.0% (mean 0.0%)
+
+Mean ranking of the 4 real compound lenses among 79 real test lenses (from the final test):
+  zoobot3 3.75, 4.50, 3.50 (mean 3.9); baseline 6.75, 12.00, 10.00 (mean 9.6)

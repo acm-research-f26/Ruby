@@ -1,0 +1,15 @@
+1. Ring size
+  share with a ring under 0.9": compound 77%, single 0%; smallest ring radius alone, compound vs. single: AUROC 0.963
+  share with a ring under 0.9": compound 77%, nearby 0%; smallest ring radius alone, compound vs. nearby: AUROC 0.963
+  real Euclid lenses with a published radius under 0.9": 58% of 322
+
+2. Simple light measures (in noise units, within 3" of the centre)
+  compound vs. single: combined (5-fold) AUROC 0.894; alone {'total_light': 0.634, 'light_0p5_to_1': 0.795, 'light_1_to_2': 0.524, 'light_outside_1': 0.54, 'bright_pixels': 0.633, 'peak': 0.506}
+  compound vs. nearby: combined (5-fold) AUROC 0.947; alone {'total_light': 0.538, 'light_0p5_to_1': 0.796, 'light_1_to_2': 0.454, 'light_outside_1': 0.294, 'bright_pixels': 0.507, 'peak': 0.512}
+  compound vs. non_lens: combined (5-fold) AUROC 0.974; alone {'total_light': 0.737, 'light_0p5_to_1': 0.858, 'light_1_to_2': 0.857, 'light_outside_1': 0.826, 'bright_pixels': 0.877, 'peak': 0.468}
+  compound vs. all others: combined (5-fold) AUROC 0.916; alone {'total_light': 0.636, 'light_0p5_to_1': 0.811, 'light_1_to_2': 0.59, 'light_outside_1': 0.55, 'bright_pixels': 0.662, 'peak': 0.498}
+
+3. Without the giveaway: only compound lenses with an inner ring of 0.9" or more
+  zoobot3   wide-ring compounds (n=233) vs. all others [0.9, 0.922, 0.911] mean 0.911; vs. single [0.867, 0.893, 0.879] mean 0.880; narrow-ring compounds vs. single mean 0.902
+  baseline  wide-ring compounds (n=233) vs. all others [0.871, 0.92, 0.911] mean 0.901; vs. single [0.852, 0.904, 0.904] mean 0.887; narrow-ring compounds vs. single mean 0.855
+  lens only wide-ring compounds (n=233) vs. all others [0.64, 0.616, 0.712] mean 0.656; vs. single [0.527, 0.508, 0.628] mean 0.554; narrow-ring compounds vs. single mean 0.451
