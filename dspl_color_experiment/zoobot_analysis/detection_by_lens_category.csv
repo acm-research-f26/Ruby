@@ -1,0 +1,85 @@
+band,lens_feature,category,simulation_definition,lens_structure,n_tested,classified_as_lens,detection_rate,rate_ci_95_low,rate_ci_95_high,mean_lens_score
+g,Source brightness,Bright/moderate,Magnitude offset 0-1,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8181245982646942
+g,Source brightness,Bright/moderate,Magnitude offset 0-1,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8519754032293956
+g,Source brightness,Bright/moderate,Magnitude offset 0-1,both,120,120,1.0,0.9689797289440706,1.0,0.8350500007470448
+g,Source brightness,Faint,Magnitude offset 2-3,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.7781273136536281
+g,Source brightness,Faint,Magnitude offset 2-3,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.7887407491604487
+g,Source brightness,Faint,Magnitude offset 2-3,both,120,120,1.0,0.9689797289440706,1.0,0.7834340314070384
+g,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,simple,60,18,0.3,0.19898010252726892,0.42508946966390415,0.41001305878162386
+g,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,compound,60,41,0.6833333333333333,0.5576599505698345,0.7869429415882567,0.575826221704483
+g,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,both,120,59,0.49166666666666664,0.4038741586989492,0.5799761791519831,0.49291964024305346
+g,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,simple,60,53,0.8833333333333333,0.7782097940014187,0.9423235259654995,0.679984184106191
+g,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.7688734243313472
+g,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,both,120,113,0.9416666666666667,0.8844727405319686,0.9714593533686271,0.7244288042187691
+g,Arc size,Baseline arcs,Einstein-radius scale 1.00,simple,30,30,1.0,0.8864829086095221,1.0,0.8199907600879669
+g,Arc size,Baseline arcs,Einstein-radius scale 1.00,compound,30,30,1.0,0.8864829086095221,1.0,0.8584690093994141
+g,Arc size,Baseline arcs,Einstein-radius scale 1.00,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8392298847436905
+g,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8727386901775996
+g,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8791844109694164
+g,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,both,120,120,1.0,0.9689797289440706,1.0,0.875961550573508
+g,Foreground blending,Low lens light,Foreground-light flux scale 0.5,simple,30,30,1.0,0.8864829086095221,1.0,0.8216600020726522
+g,Foreground blending,Low lens light,Foreground-light flux scale 0.5,compound,30,30,1.0,0.8864829086095221,1.0,0.8596777419249216
+g,Foreground blending,Low lens light,Foreground-light flux scale 0.5,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8406688719987869
+g,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,simple,30,30,1.0,0.8864829086095221,1.0,0.8199907620747884
+g,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,compound,30,30,1.0,0.8864829086095221,1.0,0.8584690074125926
+g,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8392298847436905
+g,Foreground blending,High lens light,Foreground-light flux scale 2-4,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8118864923715592
+g,Foreground blending,High lens light,Foreground-light flux scale 2-4,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8397427727778752
+g,Foreground blending,High lens light,Foreground-light flux scale 2-4,both,120,120,1.0,0.9689797289440706,1.0,0.8258146325747172
+g,Control behavior,Negative controls,Unlensed/weakly lensed controls; label=0,both,60,0,0.0,0.0,0.06017393047793289,0.23398451283574104
+r,Source brightness,Bright/moderate,Magnitude offset 0-1,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8129178524017334
+r,Source brightness,Bright/moderate,Magnitude offset 0-1,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8407125820716222
+r,Source brightness,Bright/moderate,Magnitude offset 0-1,both,120,120,1.0,0.9689797289440706,1.0,0.8268152172366778
+r,Source brightness,Faint,Magnitude offset 2-3,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.7806347380081813
+r,Source brightness,Faint,Magnitude offset 2-3,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8176493843396505
+r,Source brightness,Faint,Magnitude offset 2-3,both,120,120,1.0,0.9689797289440706,1.0,0.7991420611739158
+r,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,simple,60,15,0.25,0.1577638557841185,0.372323109454848,0.4009433098137379
+r,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,compound,60,43,0.7166666666666667,0.5923247495026482,0.8149332139569141,0.5704757367571195
+r,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,both,120,58,0.48333333333333334,0.3958348942305447,0.5718657814713197,0.48570952328542866
+r,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,simple,60,51,0.85,0.7388517410884038,0.9190265075770431,0.6655779192845027
+r,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.7527009963989257
+r,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,both,120,111,0.925,0.8635894316089088,0.9600433379935513,0.7091394578417142
+r,Arc size,Baseline arcs,Einstein-radius scale 1.00,simple,30,30,1.0,0.8864829086095221,1.0,0.8122748672962189
+r,Arc size,Baseline arcs,Einstein-radius scale 1.00,compound,30,30,1.0,0.8864829086095221,1.0,0.8495282113552094
+r,Arc size,Baseline arcs,Einstein-radius scale 1.00,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8309015393257141
+r,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8695661415656407
+r,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8758049805959066
+r,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,both,120,120,1.0,0.9689797289440706,1.0,0.8726855610807737
+r,Foreground blending,Low lens light,Foreground-light flux scale 0.5,simple,30,30,1.0,0.8864829086095221,1.0,0.816475107272466
+r,Foreground blending,Low lens light,Foreground-light flux scale 0.5,compound,30,30,1.0,0.8864829086095221,1.0,0.8547821859518687
+r,Foreground blending,Low lens light,Foreground-light flux scale 0.5,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8356286466121674
+r,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,simple,30,30,1.0,0.8864829086095221,1.0,0.8122748672962189
+r,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,compound,30,30,1.0,0.8864829086095221,1.0,0.8495282113552094
+r,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8309015393257141
+r,Foreground blending,High lens light,Foreground-light flux scale 2-4,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.7962703953186671
+r,Foreground blending,High lens light,Foreground-light flux scale 2-4,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8173361221949259
+r,Foreground blending,High lens light,Foreground-light flux scale 2-4,both,120,120,1.0,0.9689797289440706,1.0,0.8068032587567965
+r,Control behavior,Negative controls,Unlensed/weakly lensed controls; label=0,both,60,0,0.0,0.0,0.06017393047793289,0.19291282445192337
+i,Source brightness,Bright/moderate,Magnitude offset 0-1,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8049956421057384
+i,Source brightness,Bright/moderate,Magnitude offset 0-1,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8291198621193568
+i,Source brightness,Bright/moderate,Magnitude offset 0-1,both,120,120,1.0,0.9689797289440706,1.0,0.8170577521125476
+i,Source brightness,Faint,Magnitude offset 2-3,simple,60,59,0.9833333333333333,0.9114466177322051,0.9970519161391262,0.7670103197296461
+i,Source brightness,Faint,Magnitude offset 2-3,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8187951465447744
+i,Source brightness,Faint,Magnitude offset 2-3,both,120,119,0.9916666666666667,0.9543025846256777,0.9985274821693252,0.7929027331372102
+i,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,simple,60,15,0.25,0.1577638557841185,0.372323109454848,0.3973489577571551
+i,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,compound,60,39,0.65,0.5236238380947751,0.7583239827618451,0.5536615520715713
+i,Arc size,Very small arcs,Einstein-radius scale 0.50-0.55,both,120,54,0.45,0.3639158452162006,0.5391861818893925,0.47550525491436324
+i,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,simple,60,50,0.8333333333333334,0.7196814850279217,0.9068692279867897,0.6578858435153961
+i,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.7380361249049504
+i,Arc size,Small arcs,Einstein-radius scale 0.70-0.85,both,120,110,0.9166666666666666,0.8533762622701224,0.9541068451832697,0.6979609842101733
+i,Arc size,Baseline arcs,Einstein-radius scale 1.00,simple,30,30,1.0,0.8864829086095221,1.0,0.8057838102181752
+i,Arc size,Baseline arcs,Einstein-radius scale 1.00,compound,30,30,1.0,0.8864829086095221,1.0,0.840821119149526
+i,Arc size,Baseline arcs,Einstein-radius scale 1.00,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8233024646838506
+i,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,simple,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8661663989226024
+i,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8722364743550618
+i,Arc size,Large arcs,Einstein-radius scale 1.15-1.30,both,120,120,1.0,0.9689797289440706,1.0,0.8692014366388321
+i,Foreground blending,Low lens light,Foreground-light flux scale 0.5,simple,30,30,1.0,0.8864829086095221,1.0,0.8097238063812255
+i,Foreground blending,Low lens light,Foreground-light flux scale 0.5,compound,30,30,1.0,0.8864829086095221,1.0,0.8495636026064555
+i,Foreground blending,Low lens light,Foreground-light flux scale 0.5,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8296437044938405
+i,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,simple,30,30,1.0,0.8864829086095221,1.0,0.8057838102181752
+i,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,compound,30,30,1.0,0.8864829086095221,1.0,0.8408211211363474
+i,Foreground blending,Nominal lens light,Foreground-light flux scale 1.0,both,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8233024656772614
+i,Foreground blending,High lens light,Foreground-light flux scale 2-4,simple,60,59,0.9833333333333333,0.9114466177322051,0.9970519161391262,0.7827715575695038
+i,Foreground blending,High lens light,Foreground-light flux scale 2-4,compound,60,60,1.0,0.9398260695220669,0.9999999999999999,0.8040430297454199
+i,Foreground blending,High lens light,Foreground-light flux scale 2-4,both,120,119,0.9916666666666667,0.9543025846256777,0.9985274821693252,0.7934072936574618
+i,Control behavior,Negative controls,Unlensed/weakly lensed controls; label=0,both,60,0,0.0,0.0,0.06017393047793289,0.1874864694972833
