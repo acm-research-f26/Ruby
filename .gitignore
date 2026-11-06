@@ -1,4 +1,5 @@
 dspl_experiment/
+dspl_color_experiment/
 .venv/
 model_checkpoints/
 zoobot_cache/

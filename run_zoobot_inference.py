@@ -22,6 +22,11 @@ def main() -> None:
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=Path("dspl_experiment/zoobot_scores.csv"))
     parser.add_argument("--batch-size", type=int, default=32)
+    parser.add_argument(
+        "--image-column",
+        default="image_path",
+        help="manifest column holding image paths (multi-band manifests use image_path_g/r/i)",
+    )
     args = parser.parse_args()
 
     if not args.checkpoint.is_file():
@@ -48,9 +53,14 @@ def main() -> None:
         )
 
     rows = read_manifest(args.manifest)
+    if args.image_column not in rows[0]:
+        parser.error(
+            f"Manifest has no column '{args.image_column}'. "
+            f"Available: {', '.join(rows[0])}"
+        )
     manifest_root = args.manifest.resolve().parent
     for row in rows:
-        image_path = (manifest_root / row["image_path"]).resolve()
+        image_path = (manifest_root / row[args.image_column]).resolve()
         if not image_path.is_file():
             raise FileNotFoundError(f"Image listed in manifest is missing: {image_path}")
         row["file_loc"] = str(image_path)
