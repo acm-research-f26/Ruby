@@ -6,13 +6,11 @@ The team's three metrics for our 3-answer Zoobot, measured on the `Testing-Data`
 
 ## Results
 
-| Metric | Data | Zoobot3 | Baseline | Better is |
-|---|---|---|---|---|
-| **AUROC**, compound vs. everything else | 3,000 simulated images from the `Testing-Data` branch | **0.924** (0.916, 0.931, 0.924) | 0.880 (0.842, 0.900, 0.897) | Higher (1 = perfect, 0.5 = guessing) |
-| **FPR at 80% recall** | Same 3,000 images | **11.5%** (14.1%, 10.5%, 10.0%) | 21.2% (30.1%, 16.8%, 16.7%) | Lower |
-| **Mean ranking of the 4 real compound lenses** | 79 real Euclid test lenses | **3.9** (3.75, 4.5, 3.5) | 9.6 (6.75, 12.0, 10.0) | Lower (perfect = 2.5, guessing = about 40) |
-
-Zoobot3 is ahead of the baseline on all three metrics, on every run.
+| Metric | Data | Zoobot3 |
+|---|---|---|
+| **AUROC**, compound vs. everything else | 3,000 simulated images from the `Testing-Data` branch | **0.924** (0.916, 0.931, 0.924) |
+| **FPR at 80% recall** | Same 3,000 images | **11.5%** (14.1%, 10.5%, 10.0%) |
+| **Mean ranking of the 4 real compound lenses** | 79 real Euclid test lenses | **3.9** (3.75, 4.5, 3.5) |
 
 ## What each metric means
 
