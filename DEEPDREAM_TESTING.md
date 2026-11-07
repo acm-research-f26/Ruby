@@ -75,6 +75,12 @@ rank 1 and 15 of 79; the other 2 show only a single strong ring with no
 second peak at any strength -- read as a real, stated result, not spun.
 **Full writeup: [`REAL_WORLD_TEST.md`](REAL_WORLD_TEST.md).**
 
+AUCROC and FPR @ 80% recall against a separate, independent 3000-image
+simulated test set (for cross-team model comparison), plus a concrete
+diagnosis of why those numbers are weak (a real mismatch between this
+method's 0.9" minimum resolvable ring separation and real compound lenses'
+typical 0.17"-0.86" separations): **[`MODEL_EVALUATION.md`](MODEL_EVALUATION.md).**
+
 ## Setup
 
 ```bash

@@ -96,7 +96,8 @@ For each image:
 | 31/79 | Teapot Lens | single lens | 1 | 28.6 (one strong ring, no 2nd) |
 | 41/79 | Galileo's Lens | single lens | 1 | 19.8 (one strong ring, no 2nd) |
 
-Median rank of the 4 known candidates: **23/79** (random chance: ~40). 30/79
+Mean rank of the 4 known candidates: **22.0/79** (median 23.0/79; random
+chance: ~40). 30/79
 images overall are flagged `COMPOUND CANDIDATE` (2+ ring-like peaks); full
 breakdown and every image's score/peaks/labels are in
 `outputs/real_test_79_scores.csv`.
@@ -169,3 +170,11 @@ cd src
 python validate_on_real_compound.py   # 3-system archival-HST companion check
 python score_real_test_set.py         # the full 79-image ranked scoring (main deliverable)
 ```
+
+## See also
+
+[`MODEL_EVALUATION.md`](MODEL_EVALUATION.md) -- AUCROC and FPR @ 80% recall
+against an independent 3000-image simulated test set, for cross-team model
+comparison. That page's diagnosis (this method's 0.9" minimum resolvable
+ring separation vs. real compound lenses' typical 0.17"-0.86" separations)
+is relevant context for how to read this page's results too.
