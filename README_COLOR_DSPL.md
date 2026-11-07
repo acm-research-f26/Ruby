@@ -129,3 +129,20 @@ With 30 replicates per condition (n=30 per cell, 60 negative controls), the inte
 - Compound structures separated from simple ones at matched conditions: higher ring contrast (e.g. 1.93 vs 1.07 at control), higher outer-to-inner flux ratio (13.1 vs 10.7), and slightly higher quadrant asymmetry (0.39 vs 0.31). Standard deviations shrink roughly as expected with 6x more samples than the pilot.
 
 These are morphology numbers describing how the metrics respond to the knobs on simulated data - not evidence about real-survey performance.
+
+## Real-data check: 79 Euclid lenses
+
+`test_lenses_79/` holds 79 real Euclid Q1 VIS cutouts (75 ordinary lenses, 4 compound candidates from Li et al. 2026; same 100x100, 0.1 arcsec/pixel format as the sims; see `test_lenses_79/README.txt` for provenance). Score them and evaluate with:
+
+```powershell
+python run_zoobot_inference.py --manifest test_lenses_79/manifest.csv --checkpoint model_checkpoints/ruby_synthetic_lens_head/checkpoints/0.ckpt --output test_lenses_79/zoobot_scores.csv
+python evaluate_real_lenses.py
+```
+
+`evaluate_real_lenses.py` writes `test_lenses_79/real_lens_evaluation.csv` and reports the project's three evaluation pieces:
+
+1. **AUROC on never-seen simulations** - the head was trained on the 64x64 single-source-plane `synthetic_lenses.csv` set, so the 100x100 two-plane color DSPL sims are genuinely held out. Zoobot AUROC 0.9986 overall, 1.0000 on compound-vs-non-lens, 0.9966 on simple-vs-non-lens. A non-ML ring-contrast baseline reaches 0.9791 / 0.9999, meaning the sims alone cannot strongly discriminate methods.
+2. **Flags at 80% compound-recall cutoff** - cutoff 0.730 catches 80.2% of sim compounds and 0/60 sim non-lenses. On the real set it flags 3/4 compound candidates vs 23/75 ordinary lenses (32.9% of all 79).
+3. **Real compound rankings** - mean rank 21.8 of 79 by lens score; Cosmic Ammonite is rank 1 of the entire real set. Real compounds outscore ordinary lenses (median 0.756 vs 0.683). Plain argmax detects 72/79 real lenses including 4/4 compounds.
+
+Caveats: the real set contains no non-lenses, so no real-data false-positive rate or AUROC is computable (the 32.9% flag rate on ordinary lenses is not an FPR - they are all true lenses). Four compounds is an anecdote-sized sample. The compound candidates are not spectroscopically confirmed. Sim AUROCs near 1.0 partly reflect that sims and training data come from the same generator family even though the specific images are held out.

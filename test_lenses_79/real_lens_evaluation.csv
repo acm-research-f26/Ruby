@@ -1,0 +1,14 @@
+metric,value,note
+heldout_sim_auroc_zoobot_all,0.9985555555555555,n=960 sims (900 lens / 60 non-lens)
+heldout_sim_auroc_ring_contrast_baseline_all,0.9790925925925926,non-ML morphology baseline
+heldout_sim_auroc_zoobot_compound_only,1.0,compounds vs non-lens
+heldout_sim_auroc_ring_contrast_compound_only,0.9999259259259259,compounds vs non-lens
+heldout_sim_auroc_zoobot_simple_only,0.9965925925925926,simples vs non-lens
+cutoff_at_80pct_sim_compound_recall,0.7303497791290283,achieved sim-compound recall 0.802
+sim_nonlens_flag_rate_at_cutoff,0.0,fraction of 60 sim non-lenses above cutoff
+real_flag_fraction_at_cutoff,0.3291139240506329,fraction of 79 real lenses above cutoff
+real_compound_flag_fraction_at_cutoff,0.75,n=4 real compounds
+real_ordinary_flag_fraction_at_cutoff,0.30666666666666664,n=75 ordinary real lenses
+real_compound_mean_rank,21.75,"ranks [1, 10, 26, 50] of 79"
+real_compound_median_score,0.7554889619350433,
+real_ordinary_median_score,0.683188259601593,
