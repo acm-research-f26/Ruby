@@ -141,8 +141,30 @@ python evaluate_real_lenses.py
 
 `evaluate_real_lenses.py` writes `test_lenses_79/real_lens_evaluation.csv` and reports the project's three evaluation pieces:
 
-1. **AUROC on never-seen simulations** - the head was trained on the 64x64 single-source-plane `synthetic_lenses.csv` set, so the 100x100 two-plane color DSPL sims are genuinely held out. Zoobot AUROC 0.9986 overall, 1.0000 on compound-vs-non-lens, 0.9966 on simple-vs-non-lens. A non-ML ring-contrast baseline reaches 0.9791 / 0.9999, meaning the sims alone cannot strongly discriminate methods.
-2. **Flags at 80% compound-recall cutoff** - cutoff 0.730 catches 80.2% of sim compounds and 0/60 sim non-lenses. On the real set it flags 3/4 compound candidates vs 23/75 ordinary lenses (32.9% of all 79).
-3. **Real compound rankings** - mean rank 21.8 of 79 by lens score; Cosmic Ammonite is rank 1 of the entire real set. Real compounds outscore ordinary lenses (median 0.756 vs 0.683). Plain argmax detects 72/79 real lenses including 4/4 compounds.
+**1. AUROC on never-seen simulations** - the head was trained on the 64x64 single-source-plane `synthetic_lenses.csv` set, so the 100x100 two-plane color DSPL sims are genuinely held out.
+
+| Scorer | All sims | Compound vs non-lens | Simple vs non-lens |
+| --- | ---: | ---: | ---: |
+| Zoobot head | 0.9986 | 1.0000 | 0.9966 |
+| Ring-contrast baseline (non-ML) | 0.9791 | 0.9999 | - |
+
+The baseline nearly matches the model, meaning the sims alone cannot strongly discriminate methods.
+
+**2. Flags at the 80% compound-recall cutoff** - cutoff 0.730 catches 80.2% of sim compounds and 0/60 sim non-lenses. Applied to the real set:
+
+| Real subset | Flagged at cutoff |
+| --- | ---: |
+| 4 compound candidates | 3/4 (75%) |
+| 75 ordinary lenses | 23/75 (30.7%) |
+| All 79 lenses | 26/79 (32.9%) |
+
+**3. Real compound rankings** - mean rank 21.8 of 79 by lens score (rank 1 = highest). Real compounds outscore ordinary lenses (median 0.756 vs 0.683), and plain argmax detects 72/79 real lenses including 4/4 compounds.
+
+| Compound candidate | Rank of 79 | Lens score | Euclid theta_E |
+| --- | ---: | ---: | ---: |
+| Cosmic Ammonite | 1 | 0.863 | 1.16" |
+| Cosmic Dartboard | 10 | 0.778 | 0.46" |
+| Galileo's Lens | 26 | 0.733 | 1.09" |
+| Teapot Lens | 50 | 0.646 | 0.63" |
 
 Caveats: the real set contains no non-lenses, so no real-data false-positive rate or AUROC is computable (the 32.9% flag rate on ordinary lenses is not an FPR - they are all true lenses). Four compounds is an anecdote-sized sample. The compound candidates are not spectroscopically confirmed. Sim AUROCs near 1.0 partly reflect that sims and training data come from the same generator family even though the specific images are held out.
