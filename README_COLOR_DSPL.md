@@ -168,3 +168,13 @@ The baseline nearly matches the model, meaning the sims alone cannot strongly di
 | Teapot Lens | 50 | 0.646 | 0.63" |
 
 Caveats: the real set contains no non-lenses, so no real-data false-positive rate or AUROC is computable (the 32.9% flag rate on ordinary lenses is not an FPR - they are all true lenses). Four compounds is an anecdote-sized sample. The compound candidates are not spectroscopically confirmed. Sim AUROCs near 1.0 partly reflect that sims and training data come from the same generator family even though the specific images are held out.
+
+### How to read these results
+
+**Table 1 (sim AUROC).** AUROC answers: "given one lens and one non-lens, how often does the scorer rank the lens higher?" 1.0 is perfect, 0.5 is a coin flip. Zoobot is near-perfect on sims it never trained on - but a non-ML ring-contrast metric nearly ties it (0.9791). The takeaway is not that the model is exceptional; it is that the sims are too easy to discriminate between methods, which is why the real-data check matters.
+
+**Table 2 (flags at the 80% compound-recall cutoff).** The score bar (0.730) is chosen so the model catches 80% of simulated compounds while no simulated non-lens crosses it. Held against real Euclid lenses, 3 of 4 real compounds clear the bar vs only ~31% of ordinary lenses. This mimics the intended use: a human reviews a ranked candidate list, and a compound-tuned cutoff concentrates compounds near the top while letting fewer ordinary lenses through - less reviewer time wasted. The 31% is not a false-alarm rate; ordinary lenses in this set are still true lenses, so it reads as "how many non-compound lenses also look compound-like."
+
+**Table 3 (compound rankings).** Sorting all 79 real lenses by model score, the single highest-scoring image is a compound (Cosmic Ammonite), and compounds score higher on average than ordinary lenses (median 0.756 vs 0.683). The feature the model learned to reward in simulations - compound structure - is also what it rewards in real Euclid data; that is the qualitative sim-to-reality bridge. Teapot Lens (rank 50) is the weak case, and it also has the second-smallest Einstein radius (0.63") of the four, consistent with the small-arc weakness measured in the simulation sweeps.
+
+**One-paragraph version.** The model separates lenses from non-lenses almost perfectly on fresh simulations, but so does a trivial ring measurement, so sims alone prove little. On real data the signal we care about survives: real compounds score systematically higher than ordinary lenses, 3 of 4 clear a compound-optimized cutoff, and the top-scoring real image overall is a compound. With only 4 (unconfirmed) compound candidates and no real non-lenses, this is suggestive, not proof.
